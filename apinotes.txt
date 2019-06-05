@@ -1,0 +1,12 @@
+curl --request GET https://accounts.spotify.com/authorize?client_id=e32de789ed4e489f9d2c5c8ac76bb6d6&response_type=code&redirect_uri=https%3A%2F%2Fwww.getpostman.com%2Foauth2%2Fcallback&scopes=user-read-recently-played
+
+e32de789ed4e489f9d2c5c8ac76bb6d6:c5ed1e4ad31643f09f1c24ac4553d46f
+
+
+
+
+curl -H "Authorization: Basic ZTMyZGU3ODllZDRlNDg5ZjlkMmM1YzhhYzc2YmI2ZDY6YzVlZDFlNGFkMzE2NDNmMDlmMWMyNGFjNDU1M2Q0NmY=" -d grant_type=authorization_code -d code=AQCjZ7lE2wq8PYRGl_Srg8SXHAPV7XzHOl7rVi372cMKgxuIWecvl3xD4fWFgkjpqk7TZW9WKPU7Bj7boZgMjM8ySTBLEM6vKL244WralkEh-sVp_Fard0RFv9U7UBZrlgnM6gW0e8krcHQ4_ssU3EI_eRrRtqokrk3mnKiq09p4GjuS9GpqxGFAJTK_4fJSs691XpcIAQ5dvcBBXq6AH5Mn -d redirect_uri=https%3A%2F%2Fwww.getpostman.com%2Foauth2%2Fcallback https://accounts.spotify.com/api/token
+
+
+
+{"access_token":"BQDrIuiJ9eNwF9fOfjCo9V5AB4MALqpJGeiet66bA_ejPdpmYhg8TWKEgDxsmz3Mo7JZ_aRIG4oDd6LCvgZfZylU8B7t22G1aVE_kIdKK2sOOIJM9q-nVDjgfJPpEHhaT1FOqQE6xsgyKs_TYe-kvVjpa_FazbdT5qjVgxP1","token_type":"Bearer","expires_in":3600,"refresh_token":"AQD3ol-2e5UZVY1O1jom_frPAQPuR6L2iG3lu-D30jos9TllXDUR-XMmHgNIKxutgnK_Ugq3kdlGcZZcLV-fOQM44zXg0EqGc9bfwzbAvSQ9Z8xeGq8xq58FRwYjJgwwcxbjOA","scope":""}
