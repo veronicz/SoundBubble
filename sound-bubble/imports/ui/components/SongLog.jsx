@@ -1,7 +1,5 @@
 import React from 'react';
 import Song from './Song.jsx';
-import { Meteor } from 'meteor/meteor';
-import HTTP from 'meteor/http';
 
 const songSampleData = JSON.parse(JSON.stringify({
     "items": [
