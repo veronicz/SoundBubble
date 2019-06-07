@@ -1,13 +1,6 @@
 import React from 'react';
-import Hello from './components/Hello.jsx';
-import Info from './components/Info.jsx';
+import AppRouter from './components/AppRouter.jsx';
 
-const App = () => (
-  <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello />
-    <Info />
-  </div>
-);
+const App = () => <AppRouter />;
 
 export default App;
