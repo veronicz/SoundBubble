@@ -58,9 +58,9 @@ export default class Song extends React.Component {
                         <h3 className="time_stamp_stamp">
                         {this.props.songTimeStampTime}
                         </h3>
-                        <h9 class="time_stamp_played_at">
+                        <h3 className="time_stamp_played_at">
                         {this.props.songTimeStampDate}
-                        </h9>
+                        </h3>
                     </div>
                                     
                 </span>

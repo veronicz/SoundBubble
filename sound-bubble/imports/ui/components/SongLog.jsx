@@ -4744,7 +4744,7 @@ const profiles = JSON.parse(JSON.stringify({
 
 export default class SongLog extends React.Component {
 
-    getSongDetails(s){
+    getSongDetails(s, i){
         let randIndex=Math.floor(Math.random() * 5);
         let randProfile=profiles.profiles[randIndex];
         let song = s.track;
@@ -4760,7 +4760,7 @@ export default class SongLog extends React.Component {
         let artistNames = artists.map(artist => artist.name);
         // TODO: calls below need to be made null safe
         
-        return (<Song 
+        return (<Song key={i}
         userName = {randProfile.username}
         userImage = {randProfile.profile_photo}
         songName = {song.name}
@@ -4773,17 +4773,17 @@ export default class SongLog extends React.Component {
 
     render(){
     let tracks = songSampleData.items;
-    let songDivs = tracks.map((s) => this.getSongDetails(s));
+    let songDivs = tracks.map((s, i) => this.getSongDetails(s, i));
         
     
-    return (<div class="feed_container">
-        <div class="song_feed_header">
-         <h1 class="song_feed_title">
+    return (<div className="feed_container">
+        <div className="song_feed_header">
+         <h1 className="song_feed_title">
          Your Feed
          </h1>
-         <img class="refresh_button" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"/>
+         <img className="refresh_button" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"/>
         </div>
-        <div class="songs">
+        <div className="songs">
         <ul>   
         {songDivs}
         </ul>
