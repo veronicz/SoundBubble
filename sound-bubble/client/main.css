@@ -17,8 +17,6 @@ code {
     monospace;
 }
 
-/* STYLING FOR SONG FEED. ENDS WITH 'END OF STYLING FOR SONG FEED' */
-
 .song_card_container{
   border-radius:20px;
   display:flex;
@@ -215,5 +213,3 @@ code {
   width:100%;
   height:100%;
 }
-
-/* END OF STYLING FOR SONG FEED */
