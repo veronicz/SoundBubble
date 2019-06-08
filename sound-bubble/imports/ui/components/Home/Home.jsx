@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import SongLog from './SongLog.jsx';
 
 export default class Home extends Component {
   render() {
-    return <h3>Home</h3>;
+    return (<div>
+      <SongLog/>
+    </div>);
   }
 }
