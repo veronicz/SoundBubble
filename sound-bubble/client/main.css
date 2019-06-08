@@ -29,6 +29,7 @@ code {
   height:92px;
   margin:20px;
   border: 1px solid #232323;
+  overflow:hidden;
 }
 
 .song_card {
@@ -42,6 +43,7 @@ code {
 }
 
 .photo_username{
+  overflow:hidden;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
