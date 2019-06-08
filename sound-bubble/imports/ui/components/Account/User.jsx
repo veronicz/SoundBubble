@@ -27,7 +27,6 @@ export default class User extends Component {
 }
 
 function formatUserInfo(title, detail) {
-  console.log({ detail });
   return (
     <dl className="user-detail">
       <dt>{title}</dt>
