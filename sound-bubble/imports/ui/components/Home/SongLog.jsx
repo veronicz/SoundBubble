@@ -22,7 +22,7 @@ export default class SongLog extends React.Component {
         }
         
         let artists = song.artists;
-        let artistNames = artists.map(artist => artist.name);
+        let artistNames = artists.map(artist => artist.name).join(" & ");
         // TODO: calls below need to be made null safe
         
         return (<Song key={i}
