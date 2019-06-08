@@ -23,18 +23,37 @@
     overflow: hidden;
     background-color: black;
     height: 10%;
+    text-decoration: none;
 }
 
-.navContainer li {
-    float: left;
-    width: 33.3%;
-    text-align: center;
-    
+.navContainer >a{
+    text-decoration: none;
+}
+
+.navContainer >a:hover{
+    color: black;
+}
+
+.navContainer >a:hover:not(.activeLink){
+    background-color: grey;
+    color: black;
 }
 
 .navLink {
     color: white;
     text-align: center;
-    text-decoration: none;
     font-size: 30px;
+    width: 33%;
+    float: left;
+    text-align: center;
+}
+
+
+.activeLink {
+    background-color: white;
+    color: black; 
+}
+
+#rest {
+    width: 34%;
 }
