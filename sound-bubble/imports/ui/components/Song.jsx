@@ -31,7 +31,7 @@ export default class Song extends React.Component {
                 <span className="song_card">
                     <div className="photo_username">
                         <div className="profile_photo">
-                            <img className="user_photo" src={this.props.userImage}/>
+                            <img className="user_photo" src={this.props.userImage} onClick={() => {window.open(this.props.userImage.toString(), 'popup', 'width=650,height=450' ); return false;}}/>
                         </div>
 
                         <div className="username">
