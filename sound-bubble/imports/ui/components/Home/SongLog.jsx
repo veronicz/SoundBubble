@@ -1,70 +1,59 @@
 import React from 'react';
-import { timeout } from 'q';
+import Song from './Song.jsx';
+import songSampleDataRaw from './sampleData/sample_recently_played.jsx';
+import profilesRaw from './sampleData/sample_profiles.jsx';
 
-// This class has the following inherited props:
-// userName
-// userImage
-// songName
-// songArtist
-// songAlbumCover
-// songTimeStampTime
-// songTimeStampDate
-// songExternalUrl
+let songSampleData = JSON.parse(songSampleDataRaw);
 
+let profiles = JSON.parse(profilesRaw);
 
-export default class Song extends React.Component {
+export default class SongLog extends React.Component {
 
-    render() {
-        let externalUrl = this.props.songExternalUrl;
-        let albumImage = this.props.songAlbumCover;
-
-        if (this.props.userImage === ""){
-            this.props.userImage ="https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
+    getSongDetails(s, i){
+        let randIndex=Math.floor(Math.random() * 5);
+        let randProfile=profiles.profiles[randIndex];
+        let song = s.track;
+        let songUrl;
+        
+        if (s.context === null){
+            songUrl= "https://support.spotify.com/tr/article/Error-code-404/";
+        } else { 
+            songUrl= song.external_urls.spotify;
         }
+        
+        let artists = song.artists;
+        let artistNames = artists.map(artist => artist.name);
+        // TODO: calls below need to be made null safe
+        
+        return (<Song key={i}
+        userName = {randProfile.username}
+        userImage = {randProfile.profile_photo}
+        songName = {song.name}
+        songArtist = {artistNames}
+        songAlbumCover = {song.album.images[0].url}
+        songTimeStampTime = {s.played_at.substring(11,16)}
+        songTimeStampDate = {s.played_at.substring(0,10)}
+        songExternalUrl = {songUrl}/>)
+    }
 
-        if (this.props.albumCover === ""){
-            this.props.albumCover = "https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png";
-        }
+    render(){
+    let tracks = songSampleData.items;
+    let songDivs = tracks.map((s, i) => this.getSongDetails(s, i));
+        
+    
+    return (<div className="feed_container">
+        <div className="song_feed_header">
+         <h1 className="song_feed_title">
+         Your Feed
+         </h1>
+         <img className="refresh_button" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"/>
+        </div>
+        <div className="songs">
+        <ul>   
+        {songDivs}
+        </ul>
+        </div>
+      </div>);
+    }
 
-        return (
-            <li className="song_card_container">
-                <span className="song_card">
-                    <div className="photo_username">
-                        <div className="profile_photo">
-                            <img className="user_photo" src={this.props.userImage} onClick={() => {window.open(this.props.userImage.toString(), 'popup', 'width=650,height=450' ); return false;}}/>
-                        </div>
-
-                        <div className="username">
-                        <p className="username_name">
-                        {this.props.userName}
-                        </p>
-                        </div>
-                    </div>
-
-                    <div className="album_cover">
-                        <img className="album_image" src={this.props.songAlbumCover} onClick={() => {window.open(albumImage.toString(), 'popup', 'width=400,height=400' ); return false;}}></img>
-                    </div>
-
-                    <div className="song_details">
-                        <marquee behaviour="alternate" onClick={() => {window.open(externalUrl.toString(), 'popup', 'width=650,height=450' ); return false;}}>{this.props.songName} by {this.props.songArtist}</marquee>
-                    </div>
-
-                    <div className="votes">
-                        <img className="thumbsUp" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Symbol_thumbs_up_white.svg"/>
-                        <img className="thumbsDown" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Symbol_thumbs_up_white.svg"/>
-                    </div>
-
-                    <div className="time_stamp">
-                        <h3 className="time_stamp_stamp">
-                        {this.props.songTimeStampTime}
-                        </h3>
-                        <h3 className="time_stamp_played_at">
-                        {this.props.songTimeStampDate}
-                        </h3>
-                    </div>
-                                    
-                </span>
-        </li>);
-}
-                                
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { timeout } from 'q';
 
 // This class has the following inherited props:
 // userName
