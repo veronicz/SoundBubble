@@ -7,9 +7,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 class AppRouter extends Component {
   render() {
     return (
-      <div>
-        <Home/>
-      </div>);
+      <BrowserRouter>
+        <Route path="/" exact component={Home} />
+        <Route path="/about/" component={About} />
+        <Route path="/account/" component={Account} />
+      </BrowserRouter>
+    );
   }
 }
 
