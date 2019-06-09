@@ -8,15 +8,14 @@ import '../stylesheets/Heading.css';
 class AppRouter extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <div>
-           <img src='/Background/avatar.png' className='headImg'></img>
-           <h1 className='headId'><h1 className="largest">(</h1> <h1 className="smaller">(</h1> <h1 className="smallest">(</h1>  &nbsp; SoundBubble  &nbsp; <h1 className="smallest">)</h1><h1 className="smaller">)</h1><h1 className="largest">)</h1></h1>
+      <BrowserRouter className="router">
+        <div className="header">
+           <img src='/Background/header.png' className='headImg'></img>
            <div className='navContainer'>
               <NavLink exact to={'/'} className='navLink' activeClassName='activeLink'>Home</NavLink>
               <NavLink to={'/Account'} className='navLink' activeClassName='activeLink'>Account</NavLink>
               <NavLink to={'/About'} id='rest' className='navLink' activeClassName='activeLink'>About</NavLink>
-           </div>
+        </div>
           <div className="pageContainer">
           <Switch>
             <Route path="/" exact component={Home} />
