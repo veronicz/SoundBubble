@@ -45,7 +45,7 @@ export default class Song extends React.Component {
                     </div>
 
                     <div className="song_details">
-                        <marquee behaviour="alternate" onClick={() => {window.open(externalUrl.toString(), 'popup', 'width=650,height=450' ); return false;}}>{this.props.songName} by {this.props.songArtist}</marquee>
+                        <marquee onClick={() => {window.open(externalUrl.toString(), 'popup', 'width=650,height=450' ); return false;}}>{this.props.songName} by {this.props.songArtist}</marquee>
                     </div>
 
                     <div className="votes">

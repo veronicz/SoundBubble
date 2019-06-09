@@ -1,19 +1,29 @@
+.header{
+    height:25vh'
+}
+
 .headImg {
     width: 100%;
-    height: 200px;
+    height:165px;
     z-index: -1;
     padding: 0;
 }
 
-
 .headId {
+    display:flex;
+    justify-content:center;;
+    align-items:center;
     width: 100%;
-    color: white;
     margin: 0;
-    font-size: 50px;
-    position: absolute;
-    top:75px;
+    font-size: 80px;
+    top:30px;
+    position:absolute;
     text-align: center;
+    font-family:arial;
+    font-weight:bold;
+    -webkit-text-fill-color:transparent; /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 1.3px;
+    -webkit-text-stroke-color:rgb(228, 192, 192);
 }
 
 .navContainer {
@@ -22,8 +32,18 @@
     padding: 0;
     overflow: hidden;
     background-color: black;
-    height: 10%;
+    height: 15%;
     text-decoration: none;
+}
+
+.pageContainer{
+    overflow:scroll;
+    height:66vh;
+    background-color:black;
+}
+
+.pageContainer::-webkit-scrollbar { 
+    display: none;  
 }
 
 .navContainer >a{
@@ -40,12 +60,14 @@
 }
 
 .navLink {
+    border-radius: 13px 13px 13px 13px;
     color: white;
     text-align: center;
     font-size: 30px;
     width: 33%;
     float: left;
     text-align: center;
+    border-color:silver;
 }
 
 
@@ -56,4 +78,25 @@
 
 #rest {
     width: 34%;
+}
+
+.largest{
+    font-size:90px;
+    font-family:comic sans ms;
+}
+
+.smaller{
+    font-size:58px;
+    margin-top:14px;
+    font-family:comic sans ms;
+}
+
+.smallest{
+    margin-top:22px;
+    font-size:35px;
+    font-family:comic sans ms;
+}
+
+.router::-webkit-scrollbar { 
+    display: none;  
 }
