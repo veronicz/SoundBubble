@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import currentUserRaw from './sampleData/sampleUser.jsx';
+import { connect } from 'react-redux';
 
-export default class User extends Component {
+class User extends Component {
   render() {
-    const user = currentUserRaw.currentUserRaw;
+    const { user } = this.props;
     return (
       <div className="user-container">
         <div className="user-left">
@@ -34,3 +34,9 @@ function formatUserInfo(title, detail) {
     </dl>
   );
 }
+
+const mapStateToProps = state => {
+  return { user: state.user };
+};
+
+export default connect(mapStateToProps)(User);
