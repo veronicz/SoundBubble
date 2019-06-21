@@ -1,4 +1,4 @@
-#welcome_container{
+.welcome_container{
     justify-content:center;
     background-color:black;
     display:flex;
@@ -28,7 +28,7 @@
    }
  }
  
- #page_title{
+ .page_title{
    color:white;
    font-size: 80px;
    font-family:impact;
@@ -39,7 +39,7 @@
   animation:fadeIn 2s linear;
  }
  
- #welcome_description{
+ .welcome_description{
    font-family:verdana;
    color:grey;
    text-align:center;
@@ -58,8 +58,12 @@
                  transform: perspective(500px) translate3d(0, 0, 0);
              }
          }
+
+
  
- #login{
+.login{
+    background:none;
+   opacity:1.0;
    font-family: arial black;
    color:white;
    border:0.3px solid silver;
@@ -69,7 +73,7 @@
    margin-bottom: 20px;
  }
  
- #login:hover{
+.login:hover{
    background:none;
    color:black;
    border:none;

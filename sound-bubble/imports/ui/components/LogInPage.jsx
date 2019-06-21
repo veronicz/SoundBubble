@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../stylesheets/LogIn.css';
+import Blaze from 'meteor/gadicc:blaze-react-component';
 
 export default class LogInPage extends Component {
   
@@ -9,16 +10,16 @@ export default class LogInPage extends Component {
 
   render() {
       let logIn = this.props.logIn;
-    return (<div id="welcome_container">
-    <h1 id="page_title">
+    return (<div className="welcome_container">
+    <h1 className="page_title">
     SoundBubble
     </h1>
-    <p id="welcome_description">
+    <p className="welcome_description">
      SoundBubble integrates users' Spotify music listening history via Spotify's public API. To begin using this application and sharing music, you must be subscribed to Spotify and enable API access to your user account. Terms and conditions are outlined when logging in. To begin, log in with Spotify below.
     </p>
-    <button id="login" onClick={() => logIn()}>
+    <button className="login"  onClick={() => logIn()}>
     Login with Spotify
-    </button>
+        </button>
   
     </div>);
   }
