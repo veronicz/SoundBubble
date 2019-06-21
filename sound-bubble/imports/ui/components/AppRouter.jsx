@@ -2,12 +2,23 @@ import React, { Component } from 'react';
 import Home from '../components/Home/Home.jsx';
 import Account from '../components/Account/Account.jsx';
 import About from '../components/About/About.jsx';
+import LogInPage from '../components/LogInPage.jsx';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import '../stylesheets/Heading.css';
 import Blaze from 'meteor/gadicc:blaze-react-component';
 
 class AppRouter extends Component {
+  constructor(){
+    super();
+    this.state = {loggedIn: false};
+  }
+
+  logIn(){
+    this.setState({loggedIn:true});
+  }
+
   render() {
+    if (this.state.loggedIn === true){
     return (
       <BrowserRouter>
         <div>
@@ -47,6 +58,9 @@ class AppRouter extends Component {
         </div>
       </BrowserRouter>
     );
+    } else {
+      return (<LogInPage logIn= {this.logIn.bind(this)}/>)
+    }
   }
 }
 

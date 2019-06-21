@@ -1,0 +1,77 @@
+#welcome_container{
+    justify-content:center;
+    background-color:black;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    animation: fadeIn 3s;
+    position:absolute;
+    width:30%;
+    left:35%;
+    top:30%;
+ }
+
+ body{
+     background-color:black;
+     display:flex;
+     flex-direction:column;
+     align-content:center;
+     justify-content:center;
+ }
+ 
+ @keyframes fadeIn {
+   0%{
+     opacity: 0;
+   }
+   100%{
+     opacity: 1.0;
+   }
+ }
+ 
+ #page_title{
+   color:white;
+   font-size: 80px;
+   font-family:impact;
+   background: url(https://media0.giphy.com/media/3og0INtldac8gncQO4/200w.webp?cid=790b76115d0d2b724c45305055bdce10&rid=200w.webp) repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.3px silver;
+  animation:fadeIn 2s linear;
+ }
+ 
+ #welcome_description{
+   font-family:verdana;
+   color:grey;
+   text-align:center;
+   font-size:10px;
+   margin-bottom: 40px;
+   animation: an 1s ease-out 1 both;
+ }
+ 
+ @keyframes an{
+             from{
+                 opacity: 0;
+                 transform: perspective(500px) translate3d(-35px, -40px, -150px) rotate3d(1, -1, 0, 35deg);
+             }
+             to{
+                 opacity: 1;
+                 transform: perspective(500px) translate3d(0, 0, 0);
+             }
+         }
+ 
+ #login{
+   font-family: arial black;
+   color:white;
+   border:0.3px solid silver;
+   background: url(https://media0.giphy.com/media/pjBLl26fGPCOqTBIvy/200.webp?cid=790b76115d0d2ad4396b4b47512edf88&rid=200.webp) repeat;
+   border-radius:15px 15px 15px 15px;
+   width:50%;
+   margin-bottom: 20px;
+ }
+ 
+ #login:hover{
+   background:none;
+   color:black;
+   border:none;
+   background-color:#1db954;
+ }
