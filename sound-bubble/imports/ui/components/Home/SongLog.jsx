@@ -48,8 +48,23 @@ class SongLog extends Component {
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
           />
         </div>
+
+        <div class="dropdown">
+          <button className="group_button" class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Choose Group
+  </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Group 1</a>
+            <a class="dropdown-item" href="#">Group 2</a>
+            <a class="dropdown-item" href="#">Group 3</a>
+          </div>
+        </div>
+
         <div className="songs">
           <ul>{songDivs}</ul>
+        </div>
+        <div className="show_more_button_container">
+          <button className="btn btn-secondary btn-sm"> Show More </button>
         </div>
       </div>
     );
