@@ -1,11 +1,11 @@
 import { songSampleDataRaw } from './SampleData';
 
-var currentIdx = songSampleDataRaw.items.length-1;
+var currentIdx = songSampleDataRaw.items.length-2;
 
-const songLogReducer = (tracks = [songSampleDataRaw.items[currentIdx]], action) => {
+const songLogReducer = (tracks = [songSampleDataRaw.items[songSampleDataRaw.items.length-1]], action) => {
   switch (action.type) {
     case 'FETCH':
-      if (currentIdx >= 0) {
+      if (currentIdx >=0 ) {
         return [songSampleDataRaw.items[currentIdx--], ...tracks];
       } else {
         return tracks;
