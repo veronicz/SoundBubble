@@ -6,23 +6,29 @@ export const fetchSongLogs = () => {
 };
 
 export function upVote(val){
-  return val += 1;
-}
-
-export const downVote = () => {
   return {
-    type: 'DOWNVote'
+    type: 'UPVote',
+    payload: val
   }
 }
 
-export const upComplete = () => {
+export const downVote = (val) => {
   return {
-     type: 'UPComplete'
+    type: 'DOWNVote',
+    payload: val
   }
 }
 
-export const downComplete = () => {
+export const upComplete = (val) => {
   return {
-    type: 'DOWNComplete'
+     type: 'UPComplete',
+     payload: val
+  }
+}
+
+export const downComplete = (val) => {
+  return {
+    type: 'DOWNComplete',
+    payload:val
   }
 }

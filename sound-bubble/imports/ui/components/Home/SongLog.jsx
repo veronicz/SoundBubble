@@ -32,6 +32,10 @@ class SongLog extends Component {
         songTimeStampTime={s.played_at.substring(11, 16)}
         songTimeStampDate={s.played_at.substring(0, 10)}
         songExternalUrl={songUrl}
+        upAmount = {s.upAmount}
+        downAmount = {s.downAmount}
+        voteState = {s.voteState}
+        id={i}
       />
     );
   }

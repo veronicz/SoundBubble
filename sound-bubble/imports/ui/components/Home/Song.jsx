@@ -11,7 +11,6 @@ import Vote from './Vote.jsx';
 // songTimeStampDate
 // songExternalUrl
 
-
 export default class Song extends React.Component {
 
     render() {
@@ -50,7 +49,7 @@ export default class Song extends React.Component {
                         <marquee behaviour="alternate" onClick={() => {window.open(externalUrl.toString(), 'popup', 'width=650,height=450' ); return false;}}>{this.props.songName} by {this.props.songArtist}</marquee>
                     </div>
 
-                    <Vote></Vote>
+                    <Vote id={this.props.id} upAmount={this.props.upAmount} downAmount={this.props.downAmount} voteState={this.props.voteState}></Vote>
 
                     <div className="time_stamp">
                         <h3 className="time_stamp_stamp">
