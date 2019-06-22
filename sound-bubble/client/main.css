@@ -21,6 +21,10 @@ code {
     monospace;
 }
 
+.voteCount{
+  font-size:12px;
+}
+
 .song_card_container{
   border-radius:20px;
   display:flex;
