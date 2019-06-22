@@ -28,17 +28,7 @@ export default class UserSong extends React.Component {
         return (
             <li className="song_card_container">
                 <span className="song_card">
-                    <div className="photo_username">
-                        <div className="profile_photo">
-                            <img className="user_photo" src={this.props.userImage} onClick={() => {window.open(this.props.userImage.toString(), 'popup', 'width=650,height=450' ); return false;}}/>
-                        </div>
-
-                        <div className="username">
-                        <p className="username_name">
-                        {this.props.userName}
-                        </p>
-                        </div>
-                    </div>
+                    
 
                     <div className="album_cover">
                         <img className="album_image" src={this.props.songAlbumCover} onClick={() => {window.open(albumImage.toString(), 'popup', 'width=400,height=400' ); return false;}}></img>
