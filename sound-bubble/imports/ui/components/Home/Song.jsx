@@ -1,4 +1,5 @@
 import React from 'react';
+import Vote from './Vote.jsx';
 
 // This class has the following inherited props:
 // userName
@@ -16,6 +17,7 @@ export default class Song extends React.Component {
     render() {
         let externalUrl = this.props.songExternalUrl;
         let albumImage = this.props.songAlbumCover;
+
 
         if (this.props.userImage === ""){
             this.props.userImage ="https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
@@ -48,10 +50,7 @@ export default class Song extends React.Component {
                         <marquee behaviour="alternate" onClick={() => {window.open(externalUrl.toString(), 'popup', 'width=650,height=450' ); return false;}}>{this.props.songName} by {this.props.songArtist}</marquee>
                     </div>
 
-                    <div className="votes">
-                        <img className="thumbsUp" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Symbol_thumbs_up_white.svg"/>
-                        <img className="thumbsDown" src="https://upload.wikimedia.org/wikipedia/commons/f/f8/Symbol_thumbs_up_white.svg"/>
-                    </div>
+                    <Vote></Vote>
 
                     <div className="time_stamp">
                         <h3 className="time_stamp_stamp">
