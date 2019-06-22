@@ -167,35 +167,35 @@ code {
 }
 
 .votes{
-  width:10%;
+  width:20%;
   color:grey;
   margin:0px;
   position:auto;
 }
 
 .thumbsUp{
-  width:30%;
-  height:30%;
+  width:20%;
+  height:20%;
   margin:0px;
   margin-right:10px;
   transform:scaleX(-1);
 }
 
 .thumbsDown{
-  width:30%;
-  height:30%;
+  width:20%;
+  height:20%;
   margin:0px;
   transform: scaleY(-1);
 }
 
 .thumbsUp:hover{
-  width:38%;
-  height:38%;
+  width:28%;
+  height:28%;
 }
 
 .thumbsDown:hover{
-  width:38%;
-  height:38%;
+  width:28%;
+  height:28%;
 }
 
 .time_stamp{
