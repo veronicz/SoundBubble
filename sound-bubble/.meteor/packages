@@ -21,6 +21,5 @@ static-html             # Define static page content in .html files
 react-meteor-data       # React higher-order component for reactively tracking Meteor data
 xinranxiao:accounts-spotify
 accounts-ui
-gadicc:blaze-react-component
 xinranxiao:spotify-web-api
 accounts-base
