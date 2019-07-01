@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Song from './Song.jsx';
 import { connect } from 'react-redux';
-import { fetchSongLogs } from '../../actions';
+import { fetchSongLogs } from '../../actions/Home';
 
 class SongLog extends Component {
   getSongDetails(s, i) {
@@ -32,9 +32,9 @@ class SongLog extends Component {
         songTimeStampTime={s.played_at.substring(11, 16)}
         songTimeStampDate={s.played_at.substring(0, 10)}
         songExternalUrl={songUrl}
-        upAmount = {s.upAmount}
-        downAmount = {s.downAmount}
-        voteState = {s.voteState}
+        upAmount={s.upAmount}
+        downAmount={s.downAmount}
+        voteState={s.voteState}
         id={i}
       />
     );
