@@ -1,18 +1,18 @@
-export const fetchSongLogs = () => {
+export const fetchMySongLogs = () => {
   return (dispatch, getState) => {
     Meteor.call('getRecentlyPlayed', function(err, songLogs) {
       if (err) {
         console.log('get recently played failed', err);
       } else {
-        dispatch(fetchSongLogsSuccess(songLogs));
+        dispatch(fetchMySongLogsSuccess(songLogs));
       }
     });
   };
 };
 
-const fetchSongLogsSuccess = songLogs => {
+const fetchMySongLogsSuccess = songLogs => {
   return {
-    type: 'FETCH',
+    type: 'FETCH_MINE',
     songLogs: songLogs
   };
 };

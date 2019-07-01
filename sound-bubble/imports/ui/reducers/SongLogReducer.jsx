@@ -1,6 +1,6 @@
 const songLogReducer = (tracks = [], action) => {
   switch (action.type) {
-    case 'FETCH':
+    case 'FETCH_MINE':
       return action.songLogs.concat(tracks);
 
     case 'UPVote':

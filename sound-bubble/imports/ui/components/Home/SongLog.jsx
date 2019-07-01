@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Song from './Song.jsx';
 import { connect } from 'react-redux';
-import { fetchSongLogs } from '../../actions/Home';
+import { fetchMySongLogs } from '../../actions/Home';
 
 class SongLog extends Component {
   getSongDetails(s, i) {
@@ -41,7 +41,7 @@ class SongLog extends Component {
   }
 
   render() {
-    const { tracks, fetchSongLogs } = this.props;
+    const { tracks, fetchMySongLogs } = this.props;
     let songDivs = tracks.map((s, i) => this.getSongDetails(s, i));
 
     return (
@@ -51,7 +51,7 @@ class SongLog extends Component {
           <img
             className="refresh_button"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
-            onClick={() => fetchSongLogs()}
+            onClick={() => fetchMySongLogs()}
           />
         </div>
 
@@ -96,5 +96,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchSongLogs }
+  { fetchMySongLogs }
 )(SongLog);

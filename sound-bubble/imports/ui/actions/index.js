@@ -5,30 +5,30 @@ export const fetchSongLogs = () => {
   };
 };
 
-export function upVote(val){
+export function upVote(val) {
   return {
     type: 'UPVote',
     payload: val
-  }
+  };
 }
 
-export const downVote = (val) => {
+export const downVote = val => {
   return {
     type: 'DOWNVote',
     payload: val
-  }
-}
+  };
+};
 
-export const upComplete = (val) => {
+export const upComplete = val => {
   return {
-     type: 'UPComplete',
-     payload: val
-  }
-}
+    type: 'UPComplete',
+    payload: val
+  };
+};
 
-export const downComplete = (val) => {
+export const downComplete = val => {
   return {
     type: 'DOWNComplete',
-    payload:val
-  }
-}
+    payload: val
+  };
+};
