@@ -1,6 +1,8 @@
-import { currentUserRaw } from './SampleData';
-
-const currentUserReducer = (user = currentUserRaw, action) => {
+const currentUserReducer = (user = null, action) => {
+  switch (action.type) {
+    case 'ME':
+      return action.user;
+  }
   return user;
 };
 

@@ -6,7 +6,8 @@ import Groups from '../components/Groups/Groups.jsx';
 import LogInPage from '../components/LogInPage.jsx';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import '../stylesheets/Heading.css';
-import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import { connect } from 'react-redux';
+import { getCurrentUser } from '../actions/Account';
 
 class AppRouter extends Component {
   constructor() {
@@ -29,6 +30,8 @@ class AppRouter extends Component {
     Meteor.loginWithSpotify(options, function(err) {
       console.log(err || 'No error');
     });
+
+    this.props.getCurrentUser();
   }
 
   render() {
@@ -40,7 +43,6 @@ class AppRouter extends Component {
               <div className="page_title_container">
                 <h1 className="header_page_title">SoundBubble</h1>
               </div>
-              <AccountsUIWrapper />
               <div className="navContainer">
                 <NavLink
                   exact
@@ -93,4 +95,7 @@ class AppRouter extends Component {
   }
 }
 
-export default AppRouter;
+export default connect(
+  null,
+  { getCurrentUser }
+)(AppRouter);

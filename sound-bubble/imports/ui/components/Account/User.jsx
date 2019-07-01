@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 
-class User extends Component {
+export default class User extends Component {
   render() {
     const { user } = this.props;
     return (
@@ -19,7 +18,9 @@ class User extends Component {
           </div>
           <a href={user.external_urls.spotify}>Go To Your Spotify</a>
           <br />
-          <a href={user.href}>Manage Spotify Authorization</a>
+          <a href="https://www.spotify.com/account/apps/?_ga=2.100345246.1881641136.1561931040-1289360233.1558571744">
+            Manage Spotify App Access
+          </a>
         </div>
       </div>
     );
@@ -34,9 +35,3 @@ function formatUserInfo(title, detail) {
     </dl>
   );
 }
-
-const mapStateToProps = state => {
-  return { user: state.user };
-};
-
-export default connect(mapStateToProps)(User);
