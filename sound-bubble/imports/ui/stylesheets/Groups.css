@@ -35,6 +35,10 @@
     opacity: 0;
     transition: opacity 1s;
   }
+
+  .tooltiptext{
+      font-size: 17px;
+  }
   
   .option_container .tooltiptext::after{
     content: "";
@@ -54,18 +58,17 @@
 
 .group_member_username{
     font-family:monospace;
-    font-size:12px;
+    font-size:16px;
 }
 
 .profile_photo{
-    margin-left:12px;
     margin-bottom:3px;
 }
 
 .groupMember_card{
-    width:200px;
+    width:300px;
     display:flex;
-    justify-content:flex-start;
+    justify-content:center;
     align-items:center;
     height: 100%;
     text-align:center;
@@ -73,15 +76,16 @@
 }
 
 .groupMember_container{
-    width:250px;
+    width:350px;
     border-radius:20px;
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-content:center;
     background-color:#121212;
     height:60px;
     margin:20px;
-    border: 1px solid #232323;
+    border: 1px solid #3d3d3d;
+    text-align:center;
 }
   
 .heading_container{

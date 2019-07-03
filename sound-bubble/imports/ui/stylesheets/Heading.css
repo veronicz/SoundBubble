@@ -27,11 +27,9 @@
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
    -webkit-text-stroke: 3px white;
-   animation:fadeIn 2s linear;
-   margin-top:20px;
+   animation:fadeIn 3s linear;
   }
   
-
 .navContainer {
     display:flex;
     list-style-type: none;

@@ -8,7 +8,7 @@ export default class LogInPage extends Component {
       <div className="welcome_container">
         <h1 className="page_title">SoundBubble</h1>
         <p className="welcome_description">
-          SoundBubble integrates users' Spotify music listening history via
+          SoundBubble is an application which integrates users' Spotify music listening history via
           Spotify's public API. To begin using this application and sharing
           music, you must be subscribed to Spotify and enable API access to your
           user account. Terms and conditions are outlined when logging in. To

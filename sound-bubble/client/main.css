@@ -33,7 +33,7 @@ code {
   background-color:#121212;
   height:60px;
   margin:20px;
-  border: 1px solid #232323;
+  border: 1px solid #414141;
   overflow:hidden;
 }
 
@@ -59,6 +59,10 @@ display: inline-block;
   /* Fade in tooltip */
   opacity: 0;
   transition: opacity 1s;
+}
+
+.tooltiptext{
+  font-size:16px;
 }
 
 .option_container .tooltiptext::after{
