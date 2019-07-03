@@ -1,3 +1,5 @@
+@import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css');
+
 .group_heading{
     margin-top:25px;
     color:silver;
@@ -10,9 +12,82 @@
     font-size:20px;
 }
 
+.option_container{
+    position: relative;
+  display: inline-block;
+}
+
+.option_container .tooltiptext {
+    visibility: hidden;
+    background-color:silver;
+    color:black;
+    font-family:monospace;
+    text-align: center;
+    border-radius: 6px;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: -50%;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+  }
+  
+  .option_container .tooltiptext::after{
+    content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+  }
+
+  .option_container:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+.group_member_username{
+    font-family:monospace;
+}
+
+.profile_photo{
+    margin-left:15px;
+    margin-bottom:3px;
+}
+
+.song_card{
+    width:200px;
+}
+
+.song_card_container{
+    width:250px;
+}
+  
+.heading_container{
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+
 .group_header{
     display:flex;
-    justify-content:center;
+    justify-content:space-around;
+    align-items:center;
+}
+
+.group_options{
+    margin-left:20px;
+}
+
+div{
+    margin-left: 5px;
+    margin-right:5px;
 }
 
 .white, .white a {
