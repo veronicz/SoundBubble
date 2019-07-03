@@ -1,6 +1,7 @@
 import SimpleSchema from 'simpl-schema';
+import { Meteor } from 'meteor/meteor';
 
-GroupSongs = new Meteor.Collection('group_songs');
+GroupSongs = new Mongo.Collection('group_songs');
 GroupSongSchema = new SimpleSchema({
   songId: { type: String },
   groupId: { type: String },
@@ -9,5 +10,7 @@ GroupSongSchema = new SimpleSchema({
 });
 
 GroupSongs.attachSchema(GroupSongSchema);
-GroupSongs._ensureIndex({ songId: 1, groupId: 1 }, { unique: true });
+if (Meteor.isServer) {
+  GroupSongs._ensureIndex({ songId: 1, groupId: 1 }, { unique: true });
+}
 export default GroupSongs;

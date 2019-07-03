@@ -1,6 +1,6 @@
 import SimpleSchema from 'simpl-schema';
 
-Groups = new Meteor.Collection('groups');
+Groups = new Mongo.Collection('groups');
 GroupSchema = new SimpleSchema({
   name: { type: String },
   userIds: { type: Array },

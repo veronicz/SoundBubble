@@ -1,7 +1,7 @@
 import SimpleSchema from 'simpl-schema';
 
-Users = new Meteor.Collection('users');
-UserSchema = new SimpleSchema({
+SpotifyUsers = new Mongo.Collection('spotify_users');
+SpotifyUserSchema = new SimpleSchema({
   _id: { type: String },
   name: { type: String },
   profilePic: { type: String, optional: true },
@@ -11,5 +11,5 @@ UserSchema = new SimpleSchema({
   'groupIds.$': { type: String }
 });
 
-Users.attachSchema(UserSchema);
-export default Users;
+SpotifyUsers.attachSchema(SpotifyUserSchema);
+export default SpotifyUsers;
