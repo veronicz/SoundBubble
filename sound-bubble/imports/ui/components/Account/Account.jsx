@@ -8,16 +8,13 @@ class Account extends Component {
   //maybe a loading screen if user is null
   render() {
     const { user } = this.props;
-    if (user) {
-      return (
-        <div className="pageContainer">
-          <h1 className="me">My Info</h1>
-          <User user={user} />
-          <UserFeed user={user} />
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div className="pageContainer">
+        <h1 className="me">My Info</h1>
+        {user ? <User user={user} /> : null}
+        <UserFeed />
+      </div>
+    );
   }
 }
 
