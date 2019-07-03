@@ -37,6 +37,47 @@ code {
   overflow:hidden;
 }
 
+.voteButton{
+  position: relative;
+display: inline-block;
+}
+
+.voteButton .tooltiptext {
+  visibility: hidden;
+  background-color:silver;
+  color:black;
+  font-family:monospace;
+  text-align: center;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: -50%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.voteButton .tooltiptext::after{
+  content: "";
+position: absolute;
+top: 100%;
+left: 50%;
+margin-left: -5px;
+border-width: 5px;
+border-style: solid;
+border-color: #555 transparent transparent transparent;
+}
+
+.voteButton:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
 .song_card_container:hover{
   overflow:visible;
 }
