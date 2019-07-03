@@ -54,10 +54,11 @@
 
 .group_member_username{
     font-family:monospace;
+    font-size:12px;
 }
 
 .profile_photo{
-    margin-left:15px;
+    margin-left:12px;
     margin-bottom:3px;
 }
 
@@ -81,7 +82,6 @@
     height:60px;
     margin:20px;
     border: 1px solid #232323;
-    overflow:hidden;
 }
   
 .heading_container{

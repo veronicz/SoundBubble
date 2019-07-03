@@ -37,6 +37,46 @@ code {
   overflow:hidden;
 }
 
+.option_container{
+  position: relative;
+display: inline-block;
+}
+
+.option_container .tooltiptext {
+  visibility: hidden;
+  background-color:silver;
+  color:black;
+  font-family:monospace;
+  text-align: center;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: -50%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.option_container .tooltiptext::after{
+  content: "";
+position: absolute;
+top: 100%;
+left: 50%;
+margin-left: -5px;
+border-width: 5px;
+border-style: solid;
+border-color: #555 transparent transparent transparent;
+}
+
+.option_container:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 .voteButton{
   position: relative;
 display: inline-block;

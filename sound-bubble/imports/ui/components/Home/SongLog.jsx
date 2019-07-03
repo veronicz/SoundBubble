@@ -48,11 +48,11 @@ class SongLog extends Component {
       <div className="feed_container">
         <div className="song_feed_header">
           <h1 className="song_feed_title">Your Feed</h1>
-          <img
+          <div
             className="refresh_button"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
-            onClick={() => fetchMySongLogs()}
-          />
+            onClick={() => fetchMySongLogs()}>
+            <div className="option_container" onClick={() => this.createGroup()}><div className="glyphicon glyphicon-refresh white"><span className="tooltiptext">Refresh</span></div></div>
+            </div>
         </div>
 
         <div className="dropdown">
