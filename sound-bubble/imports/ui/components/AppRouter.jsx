@@ -6,10 +6,8 @@ import Groups from '../components/Groups/Groups.jsx';
 import LogInPage from '../components/LogInPage.jsx';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import '../stylesheets/Heading.css';
-import { connect } from 'react-redux';
-import { getCurrentUser } from '../actions/account';
 
-class AppRouter extends Component {
+export default class AppRouter extends Component {
   constructor() {
     super();
     this.state = { loggedIn: false };
@@ -29,7 +27,6 @@ class AppRouter extends Component {
     Meteor.loginWithSpotify(options, err => {
       if (!err) {
         this.setState({ loggedIn: true });
-        this.props.getCurrentUser();
       } else {
         console.log('login failed', err);
       }
@@ -96,8 +93,3 @@ class AppRouter extends Component {
     }
   }
 }
-
-export default connect(
-  null,
-  { getCurrentUser }
-)(AppRouter);

@@ -2,27 +2,16 @@ import React, { Component } from 'react';
 import User from './User.jsx';
 import UserFeed from './UserFeed.jsx';
 import '../../stylesheets/Account.css';
-import { connect } from 'react-redux';
 
-class Account extends Component {
-  //maybe a loading screen if user is null
+export default class Account extends Component {
   render() {
-    const { user } = this.props;
-    if (user) {
-      return (
-        <div className="pageContainer">
-          <h1 className="me">My Info</h1>
-          <User user={user} />
-          <UserFeed user={user} />
-        </div>
-      );
-    }
-    return null;
+    const spotifyUser = Meteor.user().services.spotify;
+    return (
+      <div className="pageContainer">
+        <h1 className="me">My Info</h1>
+        <User user={spotifyUser} />
+        <UserFeed user={spotifyUser} />
+      </div>
+    );
   }
 }
-
-const mapStateToProps = state => {
-  return { user: state.user };
-};
-
-export default connect(mapStateToProps)(Account);

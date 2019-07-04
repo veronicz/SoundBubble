@@ -4,8 +4,6 @@ SpotifyWebApi = function(config) {
   config = config || {};
   var SpotifyWebApi = require('spotify-web-api-node');
   var api = new SpotifyWebApi(config);
-  var accessToken = '';
-  var refreshToken = '';
 
   // Set the access token + refresh token (either provided, or retrieved from account)
   setAccessTokens(api, config);
@@ -18,8 +16,7 @@ SpotifyWebApi = function(config) {
       callback(response.error, null);
     } else {
       // Update the current API instance
-      accessToken = response.data.body.access_token;
-      api.setAccessToken(accessToken);
+      api.setAccessToken(response.data.body.access_token);
 
       // Update the current user (if available)
       if (Meteor.userId()) {
@@ -27,7 +24,7 @@ SpotifyWebApi = function(config) {
           { _id: Meteor.userId() },
           {
             $set: {
-              'services.spotify.accessToken': accessToken,
+              'services.spotify.accessToken': response.data.body.access_token,
               'services.spotify.expiresAt':
                 +new Date() + 1000 * response.data.body.expires_in
             }
@@ -109,8 +106,6 @@ SpotifyWebApi = function(config) {
     }
   });
 
-  api.accessToken = accessToken;
-  api.refreshToken = refreshToken;
   return api;
 };
 
@@ -167,11 +162,9 @@ var setAccessTokens = function(api, config) {
   }
 
   if (config.accessToken) {
-    accessToken = config.accessToken;
-    api.setAccessToken(accessToken);
+    api.setAccessToken(config.accessToken);
     if (config.refreshToken) {
-      refreshToken = config.refreshToken;
-      api.setRefreshToken(refreshToken);
+      api.setRefreshToken(config.refreshToken);
     }
   } else {
     var currUser = Meteor.user();
@@ -181,11 +174,9 @@ var setAccessTokens = function(api, config) {
       currUser.services.spotify &&
       currUser.services.spotify.accessToken
     ) {
-      accessToken = currUser.services.spotify.accessToken;
-      api.setAccessToken(accessToken);
+      api.setAccessToken(currUser.services.spotify.accessToken);
       if (currUser.services.spotify.refreshToken) {
-        refreshToken = currUser.services.spotify.refreshToken;
-        api.setRefreshToken(refreshToken);
+        api.setRefreshToken(currUser.services.spotify.refreshToken);
       }
     }
   }

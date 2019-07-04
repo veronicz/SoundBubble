@@ -13,16 +13,6 @@ Meteor.methods({
     var songs = response.data.body.items;
     updateUserSongs(songs, user);
     return songs;
-  },
-  getMe: function() {
-    var spotifyApi = new SpotifyWebApi();
-    var response = spotifyApi.getMe();
-    if (checkTokenRefreshed(response, spotifyApi)) {
-      response = spotifyApi.getMe();
-    }
-    var user = parseUser(response.data.body);
-    updateUser(user, spotifyApi);
-    return user;
   }
 });
 
@@ -78,30 +68,4 @@ function updateSongs(songs) {
         }
       );
     });
-}
-
-function updateUser(user, api) {
-  SpotifyUsers.upsert(
-    {
-      _id: user.id
-    },
-    {
-      $set: {
-        name: user.name,
-        profilePic: user.profilePic,
-        apiToken: api.acessToken,
-        apiRefreshToken: api.refreshToken
-      }
-    }
-  );
-}
-
-function parseUser(userJson) {
-  return {
-    id: userJson.id,
-    name: userJson.display_name,
-    profilePic: userJson.images[0].url,
-    followerCount: userJson.followers.total,
-    spotifyUrl: userJson.external_urls.spotify
-  };
 }
