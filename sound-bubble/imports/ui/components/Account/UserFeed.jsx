@@ -6,7 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { connect } from 'react-redux';
 import UserSongs from '../../../api/userSongs';
 import Songs from '../../../api/songs';
-import { fetchMySongLogs } from '../../actions/Home';
+import { fetchMySongLogs } from '../../actions/account';
 
 class UserFeed extends Component {
   getSongDetails(song, timestamp) {

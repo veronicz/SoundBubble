@@ -7,7 +7,7 @@ import LogInPage from '../components/LogInPage.jsx';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import '../stylesheets/Heading.css';
 import { connect } from 'react-redux';
-import { getCurrentUser } from '../actions/Account';
+import { getCurrentUser } from '../actions/account';
 
 class AppRouter extends Component {
   constructor() {
@@ -16,7 +16,6 @@ class AppRouter extends Component {
   }
 
   logIn() {
-    this.setState({ loggedIn: true });
     var options = {
       showDialog: true, // Whether or not to force the user to approve the app again if they’ve already done so.
       requestPermissions: [
@@ -27,11 +26,14 @@ class AppRouter extends Component {
       ] // Spotify access scopes.
     };
 
-    Meteor.loginWithSpotify(options, function(err) {
-      console.log(err || 'No error');
+    Meteor.loginWithSpotify(options, err => {
+      if (!err) {
+        this.setState({ loggedIn: true });
+        this.props.getCurrentUser();
+      } else {
+        console.log('login failed', err);
+      }
     });
-
-    this.props.getCurrentUser();
   }
 
   render() {

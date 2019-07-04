@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Song from './Song.jsx';
 import { connect } from 'react-redux';
-import { fetchMySongLogs } from '../../actions/Home';
+import { fetchGroupSongLogs } from '../../actions/home';
 
 class SongLog extends Component {
   getSongDetails(s, i) {
@@ -41,18 +41,20 @@ class SongLog extends Component {
   }
 
   render() {
-    const { tracks, fetchMySongLogs } = this.props;
+    const { tracks, fetchGroupSongLogs } = this.props;
     let songDivs = tracks.map((s, i) => this.getSongDetails(s, i));
 
     return (
       <div className="feed_container">
         <div className="song_feed_header">
           <h1 className="song_feed_title">Your Feed</h1>
-          <div
-            className="refresh_button"
-            onClick={() => fetchMySongLogs()}>
-            <div className="option_container"><div className="glyphicon glyphicon-refresh white"><span className="tooltiptext">Refresh</span></div></div>
+          <div className="refresh_button" onClick={() => fetchGroupSongLogs()}>
+            <div className="option_container">
+              <div className="glyphicon glyphicon-refresh white">
+                <span className="tooltiptext">Refresh</span>
+              </div>
             </div>
+          </div>
         </div>
 
         <div className="dropdown">
@@ -96,5 +98,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchMySongLogs }
+  { fetchGroupSongLogs }
 )(SongLog);
