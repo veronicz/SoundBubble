@@ -51,7 +51,7 @@ class SongLog extends Component {
           <div
             className="refresh_button"
             onClick={() => fetchMySongLogs()}>
-            <div className="option_container" onClick={() => this.createGroup()}><div className="glyphicon glyphicon-refresh white"><span className="tooltiptext">Refresh</span></div></div>
+            <div className="option_container"><div className="glyphicon glyphicon-refresh white"><span className="tooltiptext">Refresh</span></div></div>
             </div>
         </div>
 
