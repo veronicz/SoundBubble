@@ -1,6 +1,6 @@
 export const fetchMySongLogs = () => {
   return (dispatch, getState) => {
-    Meteor.call('getRecentlyPlayed', function(err, songLogs) {
+    Meteor.call('getRecentlyPlayed', getState().user, function(err, songLogs) {
       if (err) {
         console.log('get recently played failed', err);
       } else {

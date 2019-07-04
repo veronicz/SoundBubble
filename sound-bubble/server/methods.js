@@ -6,12 +6,12 @@ import SpotifyUsers from '../imports/api/spotifyUsers';
 Meteor.methods({
   //gets the Current User's Recently Played Tracks
   //TODO: should fetch all user's recently played tracks inside a group
-  getRecentlyPlayed: function() {
+  getRecentlyPlayed: function(user) {
     var response = getFromSpotifyWithOptionsChecked(
       'getMyRecentlyPlayedTracks'
     );
     var songs = response.data.body.items;
-    updateUserSongs(songs);
+    updateUserSongs(songs, user);
     return songs;
   },
   getMe: function() {
@@ -20,7 +20,7 @@ Meteor.methods({
     if (checkTokenRefreshed(response, spotifyApi)) {
       response = spotifyApi.getMe();
     }
-    var user = response.data.body;
+    var user = parseUser(response.data.body);
     updateUser(user, spotifyApi);
     return user;
   }
@@ -44,12 +44,12 @@ var checkTokenRefreshed = function(response, api) {
   }
 };
 
-function updateUserSongs(songs) {
+function updateUserSongs(songs, user) {
   updateSongs(songs);
   songs.forEach(song => {
     UserSongs.upsert(
       {
-        userId: '31ww2xhlilkmjxpnqnar4afvtdze',
+        userId: user.id,
         songId: song.track.id
       },
       {
@@ -87,11 +87,21 @@ function updateUser(user, api) {
     },
     {
       $set: {
-        name: user.display_name,
-        profilePic: user.images[0].url,
+        name: user.name,
+        profilePic: user.profilePic,
         apiToken: api.acessToken,
         apiRefreshToken: api.refreshToken
       }
     }
   );
+}
+
+function parseUser(userJson) {
+  return {
+    id: userJson.id,
+    name: userJson.display_name,
+    profilePic: userJson.images[0].url,
+    followerCount: userJson.followers.total,
+    spotifyUrl: userJson.external_urls.spotify
+  };
 }
