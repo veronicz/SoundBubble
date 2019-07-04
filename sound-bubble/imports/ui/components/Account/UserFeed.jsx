@@ -9,6 +9,20 @@ import Songs from '../../../api/songs';
 import { fetchMySongLogs } from '../../actions/account';
 
 class UserFeed extends Component {
+  sortSongLogsByTimeDesc(songs) {
+    let result = [];
+    songs.forEach(song => {
+      song.timestamps.forEach(ts => {
+        result.push({
+          songId: song.songId,
+          timestamp: ts
+        });
+      });
+    });
+    result.sort((a, b) => b.timestamp - a.timestamp);
+    return result;
+  }
+
   getSongDetails(song, timestamp) {
     let artistNames = song.artists.join(' & ');
     let albumCover =
@@ -31,9 +45,10 @@ class UserFeed extends Component {
   }
 
   render() {
-    const { mySongs, played_at, fetchMySongLogs } = this.props;
-    let songDivs = mySongs.map((s, i) =>
-      played_at[i].timestamps.map(ts => this.getSongDetails(s, ts))
+    const { mySongs, songLogs, fetchMySongLogs } = this.props;
+
+    let songDivs = this.sortSongLogsByTimeDesc(songLogs).map(sl =>
+      this.getSongDetails(mySongs.find(s => s._id === sl.songId), sl.timestamp)
     );
 
     return (
@@ -61,10 +76,10 @@ export default compose(
   withTracker(props => {
     let played_songs = UserSongs.find(
       { userId: props.user.id, timestamps: { $ne: null } },
-      { songId: 1, timestamp: 1 }
+      { songId: 1, timestamps: 1 }
     ).fetch();
     return {
-      played_at: played_songs,
+      songLogs: played_songs,
       mySongs: Songs.find({
         _id: { $in: played_songs.map(s => s.songId) }
       }).fetch()
