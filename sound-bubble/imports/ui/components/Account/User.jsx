@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import AccountsUIWrapper from '../AccountsUIWrapper.jsx';
 
 export default class User extends Component {
   formatUserInfo(title, detail) {
@@ -30,6 +31,9 @@ export default class User extends Component {
           <a href="https://www.spotify.com/account/apps/?_ga=2.100345246.1881641136.1561931040-1289360233.1558571744">
             Manage Spotify App Access
           </a>
+          <div className="logout">
+            <AccountsUIWrapper />
+          </div>
         </div>
       </div>
     );
