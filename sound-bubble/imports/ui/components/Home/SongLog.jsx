@@ -7,49 +7,26 @@ import Groups from '../../../api/groups';
 import Songs from '../../../api/songs';
 
 class SongLog extends Component {
-  getSongDetails(track, timestamp) {
-    let user = Meteor.users.findOne({ 'profile.id': track.userId }).profile;
-    let song = Songs.findOne({ _id: track.songId });
-
-    let artistNames = song.artists.join(' & ');
-    let albumCover =
-      song.albumCover ||
-      'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';
-    let songUrl =
-      song.spotifyUrl ||
-      'https://support.spotify.com/tr/article/Error-code-404/';
-
-    return (
-      <Song
-        key={song._id + user.id + timestamp}
-        userName={user.display_name}
-        userImage={user.images[0].url}
-        songName={song.name}
-        songArtist={artistNames}
-        songAlbumCover={albumCover}
-        songTimeStampTime={timestamp.toISOString().substring(11, 16)}
-        songTimeStampDate={timestamp.toISOString().substring(0, 10)}
-        songExternalUrl={songUrl}
-        upAmount={0}
-        downAmount={0}
-        voteState={null}
-      />
-    );
+  getSongDetails() {
+    return this.props.groupRecentTracks.map(t => {
+      let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
+      let song = Songs.findOne({ _id: t.songId });
+      let timestamp = t.timestamps;
+      return (
+        <Song
+          key={song.id + user.id + timestamp}
+          song={song}
+          user={user}
+          timestamp={timestamp}
+          upvoteCount={0} //TODO
+          downvoteCount={0} //TODO
+          voteState={1} //TODO
+        />
+      );
+    });
   }
-
   render() {
-    const {
-      groupRecentTracks,
-      fetchGroupSongLogs,
-      changeCurrentGroup
-    } = this.props;
-    let songLogs = Songs.find({
-      _id: { $in: groupRecentTracks.map(t => t.songId) }
-    }).fetch();
-    let songDivs = groupRecentTracks.map(t =>
-      this.getSongDetails(t, t.timestamps)
-    );
-
+    const { fetchGroupSongLogs, changeCurrentGroup } = this.props;
     return (
       <div className="feed_container">
         <div className="song_feed_header">
@@ -92,7 +69,7 @@ class SongLog extends Component {
         </div>
 
         <div className="songs">
-          <ul>{songDivs}</ul>
+          <ul>{this.getSongDetails()}</ul>
         </div>
         <div className="show_more_button_container">
           <button className="btn btn-secondary btn-sm"> Show More </button>

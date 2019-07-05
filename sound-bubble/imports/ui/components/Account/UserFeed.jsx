@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import UserSong from './UserSong.jsx';
+import Song from '../Home/Song.jsx';
 import '../../stylesheets/Account.css';
 import { connect } from 'react-redux';
 import { fetchMySongLogs } from '../../actions/accountActions';
@@ -10,37 +10,22 @@ class UserFeed extends Component {
     this.props.fetchMySongLogs();
   }
 
-  getSongDetails(song, timestamp) {
-    let artistNames = song.artists.join(' & ');
-    let albumCover =
-      song.albumCover ||
-      'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';
-    let songUrl =
-      song.spotifyUrl ||
-      'https://support.spotify.com/tr/article/Error-code-404/';
-    return (
-      <UserSong
-        key={song._id + timestamp}
-        songName={song.name}
-        songArtist={artistNames}
-        songAlbumCover={albumCover}
-        songTimeStampTime={timestamp.toISOString().substring(11, 16)}
-        songTimeStampDate={timestamp.toISOString().substring(0, 10)}
-        songExternalUrl={songUrl}
-      />
-    );
-  }
-
-  render() {
+  getSongDetails() {
     const { myRecentTracks, fetchMySongLogs } = this.props;
     let songLogs = Songs.find({
       _id: { $in: myRecentTracks.map(t => t.songId) }
     }).fetch();
 
-    let songDivs = myRecentTracks.map(t =>
-      this.getSongDetails(songLogs.find(s => s._id === t.songId), t.timestamps)
-    );
+    return myRecentTracks.map(t => {
+      let song = songLogs.find(s => s._id === t.songId);
+      let timestamp = t.timestamps;
+      return (
+        <Song key={song.id + timestamp} song={song} timestamp={timestamp} />
+      );
+    });
+  }
 
+  render() {
     return (
       <div className="feed_container">
         <div className="song_feed_header">
@@ -52,7 +37,7 @@ class UserFeed extends Component {
           />
         </div>
         <div className="songs">
-          <ul>{songDivs}</ul>
+          <ul>{this.getSongDetails()}</ul>
         </div>
         <div className="show_more_button_container">
           <button className="btn btn-secondary btn-sm"> Show More </button>
