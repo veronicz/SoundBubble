@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AccountsUIWrapper from '../AccountsUIWrapper.jsx';
+import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
 export default class User extends Component {
   formatUserInfo(title, detail) {

@@ -3,7 +3,6 @@ import Song from '../Home/Song.jsx';
 import '../../stylesheets/Account.css';
 import { connect } from 'react-redux';
 import { fetchMySongLogs } from '../../actions/accountActions';
-import Songs from '../../../api/songs';
 
 class UserFeed extends Component {
   componentDidMount() {

@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import Song from './Song.jsx';
 import { connect } from 'react-redux';
 import { fetchGroupSongLogs } from '../../actions/homeActions';
-import { changeCurrentGroup } from '../../actions/groupsActions';
-import Groups from '../../../api/groups';
 import Songs from '../../../api/songs';
+import GroupButton from './GroupButton';
 
 class SongLog extends Component {
   getSongDetails() {
@@ -25,13 +24,16 @@ class SongLog extends Component {
       );
     });
   }
+
   render() {
-    const { fetchGroupSongLogs, changeCurrentGroup } = this.props;
     return (
       <div className="feed_container">
         <div className="song_feed_header">
           <h1 className="song_feed_title">Your Feed</h1>
-          <div className="refresh_button" onClick={() => fetchGroupSongLogs()}>
+          <div
+            className="refresh_button"
+            onClick={() => this.props.fetchGroupSongLogs()}
+          >
             <div className="option_container">
               <div className="glyphicon glyphicon-refresh white">
                 <span className="tooltiptext">Refresh</span>
@@ -40,33 +42,7 @@ class SongLog extends Component {
           </div>
         </div>
 
-        <div className="dropdown">
-          <button
-            className="group_button btn btn-secondary btn-sm dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Choose Group
-          </button>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a
-              className="dropdown-item"
-              href="#"
-              onClick={() => changeCurrentGroup('1')}
-            >
-              Group 1
-            </a>
-            <a className="dropdown-item" href="#">
-              Group 2
-            </a>
-            <a className="dropdown-item" href="#">
-              Group 3
-            </a>
-          </div>
-        </div>
+        <GroupButton />
 
         <div className="songs">
           <ul>{this.getSongDetails()}</ul>
@@ -91,5 +67,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchGroupSongLogs, changeCurrentGroup }
+  { fetchGroupSongLogs }
 )(SongLog);
