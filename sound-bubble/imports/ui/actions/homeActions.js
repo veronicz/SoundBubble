@@ -1,9 +1,10 @@
 export const fetchGroupSongLogs = () => {
   return (dispatch, getState) => {
-    Meteor.call('getRecentlyPlayed', getState().user, function(err, songLogs) {
+    Meteor.call('getGroupRecentlyPlayed', '1', function(err, songLogs) {
       if (err) {
-        console.log('get recently played failed', err);
+        console.log('get group recently played failed', err);
       } else {
+        console.log(songLogs);
         dispatch(fetchGroupSongLogsSuccess(songLogs));
       }
     });
@@ -12,7 +13,7 @@ export const fetchGroupSongLogs = () => {
 
 const fetchGroupSongLogsSuccess = songLogs => {
   return {
-    type: 'FETCH_MINE',
+    type: 'FETCH',
     songLogs: songLogs
   };
 };

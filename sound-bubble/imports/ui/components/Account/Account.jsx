@@ -5,7 +5,7 @@ import '../../stylesheets/Account.css';
 
 export default class Account extends Component {
   render() {
-    const spotifyUser = Meteor.user().services.spotify;
+    const spotifyUser = Meteor.user().profile;
     return (
       <div className="pageContainer">
         <h1 className="me">My Info</h1>

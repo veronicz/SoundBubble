@@ -13,7 +13,7 @@ export const fetchMySongLogs = () => {
 
 const fetchMySongLogsSuccess = songLogs => {
   return {
-    type: 'FETCH_MINE',
+    type: 'FETCH',
     songLogs: songLogs
   };
 };

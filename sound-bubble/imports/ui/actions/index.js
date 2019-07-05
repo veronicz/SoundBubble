@@ -1,10 +1,3 @@
-//todo: add group parameter
-export const fetchSongLogs = () => {
-  return {
-    type: 'FETCH'
-  };
-};
-
 export function upVote(val) {
   return {
     type: 'UPVote',

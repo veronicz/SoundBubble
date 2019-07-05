@@ -1,7 +1,7 @@
 const songLogReducer = (tracks = [], action) => {
   switch (action.type) {
-    case 'FETCH_MINE':
-      return action.songLogs.concat(tracks);
+    case 'FETCH':
+      return sortAndUnique(action.songLogs.concat(tracks));
 
     case 'UPVote':
       return tracks.map((item, index) => {
@@ -53,5 +53,21 @@ const songLogReducer = (tracks = [], action) => {
   }
   return tracks;
 };
+
+function sortAndUnique(songs) {
+  unique_songs = uniqueBySongAndTimestamp(songs);
+  return unique_songs.sort((a, b) => b.timestamps - a.timestamps);
+}
+
+function uniqueBySongAndTimestamp(songs) {
+  return songs.filter(
+    (song, index, self) =>
+      self.findIndex(
+        s =>
+          s.songId === song.songId &&
+          s.timestamps.toISOString() === song.timestamps.toISOString()
+      ) === index
+  );
+}
 
 export default songLogReducer;

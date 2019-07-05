@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import SongLogReducer from './SongLogReducer';
-import UserProfileReducer from './UserProfileReducer';
+import SongLogReducer from './songLogReducer';
+import CurrentGroupReducer from './currentGroupReducer';
 
 export default combineReducers({
   tracks: SongLogReducer,
-  profiles: UserProfileReducer
+  usersInGroup: CurrentGroupReducer
 });

@@ -1,48 +1,54 @@
 import React, { Component } from 'react';
 import Song from './Song.jsx';
 import { connect } from 'react-redux';
-import { fetchGroupSongLogs } from '../../actions/home';
+import { fetchGroupSongLogs } from '../../actions/homeActions';
+import { changeCurrentGroup } from '../../actions/groupsActions';
+import Groups from '../../../api/groups';
+import Songs from '../../../api/songs';
 
 class SongLog extends Component {
-  getSongDetails(s, i) {
-    const { profiles } = this.props;
-    let randIndex = Math.floor(Math.random() * 5);
-    let randProfile = profiles[randIndex];
-    let song = s.track;
-    let songUrl;
+  getSongDetails(track, timestamp) {
+    let user = Meteor.users.findOne({ 'profile.id': track.userId }).profile;
+    let song = Songs.findOne({ _id: track.songId });
 
-    if (s.context === null) {
-      songUrl = 'https://support.spotify.com/tr/article/Error-code-404/';
-    } else {
-      songUrl = song.external_urls.spotify;
-    }
-
-    let artists = song.artists;
-    let artistNames = artists.map(artist => artist.name).join(' & ');
-    // TODO: calls below need to be made null safe
+    let artistNames = song.artists.join(' & ');
+    let albumCover =
+      song.albumCover ||
+      'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';
+    let songUrl =
+      song.spotifyUrl ||
+      'https://support.spotify.com/tr/article/Error-code-404/';
 
     return (
       <Song
-        key={i}
-        userName={randProfile.username}
-        userImage={randProfile.profile_photo}
+        key={song._id + user.id + timestamp}
+        userName={user.display_name}
+        userImage={user.images[0].url}
         songName={song.name}
         songArtist={artistNames}
-        songAlbumCover={song.album.images[0].url}
-        songTimeStampTime={s.played_at.substring(11, 16)}
-        songTimeStampDate={s.played_at.substring(0, 10)}
+        songAlbumCover={albumCover}
+        songTimeStampTime={timestamp.toISOString().substring(11, 16)}
+        songTimeStampDate={timestamp.toISOString().substring(0, 10)}
         songExternalUrl={songUrl}
-        upAmount={s.upAmount}
-        downAmount={s.downAmount}
-        voteState={s.voteState}
-        id={i}
+        upAmount={0}
+        downAmount={0}
+        voteState={null}
       />
     );
   }
 
   render() {
-    const { tracks, fetchGroupSongLogs } = this.props;
-    let songDivs = tracks.map((s, i) => this.getSongDetails(s, i));
+    const {
+      groupRecentTracks,
+      fetchGroupSongLogs,
+      changeCurrentGroup
+    } = this.props;
+    let songLogs = Songs.find({
+      _id: { $in: groupRecentTracks.map(t => t.songId) }
+    }).fetch();
+    let songDivs = groupRecentTracks.map(t =>
+      this.getSongDetails(t, t.timestamps)
+    );
 
     return (
       <div className="feed_container">
@@ -69,7 +75,11 @@ class SongLog extends Component {
             Choose Group
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="#">
+            <a
+              className="dropdown-item"
+              href="#"
+              onClick={() => changeCurrentGroup('1')}
+            >
               Group 1
             </a>
             <a className="dropdown-item" href="#">
@@ -93,10 +103,16 @@ class SongLog extends Component {
 }
 
 const mapStateToProps = state => {
-  return { tracks: state.tracks, profiles: state.profiles };
+  console.log('allTracks', state.tracks);
+  console.log('usersInGroup', state.usersInGroup);
+  return {
+    groupRecentTracks: state.tracks.filter(t =>
+      state.usersInGroup.includes(t.userId)
+    )
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchGroupSongLogs }
+  { fetchGroupSongLogs, changeCurrentGroup }
 )(SongLog);

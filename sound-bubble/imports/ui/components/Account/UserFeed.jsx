@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
-import '../../stylesheets/Account.css';
 import UserSong from './UserSong.jsx';
-import compose from 'recompose/compose';
-import { withTracker } from 'meteor/react-meteor-data';
+import '../../stylesheets/Account.css';
 import { connect } from 'react-redux';
-import UserSongs from '../../../api/userSongs';
+import { fetchMySongLogs } from '../../actions/accountActions';
 import Songs from '../../../api/songs';
-import { fetchMySongLogs } from '../../actions/account';
 
 class UserFeed extends Component {
-  sortSongLogsByTimeDesc(songs) {
-    let result = [];
-    songs.forEach(song => {
-      song.timestamps.forEach(ts => {
-        result.push({
-          songId: song.songId,
-          timestamp: ts
-        });
-      });
-    });
-    result.sort((a, b) => b.timestamp - a.timestamp);
-    return result;
+  componentDidMount() {
+    this.props.fetchMySongLogs();
   }
 
   getSongDetails(song, timestamp) {
@@ -45,10 +32,13 @@ class UserFeed extends Component {
   }
 
   render() {
-    const { mySongs, songLogs, fetchMySongLogs } = this.props;
+    const { myRecentTracks, fetchMySongLogs } = this.props;
+    let songLogs = Songs.find({
+      _id: { $in: myRecentTracks.map(t => t.songId) }
+    }).fetch();
 
-    let songDivs = this.sortSongLogsByTimeDesc(songLogs).map(sl =>
-      this.getSongDetails(mySongs.find(s => s._id === sl.songId), sl.timestamp)
+    let songDivs = myRecentTracks.map(t =>
+      this.getSongDetails(songLogs.find(s => s._id === t.songId), t.timestamps)
     );
 
     return (
@@ -72,21 +62,15 @@ class UserFeed extends Component {
   }
 }
 
-export default compose(
-  withTracker(props => {
-    let played_songs = UserSongs.find(
-      { userId: props.user.id, timestamps: { $ne: null } },
-      { songId: 1, timestamps: 1 }
-    ).fetch();
-    return {
-      songLogs: played_songs,
-      mySongs: Songs.find({
-        _id: { $in: played_songs.map(s => s.songId) }
-      }).fetch()
-    };
-  }),
-  connect(
-    null,
-    { fetchMySongLogs }
-  )
+const mapStateToProps = state => {
+  return {
+    myRecentTracks: state.tracks.filter(
+      t => t.userId === Meteor.user().profile.id
+    )
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchMySongLogs }
 )(UserFeed);
