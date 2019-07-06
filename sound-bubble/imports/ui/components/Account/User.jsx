@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
 
-export default class User extends Component {
+class User extends Component {
   formatUserInfo(title, detail) {
     return (
       <dl className="user-detail">
@@ -12,7 +13,7 @@ export default class User extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, myGroupsReady } = this.props;
     let spotifyUrl = 'https://open.spotify.com/user/' + user.id;
     return (
       <div className="user-container">
@@ -23,7 +24,12 @@ export default class User extends Component {
         <div className="user-right">
           <h3>{user.display_name}</h3>
           <div className="user-info">
-            {this.formatUserInfo('Groups', 0)}
+            {this.formatUserInfo(
+              'Groups',
+              myGroupsReady && Meteor.user().groupIds
+                ? Meteor.user().groupIds.length
+                : 0
+            )}
             {this.formatUserInfo('Email', user.email)}
           </div>
           <a href={spotifyUrl}>Go To Your Spotify</a>
@@ -39,3 +45,9 @@ export default class User extends Component {
     );
   }
 }
+
+export default withTracker(props => {
+  return {
+    myGroupsReady: Meteor.subscribe('myGroupIds').ready()
+  };
+})(User);
