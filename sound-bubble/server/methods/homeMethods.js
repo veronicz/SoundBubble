@@ -4,11 +4,11 @@ import Groups from '../../imports/api/groups';
 
 Meteor.methods({
   getGroupRecentlyPlayed: function(group) {
-    return updateGroupRencentlyPlayed(group);
+    return updateGroupRecentlyPlayed(group);
   }
 });
 
-function updateGroupRencentlyPlayed(groupId) {
+function updateGroupRecentlyPlayed(groupId) {
   let userIds = Groups.findOne({ _id: groupId }).userIds;
   let tracks = [];
   userIds.forEach(userId => {
