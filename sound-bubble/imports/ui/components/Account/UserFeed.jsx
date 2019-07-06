@@ -31,7 +31,6 @@ class UserFeed extends Component {
   }
 
   render() {
-    const
     return (
       <div className="feed_container">
         <div className="song_feed_header">
