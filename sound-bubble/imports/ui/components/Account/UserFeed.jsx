@@ -18,11 +18,14 @@ class UserFeed extends Component {
     return myRecentTracks.map(t => {
       let song = songLogs.find(s => s._id === t.songId);
       let timestamp = t.timestamps;
-      let targetSong = t.songId;
-      let targetUser =t.userId;
       let show = t.show;
       return (
-        <Song key={song.id + timestamp} song={song} timestamp={timestamp} targetSong={targetSong} targetUser={targetUser} show={show} />
+        <Song
+          key={song.id + timestamp}
+          song={song}
+          timestamp={timestamp}
+          show={show}
+        />
       );
     });
   }
