@@ -4,5 +4,5 @@ import CurrentGroupReducer from './currentGroupReducer';
 
 export default combineReducers({
   tracks: SongLogReducer,
-  usersInGroup: CurrentGroupReducer
+  currentGroup: CurrentGroupReducer
 });

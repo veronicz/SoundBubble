@@ -1,9 +1,9 @@
-const currentGroupReducer = (usersInGroup = [], action) => {
+const currentGroupReducer = (currentGroup = null, action) => {
   switch (action.type) {
-    case 'USERS_IN_GROUP':
-      return action.users;
+    case 'CHANGE_GROUP':
+      return action.group;
   }
-  return usersInGroup;
+  return currentGroup;
 };
 
 export default currentGroupReducer;

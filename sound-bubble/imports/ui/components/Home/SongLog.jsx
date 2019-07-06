@@ -57,11 +57,16 @@ class SongLog extends Component {
 
 const mapStateToProps = state => {
   console.log('allTracks', state.tracks);
-  console.log('usersInGroup', state.usersInGroup);
+  console.log('currentGroup', state.currentGroup);
   return {
-    groupRecentTracks: state.tracks.filter(t =>
-      state.usersInGroup.includes(t.userId)
-    )
+    groupRecentTracks: state.tracks.filter(t => {
+      if (state.currentGroup) {
+        return state.currentGroup.userIds.includes(t.userId);
+      } else {
+        //user is not in any group, display own songs
+        return t.userId === Meteor.user().profile.id;
+      }
+    })
   };
 };
 
