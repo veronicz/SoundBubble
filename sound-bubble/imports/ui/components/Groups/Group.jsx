@@ -68,8 +68,9 @@ this.closeDeleteForm();
         <div className="group_header">
         <h1 className="groupName"> Group 2 </h1> 
         <div className="group_options">
-        <div className="option_container" onClick={() => this.deleteGroup()}><div className="glyphicon glyphicon-user white"><span className="tooltiptext">Add User</span></div></div><div className="option_container" onClick={() => this.deleteGroup()}><div className="glyphicon glyphicon-trash white"><span className="tooltiptext">Delete Group</span></div></div> 
+        <div className="option_container" onClick={() => this.deleteGroup()}><div className="glyphicon glyphicon-user white"><span className="tooltiptext">Add User</span></div></div><div className="option_container" onClick={() => this.openDeleteForm()}><div className="glyphicon glyphicon-trash white"><span className="tooltiptext">Delete Group</span></div></div> 
         </div>
+        {deleteGroupPopUp}
         </div>
        
 
