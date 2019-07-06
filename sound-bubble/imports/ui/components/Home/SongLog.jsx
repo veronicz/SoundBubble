@@ -14,8 +14,8 @@ class SongLog extends Component {
         let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
         let song = Songs.findOne({ _id: t.songId });
         let timestamp = t.timestamps;
-        let upVoteCount = GroupSongs.findOne({songId:t.songId}).upvote;
-        let downVoteCount = GroupSongs.findOne({songId:t.songId}).downvote;
+        let upVoteCount = GroupSongs.findOne({groupId: this.props.currentGroup._id,songId:t.songId}).upvote;
+        let downVoteCount = GroupSongs.findOne({groupId:this.props.currentGroup._id,songId:t.songId}).downvote;
         let voteState = t.vote;
         return (
           <Song
@@ -71,7 +71,8 @@ const mapStateToProps = state => {
         //user is not in any group, display own songs
         return t.userId === Meteor.user().profile.id;
       }
-    })
+    }),
+    currentGroup: state.currentGroup
   };
 };
 

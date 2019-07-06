@@ -63,7 +63,7 @@ function voteSong(songId,userId,groupId,option){
         upvote: 1
       }
     });
-    UserSongs.update({
+    UserSongs.upsert({
       songId:songId,
       userId:userId
     },{
@@ -81,7 +81,7 @@ function voteSong(songId,userId,groupId,option){
         upvote: -1
       }
     });
-    UserSongs.update({
+    UserSongs.upsert({
       songId:songId,
       userId:userId
     },{
@@ -99,7 +99,7 @@ function voteSong(songId,userId,groupId,option){
         downvote: 1
       }
     });
-    UserSongs.update({
+    UserSongs.upsert({
       songId:songId,
       userId:userId
     },{
@@ -117,7 +117,7 @@ function voteSong(songId,userId,groupId,option){
         downvote: -1
       }
     });
-    UserSongs.update({
+    UserSongs.upsert({
       songId:songId,
       userId:userId
     },{
