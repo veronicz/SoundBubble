@@ -82,6 +82,7 @@ class Song extends Component {
   }
 
   render() {
+    if(this.props.user&&!this.props.show){return null}
     const { song, timestamp } = this.props;
 
     let albumImage =

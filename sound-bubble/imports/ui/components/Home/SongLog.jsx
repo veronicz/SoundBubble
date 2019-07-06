@@ -11,12 +11,14 @@ class SongLog extends Component {
       let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
       let song = Songs.findOne({ _id: t.songId });
       let timestamp = t.timestamps;
+      let show = t.show;
       return (
         <Song
           key={song.id + user.id + timestamp}
           song={song}
           user={user}
           timestamp={timestamp}
+          show={show}
           upvoteCount={0} //TODO
           downvoteCount={0} //TODO
           voteState={1} //TODO
