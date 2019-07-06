@@ -10,7 +10,7 @@ class UserFeed extends Component {
   }
 
   getSongDetails() {
-    const { myRecentTracks, fetchMySongLogs } = this.props;
+    const { myRecentTracks } = this.props;
     let songLogs = Songs.find({
       _id: { $in: myRecentTracks.map(t => t.songId) }
     }).fetch();
@@ -31,6 +31,7 @@ class UserFeed extends Component {
   }
 
   render() {
+    const
     return (
       <div className="feed_container">
         <div className="song_feed_header">
@@ -38,7 +39,7 @@ class UserFeed extends Component {
           <img
             className="refresh_button"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
-            onClick={() => fetchMySongLogs()}
+            onClick={() => this.propsfetchMySongLogs()}
           />
         </div>
         <div className="songs">
