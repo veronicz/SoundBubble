@@ -1,19 +1,28 @@
-body {
-  padding: 10px;
-  font-family: sans-serif;
+
+.react-target{
+  margin:0;
+  padding:0;
 }
-body {
-  padding: 10px;
-  font-family: comic sans ms;
+
+div{
+  margin:0;
+  padding:0;
+}
+
+.app{
+  margin:0;
+  padding:0;
+  width:100%;
 }
 
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding:0;
+  margin:0;
 }
 
 code {
@@ -181,7 +190,9 @@ border-color: #555 transparent transparent transparent;
 }
 
 .headerContainer{
-  
+  width:inherit;
+  padding:0;
+  margin:0;
 }
 
 .show_more_button_container{
