@@ -57,7 +57,6 @@ class SongLog extends Component {
 
 const mapStateToProps = state => {
   console.log('allTracks', state.tracks);
-  console.log('currentGroup', state.currentGroup);
   return {
     groupRecentTracks: state.tracks.filter(t => {
       if (state.currentGroup) {
