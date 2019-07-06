@@ -1,18 +1,17 @@
 
-.react-target{
-  margin:0;
+#react-target{
   padding:0;
+  margin:0;
 }
 
-div{
-  margin:0;
+.pageWrapper{
   padding:0;
+  margin:0;
 }
 
 .app{
-  margin:0;
   padding:0;
-  width:100%;
+  margin:0;
 }
 
 body {
@@ -50,6 +49,7 @@ code {
   position: relative;
 display: inline-block;
 }
+
 
 .option_container .tooltiptext {
   visibility: hidden;
