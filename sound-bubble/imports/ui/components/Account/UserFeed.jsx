@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Song from '../Home/Song.jsx';
+import Song from '../Song';
 import '../../stylesheets/Account.css';
 import { connect } from 'react-redux';
 import { fetchMySongLogs } from '../../actions/accountActions';
@@ -10,7 +10,7 @@ class UserFeed extends Component {
   }
 
   getSongDetails() {
-    const { myRecentTracks, fetchMySongLogs } = this.props;
+    const { myRecentTracks } = this.props;
     let songLogs = Songs.find({
       _id: { $in: myRecentTracks.map(t => t.songId) }
     }).fetch();
@@ -18,11 +18,14 @@ class UserFeed extends Component {
     return myRecentTracks.map(t => {
       let song = songLogs.find(s => s._id === t.songId);
       let timestamp = t.timestamps;
-      let targetSong = t.songId;
-      let targetUser =t.userId;
       let show = t.show;
       return (
-        <Song key={song.id + timestamp} song={song} timestamp={timestamp} targetSong={targetSong} targetUser={targetUser} show={show} />
+        <Song
+          key={song.id + timestamp}
+          song={song}
+          timestamp={timestamp}
+          show={show}
+        />
       );
     });
   }
@@ -35,7 +38,7 @@ class UserFeed extends Component {
           <img
             className="refresh_button"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
-            onClick={() => fetchMySongLogs()}
+            onClick={() => this.propsfetchMySongLogs()}
           />
         </div>
         <div className="songs">

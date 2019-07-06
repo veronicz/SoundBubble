@@ -1,24 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { upVote, downVote, upComplete, downComplete } from '../../actions';
+import { vote } from '../../actions/homeActions';
 
 class Vote extends React.Component {
 
     render() {
-        if (this.props.voteState == 1) {
+        if (this.props.voteState === 1) {
             return (
                 <div className="votes">
-                    <div onClick={() => this.props.upComplete(this.props.id)} className="voteButton" >
+                    <div onClick={() => this.props.vote(this.props.id, this.props.userId, 2)} className="voteButton" >
                     <div className="glyphicon glyphicon-thumbs-up" style={{color:'#1db954'}}><span className="tooltiptext">Undo Upvote</span></div>
                         </div>
                     <span className="voteCount">{this.props.upAmount} likes</span>
                 </div>
             )
         }
-        if (this.props.voteState == 2) {
+        if (this.props.voteState === -1) {
             return (
                 <div className="votes">
-                    <div onClick={() => this.props.downComplete(this.props.id)} className="voteButton">
+                    <div onClick={() => this.props.vote(this.props.id, this.props.userId, 4)} className="voteButton">
                     <div className="glyphicon glyphicon-thumbs-down" style={{color:'#1db954'}}><span className="tooltiptext">Undo Downvote</span></div>
                         </div>
                     <span className="voteCount">{this.props.downAmount} dislikes</span>
@@ -28,10 +28,10 @@ class Vote extends React.Component {
         else {
             return (
                 <div className="votes">
-                    <div onClick={() => this.props.upVote(this.props.id)} className="voteButton">
+                    <div onClick={() => this.props.vote(this.props.id, this.props.userId, 1)} className="voteButton">
                         <div className="glyphicon glyphicon-thumbs-up white"><span className="tooltiptext">Upvote</span></div></div>
                 <span className="voteCount">{this.props.upAmount}</span>
-                <div onClick={() => this.props.downVote(this.props.id)} className="voteButton">
+                <div onClick={() => this.props.vote(this.props.id, this.props.userId, 3)} className="voteButton">
                     <div className="glyphicon glyphicon-thumbs-down white"><span className="tooltiptext">Downvote</span></div></div>
                 <span className="voteCount">{this.props.downAmount}</span>
                     
@@ -42,4 +42,4 @@ class Vote extends React.Component {
 
 
 
-export default connect(null, { upVote, downVote, upComplete, downComplete })(Vote);
+export default connect(null, { vote })(Vote);

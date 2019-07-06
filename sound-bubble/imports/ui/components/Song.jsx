@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import Vote from './Vote.jsx';
-import { connect } from 'react-redux';
-import { hideMySong } from '../../actions/accountActions';
+import Vote from './Home/Vote.jsx';
+import HideSongButton from './Account/HideSongButton';
 
 // This class has the following inherited props:
 // song (required)
 // user (optional)
 // Note: - this corresponds to users.services.spotify in the db
-//       - every field on user is null safe
+//       - every field on user has a null check
+// show (required if user is null)
 // upvoteCount, downvoteCount, voteState (optional)
 
-class Song extends Component {
+export default class Song extends Component {
   userInfo() {
     const { user } = this.props;
     if (user && user.display_name) {
@@ -47,14 +47,15 @@ class Song extends Component {
 
   //TODO
   voteInfo() {
-    const { song, upvoteCount, downvoteCount, voteState } = this.props;
-    if (upvoteCount != null && downvoteCount != null && voteState != null) {
+    const {song, upVoteCount, downVoteCount, voteState, user } = this.props;
+    if (upVoteCount != null && downVoteCount != null && voteState != null) {
       return (
         <Vote
           id={song._id}
-          upAmount={upvoteCount}
-          downAmount={downvoteCount}
+          upAmount={upVoteCount}
+          downAmount={downVoteCount}
           voteState={voteState}
+          userId={user.id}
         />
       );
     } else {
@@ -62,27 +63,7 @@ class Song extends Component {
     }
   }
 
-  hideButton() {
-    if(this.props.user){
-      return null;
-    }else{
-      if(this.props.show){
-        return (
-          <div className="hide_song">
-            <button className="hide_button" onClick={()=>this.props.hideMySong(this.props.targetSong, this.props.targetUser, 'hide')}>Hide</button>
-          </div>
-        );
-      }
-      return (
-        <div className="hide_song">
-          <button className="hide_button" onClick={()=>this.props.hideMySong(this.props.targetSong, this.props.targetUser, 'show')}>Show</button>
-        </div>
-      );
-    }
-  }
-
   render() {
-    if(this.props.user&&!this.props.show){return null}
     const { song, timestamp } = this.props;
 
     let albumImage =
@@ -129,7 +110,9 @@ class Song extends Component {
 
           {this.voteInfo()}
 
-          {this.hideButton()}
+          {this.props.user ? null : (
+            <HideSongButton show={this.props.show} targetSong={song._id} />
+          )}
 
           <div className="time_stamp">
             <h3 className="time_stamp_stamp">
@@ -144,5 +127,3 @@ class Song extends Component {
     );
   }
 }
-
-export default connect(null,{hideMySong})(Song);

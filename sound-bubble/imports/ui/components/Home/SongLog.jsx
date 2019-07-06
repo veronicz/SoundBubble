@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import Song from './Song.jsx';
+import Song from '../Song';
 import { connect } from 'react-redux';
 import { fetchGroupSongLogs } from '../../actions/homeActions';
 import Songs from '../../../api/songs';
 import GroupButton from './GroupButton';
+import GroupSongs from '../../../api/groupSongs';
 
 class SongLog extends Component {
   getSongDetails() {
+<<<<<<< HEAD
     return this.props.groupRecentTracks.map(t => {
       let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
       let song = Songs.findOne({ _id: t.songId });
       let timestamp = t.timestamps;
       let show = t.show;
+      let upVoteCount = GroupSongs.findOne({songId:t.songId}).upvote;
+      let downVoteCount = GroupSongs.findOne({songId:t.songId}).downvote;
+      let voteState = t.vote;
       return (
         <Song
           key={song.id + user.id + timestamp}
@@ -19,12 +24,32 @@ class SongLog extends Component {
           user={user}
           timestamp={timestamp}
           show={show}
-          upvoteCount={0} //TODO
-          downvoteCount={0} //TODO
-          voteState={1} //TODO
+          upVoteCount={upVoteCount}
+          downVoteCount={downVoteCount}
+          voteState={voteState}
         />
       );
     });
+=======
+    return this.props.groupRecentTracks
+      .filter(t => t.show)
+      .map(t => {
+        let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
+        let song = Songs.findOne({ _id: t.songId });
+        let timestamp = t.timestamps;
+        return (
+          <Song
+            key={song.id + user.id + timestamp}
+            song={song}
+            user={user}
+            timestamp={timestamp}
+            upvoteCount={0} //TODO
+            downvoteCount={0} //TODO
+            voteState={1} //TODO
+          />
+        );
+      });
+>>>>>>> 69f5ba21535f7f12975f9aa694581c10c6aa20b2
   }
 
   render() {

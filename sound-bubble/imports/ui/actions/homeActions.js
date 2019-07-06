@@ -36,3 +36,16 @@ export const changeCurrentGroup = groupId => {
     group: Groups.findOne({ _id: groupId })
   };
 };
+
+export const vote = (songId, userId, Option) => {
+  return (dispatch, getState) => {
+    Meteor.call('vote', songId, userId, getState().currentGroup._id, Option, (err, songLogs) => {
+      if(err){
+        console.log('vote failed', err);
+      }else{
+        console.log(songLogs)
+        dispatch(fetchGroupSongLogsSuccess(songLogs))
+      }
+    })
+  }
+}
