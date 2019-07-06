@@ -28,6 +28,7 @@ export default class Group extends Component {
 
   openSearchUserBar(){
     this.setState({searchUserBar: true});
+    console.log("opened");
   }
 
   closeSearchUserBar(){
@@ -65,7 +66,7 @@ export default class Group extends Component {
     let searchUserBar = <div></div>;
     if (this.state.searchUserBar === true){
       searchUserBar = (<div className="myDropdown" className="dropdown-content">
-      <input type="text" placeholder="Search.." id="myInput" onKeyUp="filterFunction()" />
+      <input type="text" placeholder="Search.." id="myInput" />
       <a href="#about">About</a>
       <a href="#base">Base</a>
       <a href="#blog">Blog</a>
@@ -99,12 +100,12 @@ export default class Group extends Component {
             <button onClick={() => this.openSearchUserBar} className="dropbtn"><div className="option_container" onClick={() => this.openSearchUserBar()}><div className="glyphicon glyphicon-user white"><span className="tooltiptext">Add User</span></div></div></button>
            
           </div>
-          {searchUserBar}
+          
           <div className="option_container" onClick={() => this.openDeleteForm()}><div className="glyphicon glyphicon-trash white"><span className="tooltiptext">Delete Group</span></div></div>
         </div>
         {deleteGroupPopUp}
       </div>
-
+      {searchUserBar}
 
       <GroupMember userImage="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10201448929539226&height=200&width=200&ext=1562344836&hash=AeRoRM9lN97xJOp5" userName="martipals" isCurrentUser="true"></GroupMember>
       <GroupMember userImage="https://i.ytimg.com/vi/AyFbegeRcCQ/maxresdefault.jpg" userName="WollSmoth" isCurrentUser="false"></GroupMember>
