@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Song from '../Home/Song.jsx';
+import Song from '../Song';
 import '../../stylesheets/Account.css';
 import { connect } from 'react-redux';
 import { fetchMySongLogs } from '../../actions/accountActions';

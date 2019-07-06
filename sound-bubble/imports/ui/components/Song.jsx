@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Vote from './Vote.jsx';
-import HideSongButton from './HideSongButton.jsx';
+import Vote from './Home/Vote.jsx';
+import HideSongButton from './Account/HideSongButton';
 
 // This class has the following inherited props:
 // song (required)
