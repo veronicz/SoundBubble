@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Vote from './Vote.jsx';
+import { connect } from 'react-redux';
+import { hideMySong } from '../../actions/accountActions';
 
 // This class has the following inherited props:
 // song (required)
@@ -8,7 +10,7 @@ import Vote from './Vote.jsx';
 //       - every field on user is null safe
 // upvoteCount, downvoteCount, voteState (optional)
 
-export default class Song extends Component {
+class Song extends Component {
   userInfo() {
     const { user } = this.props;
     if (user && user.display_name) {
@@ -61,11 +63,22 @@ export default class Song extends Component {
   }
 
   hideButton() {
-    return this.props.user ? null : (
-      <div className="hide_song">
-        <button className="hide_button">Hide</button>
-      </div>
-    );
+    if(this.props.user){
+      return null;
+    }else{
+      if(this.props.show){
+        return (
+          <div className="hide_song">
+            <button className="hide_button" onClick={()=>this.props.hideMySong(this.props.targetSong, this.props.targetUser, 'hide')}>Hide</button>
+          </div>
+        );
+      }
+      return (
+        <div className="hide_song">
+          <button className="hide_button" onClick={()=>this.props.hideMySong(this.props.targetSong, this.props.targetUser, 'show')}>Show</button>
+        </div>
+      );
+    }
   }
 
   render() {
@@ -130,3 +143,5 @@ export default class Song extends Component {
     );
   }
 }
+
+export default connect(null,{hideMySong})(Song);
