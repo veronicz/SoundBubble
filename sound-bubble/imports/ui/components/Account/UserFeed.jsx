@@ -38,7 +38,7 @@ class UserFeed extends Component {
           <img
             className="refresh_button"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
-            onClick={() => this.propsfetchMySongLogs()}
+            onClick={() => this.props.fetchMySongLogs()}
           />
         </div>
         <div className="songs">

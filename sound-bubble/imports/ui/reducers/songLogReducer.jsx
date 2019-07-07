@@ -65,7 +65,8 @@ function uniqueBySongAndTimestamp(songs) {
       self.findIndex(
         s =>
           s.songId === song.songId &&
-          s.timestamps.toISOString() === song.timestamps.toISOString()
+          s.timestamps.toISOString() === song.timestamps.toISOString() &&
+          s.userId === song.userId
       ) === index
   );
 }
