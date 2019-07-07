@@ -8,7 +8,6 @@ import HideSongButton from './Account/HideSongButton';
 // Note: - this corresponds to users.services.spotify in the db
 //       - every field on user has a null check
 // show (required if user is null)
-// upvoteCount, downvoteCount, voteState (optional)
 
 export default class Song extends Component {
   userInfo() {
@@ -45,26 +44,8 @@ export default class Song extends Component {
     }
   }
 
-  //TODO
-  voteInfo() {
-    const {song, upVoteCount, downVoteCount, voteState, user } = this.props;
-    if (upVoteCount != null && downVoteCount != null && voteState != null) {
-      return (
-        <Vote
-          id={song._id}
-          upAmount={upVoteCount}
-          downAmount={downVoteCount}
-          voteState={voteState}
-          userId={user.id}
-        />
-      );
-    } else {
-      return null;
-    }
-  }
-
   render() {
-    const { song, timestamp } = this.props;
+    const { song, timestamp, user } = this.props;
 
     let albumImage =
       song.albumCover ||
@@ -108,7 +89,7 @@ export default class Song extends Component {
             </marquee>
           </div>
 
-          {this.voteInfo()}
+          {user ? <Vote song={song} /> : null}
 
           {this.props.user ? null : (
             <HideSongButton show={this.props.show} targetSong={song._id} />
