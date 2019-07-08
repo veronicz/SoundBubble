@@ -15,7 +15,7 @@ export default class GroupMember extends React.Component {
         }
 
 
-        if (this.props.isCurrentUser==="true"){
+        if (this.props.isCurrentUser===true){
           groupMemberDiv = (<li className="groupMember_container">
                 <span className="groupMember_card">
                         <div className="profile_photo">

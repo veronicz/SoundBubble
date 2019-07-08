@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../stylesheets/Groups.css';
 import GroupMember from './GroupMember.jsx';
+import Groups from '../../../api/groups';
 
 
 export default class Group extends Component {
@@ -41,6 +42,9 @@ export default class Group extends Component {
 
   deleteGroup() {
     // TODO: delete group from db. Should only an "admin" user be able to do this? Maybe stretch requirement?
+    Groups.deleteOne({
+      "_id":this.props.groupId
+    });
     console.log("group deleted");
     this.closeDeleteForm();
   }
@@ -100,8 +104,10 @@ export default class Group extends Component {
 }
 
 function createUserDivs(userIds){
+  console.log(userIds);
   return userIds.map(userId => {
     let user = Meteor.users.findOne({ 'profile.id': userId});
+    console.log(userId);
 
     let currentUser= Meteor.user();
     let isCurrentUser=false;
