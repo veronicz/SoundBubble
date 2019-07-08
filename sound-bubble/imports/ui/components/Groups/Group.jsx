@@ -6,6 +6,10 @@ import GroupMember from './GroupMember.jsx';
 export default class Group extends Component {
 
   constructor() {
+    // props:
+    // groupId
+    // groupName
+    // userIds
     super();
     this.state = {
       groupID: "",
@@ -63,6 +67,8 @@ export default class Group extends Component {
 
     }
 
+    let userDivs=createUserDivs(this.props.userIds);
+
     let searchUserBar = <div></div>;
     if (this.state.searchUserBar === true){
       searchUserBar = (<div className="myDropdown" className="dropdown-content">
@@ -81,37 +87,36 @@ export default class Group extends Component {
 
     return (<div>
       <div className="group_header">
-        <h1 className="groupName"> SoundBubble Devs </h1>
+        <h1 className="groupName"> {this.props.groupName} </h1>
         <div className="group_options">
           <div className="option_container" onClick={() => this.addNewGroupMember()}><div className="glyphicon glyphicon-user white"><span className="tooltiptext">Add User</span></div></div><div className="option_container" onClick={() => this.openDeleteForm()}><div className="glyphicon glyphicon-trash white"><span className="tooltiptext">Delete Group</span></div></div>
         </div>
         {deleteGroupPopUp}
       </div>
 
-      <GroupMember userImage="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10201448929539226&height=200&width=200&ext=1562344836&hash=AeRoRM9lN97xJOp5" userName="martipals" isCurrentUser="true"></GroupMember>
-      <GroupMember userImage="https://avatars3.githubusercontent.com/u/33446354?s=460&v=4" userName="veronicz" isCurrentUser="false"></GroupMember>
-      <GroupMember userImage="https://avatars3.githubusercontent.com/u/36035964?s=460&v=4" userName="talos6" isCurrentUser="false"></GroupMember>
-
-
-      <div className="group_header">
-        <h1 className="groupName"> Group 2 </h1>
-        <div className="group_options">
-          <div className="dropdown">
-            <button onClick={() => this.openSearchUserBar} className="dropbtn"><div className="option_container" onClick={() => this.openSearchUserBar()}><div className="glyphicon glyphicon-user white"><span className="tooltiptext">Add User</span></div></div></button>
-           
-          </div>
-          
-          <div className="option_container" onClick={() => this.openDeleteForm()}><div className="glyphicon glyphicon-trash white"><span className="tooltiptext">Delete Group</span></div></div>
-        </div>
-        {deleteGroupPopUp}
-      </div>
-      {searchUserBar}
-
-      <GroupMember userImage="https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10201448929539226&height=200&width=200&ext=1562344836&hash=AeRoRM9lN97xJOp5" userName="martipals" isCurrentUser="true"></GroupMember>
-      <GroupMember userImage="https://i.ytimg.com/vi/AyFbegeRcCQ/maxresdefault.jpg" userName="WollSmoth" isCurrentUser="false"></GroupMember>
-      <GroupMember userImage="https://cdn1.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg" userName="adog" isCurrentUser="false"></GroupMember>
-
+      {userDivs}
     </div>);
   }
 }
+
+function createUserDivs(userIds){
+  return userIds.map(userId => {
+    let user = Meteor.users.findOne({ 'profile.id': userId});
+
+    let currentUser= Meteor.user();
+    let isCurrentUser=false;
+
+    if (currentUser.profile.id === userId){
+      isCurrentUser=true;
+    }
+
+    console.log(isCurrentUser);
+
+    return (<GroupMember key={userId} userImage={user.profile.images[0].url} userName={user.profile.display_name} isCurrentUser={isCurrentUser}/> );
+
+  })
+
+}
+
+
 

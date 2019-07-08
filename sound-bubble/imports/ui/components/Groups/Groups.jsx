@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import '../../stylesheets/Groups.css';
 import Group from './Group.jsx';
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
+import { withTracker } from 'meteor/react-meteor-data';
+import GroupsApi from '../../../api/groups';
 
-export default class Groups extends Component {
+class Groups extends Component {
 
   constructor() {
     super();
@@ -34,6 +38,13 @@ export default class Groups extends Component {
   }
 
   render() {
+    const { myGroupsReady} = this.props;
+    let myGroups = findGroups(myGroupsReady);
+
+    console.log(myGroups);
+    let groupDivs= createGroupDivs(myGroups);
+    console.log(groupDivs);
+
     let popup = (<div></div>);
     if (this.state.createGroupPopup === true) {
       popup = (<div className="form-popup" className="myForm">
@@ -54,13 +65,46 @@ export default class Groups extends Component {
       
       </div>
       {popup}
-      <Group groupName="" groupId="" usersIds="" />
+      {groupDivs}
 
 
     </div>);
 
   }
 }
+
+function findGroups(myGroupsReady){
+  if (myGroupsReady) {
+    let myGroupIds = Meteor.user().groupIds;
+    if (myGroupIds) {
+      myGroups = GroupsApi.find({
+        _id: { $in: myGroupIds }
+      }).fetch();
+    }
+    return myGroups;
+  }
+}
+
+function createGroupDivs(myGroups){
+  let groupDivs = [];
+  if (myGroups){
+    return myGroups.map(g => (<Group key={g._id} groupName={g.name} userIds={g.userIds}></Group>));
+  }
+}
+
+
+
+export default compose(
+  withTracker(props => {
+    return {
+      myGroupsReady: Meteor.subscribe('myGroupIds').ready()
+    };
+  }),
+  connect(
+    null,
+    {  }
+  )
+)(Groups);
 
 
 
