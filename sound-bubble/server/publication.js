@@ -11,32 +11,44 @@ Meteor.publish('myGroupIds', function() {
   }
 });
 
-Meteor.publish('user_songs.vote', function() {
+Meteor.publish('currentUserSongs', function() {
   if (!this.userId) {
     return this.ready();
   }
-
-  return UserSongs.find(
-    {
-      userId: this.userId
-    },
-    {
-      fields: { vote: 1 }
-    }
-  );
+  return UserSongs.find({ userId: Meteor.user().profile.id });
 });
 
-Meteor.publish('group_songs', function() {
+Meteor.publish('currentGroupSongs', function(groupId) {
   if (!this.userId) {
     return this.ready();
   }
+  return GroupSongs.find({ groupId: groupId });
+});
 
-  return GroupSongs.find(
-    {
-      groupId: { $in: Meteor.user().groupIds }
-    },
-    {
-      fields: { upvote: 1, downvote: 1 }
-    }
-  );
+Meteor.publish('trackSong', function(songId) {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Songs.find({ _id: songId });
+});
+
+Meteor.publish('trackUser', function(userId) {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Meteor.users.find({ 'profile.id': userId });
+});
+
+Meteor.publish('mySongs', function(songIds) {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Songs.find({ _id: { $in: songIds } });
+});
+
+Meteor.publish('myGroups', function() {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Groups.find({ _id: { $in: Meteor.user().groupIds } });
 });
