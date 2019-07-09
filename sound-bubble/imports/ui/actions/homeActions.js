@@ -37,15 +37,31 @@ export const changeCurrentGroup = groupId => {
   };
 };
 
-export const vote = (songId, userId, Option) => {
+export const vote = (songId, option) => {
   return (dispatch, getState) => {
-    Meteor.call('vote', songId, userId, getState().currentGroup._id, Option, (err, songLogs) => {
-      if(err){
-        console.log('vote failed', err);
-      }else{
-        console.log(songLogs)
-        dispatch(fetchGroupSongLogsSuccess(songLogs))
-      }
-    })
-  }
-}
+    if (getState().currentGroup) {
+      Meteor.call(
+        'voteGroupSong',
+        songId,
+        getState().currentGroup._id,
+        option,
+        (err, result) => {
+          if (err) {
+            console.log(
+              `vote song with ${songId} in group ${
+                getState().currentGroup._id
+              } failed`,
+              err
+            );
+          }
+        }
+      );
+    } else {
+      Meteor.call('voteUserSong', songId, option, (err, result) => {
+        if (err) {
+          console.log(`vote song with ${songId} failed`, err);
+        }
+      });
+    }
+  };
+};

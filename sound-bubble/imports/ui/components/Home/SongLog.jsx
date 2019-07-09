@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchGroupSongLogs } from '../../actions/homeActions';
 import Songs from '../../../api/songs';
 import GroupButton from './GroupButton';
-import GroupSongs from '../../../api/groupSongs';
 
 class SongLog extends Component {
   getSongDetails() {
@@ -14,22 +13,16 @@ class SongLog extends Component {
         let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
         let song = Songs.findOne({ _id: t.songId });
         let timestamp = t.timestamps;
-        let upVoteCount = GroupSongs.findOne({groupId: this.props.currentGroup._id,songId:t.songId}).upvote;
-        let downVoteCount = GroupSongs.findOne({groupId:this.props.currentGroup._id,songId:t.songId}).downvote;
-        let voteState = t.vote;
         return (
           <Song
             key={song.id + user.id + timestamp}
             song={song}
             user={user}
             timestamp={timestamp}
-            upVoteCount={upVoteCount}
-            downVoteCount={downVoteCount} 
-            voteState={voteState} 
           />
         );
       });
-}
+  }
 
   render() {
     return (
