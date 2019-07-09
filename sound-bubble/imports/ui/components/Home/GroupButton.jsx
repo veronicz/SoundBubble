@@ -8,34 +8,31 @@ import {
 } from '../../actions/homeActions';
 
 class GroupButton extends Component {
-  getMyGroups() {
+  setDefaultGroup() {
     const {
       currentGroup,
-      myGroupsReady,
+      myGroups,
       changeCurrentGroup,
       fetchGroupSongLogs
     } = this.props;
-    let myGroups = [];
-    if (myGroupsReady) {
-      let myGroupIds = Meteor.user().groupIds;
-      if (myGroupIds) {
-        myGroups = Groups.find({
-          _id: { $in: myGroupIds }
-        }).fetch();
-        //set currentGroup to the first group if it is not initialized but the user has groups
-        if (!currentGroup) {
-          changeCurrentGroup(myGroups[0]._id);
-        }
-      }
-      //display the initial group song logs (will fetch user song logs if user is not in any groups)
-      fetchGroupSongLogs();
+    //set currentGroup to the first group if it is not initialized but the user has groups
+    if (!currentGroup && myGroups[0]) {
+      changeCurrentGroup(myGroups[0]._id);
     }
-    return myGroups;
+    //display the initial group song logs (will fetch user song logs if user is not in any groups)
+    fetchGroupSongLogs();
+  }
+
+  handleChangeGroup(newGroupId) {
+    const { currentGroup, changeCurrentGroup } = this.props;
+    if (newGroupId != currentGroup._id) {
+      changeCurrentGroup(newGroupId);
+    }
   }
 
   render() {
-    const { currentGroup, changeCurrentGroup } = this.props;
-    let myGroups = this.getMyGroups();
+    const { currentGroup, myGroups } = this.props;
+    this.setDefaultGroup();
     return (
       <div className="dropdown">
         <button
@@ -54,7 +51,7 @@ class GroupButton extends Component {
               key={g._id}
               className="dropdown-item"
               href="#"
-              onClick={() => changeCurrentGroup(g._id)}
+              onClick={() => this.handleChangeGroup(g._id)}
             >
               {g.name}
             </a>
@@ -73,13 +70,14 @@ const mapStateToProps = state => {
 };
 
 export default compose(
-  withTracker(props => {
-    return {
-      myGroupsReady: Meteor.subscribe('myGroupIds').ready()
-    };
-  }),
   connect(
     mapStateToProps,
     { changeCurrentGroup, fetchGroupSongLogs }
-  )
+  ),
+  withTracker(props => {
+    const myGroupsReady = Meteor.subscribe('myGroups').ready();
+    return {
+      myGroups: myGroupsReady ? Groups.find().fetch() : []
+    };
+  })
 )(GroupButton);
