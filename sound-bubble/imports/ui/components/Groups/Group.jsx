@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import '../../stylesheets/Groups.css';
 import GroupMember from './GroupMember.jsx';
 import Groups from '../../../api/groups';
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
+import { deleteGroup } from '../../actions/groupActions';
 
 
-export default class Group extends Component {
+class Group extends Component {
 
   constructor() {
     // props:
@@ -40,12 +43,10 @@ export default class Group extends Component {
     this.setState({searchUserBar: false});
   }
 
-  deleteGroup() {
+  deleteGroup(event) {
     // TODO: delete group from db. Should only an "admin" user be able to do this? Maybe stretch requirement?
-    Groups.deleteOne({
-      "_id":this.props.groupId
-    });
-    console.log("group deleted");
+    event.preventDefault();
+    this.props.deleteGroup(this.props.groupId);
     this.closeDeleteForm();
   }
 
@@ -104,11 +105,10 @@ export default class Group extends Component {
 }
 
 function createUserDivs(userIds){
-  console.log(userIds);
   return userIds.map(userId => {
+    if (userId){
     let user = Meteor.users.findOne({ 'profile.id': userId});
-    console.log(userId);
-
+    if (user){
     let currentUser= Meteor.user();
     let isCurrentUser=false;
 
@@ -116,13 +116,21 @@ function createUserDivs(userIds){
       isCurrentUser=true;
     }
 
-    console.log(isCurrentUser);
-
     return (<GroupMember key={userId} userImage={user.profile.images[0].url} userName={user.profile.display_name} isCurrentUser={isCurrentUser}/> );
-
+  } else {
+    throw new Error("Cannot find user with user id " + userId);
+  }
+  }
   })
 
 }
+
+export default compose(
+  connect(
+    null,
+    { deleteGroup }
+  )
+)(Group);
 
 
 

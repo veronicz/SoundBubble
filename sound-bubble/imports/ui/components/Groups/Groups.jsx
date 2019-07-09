@@ -33,9 +33,7 @@ class Groups extends Component {
   render() {
     const { myGroupsReady} = this.props;
     let myGroups = findGroups(myGroupsReady);
-    console.log(myGroups);
     let groupDivs= createGroupDivs(myGroups);
-    console.log(groupDivs);
 
     let popup = (<div></div>);
     if (this.state.createGroupPopup === true) {
@@ -79,7 +77,7 @@ function findGroups(myGroupsReady){
 
 function createGroupDivs(myGroups){
   if (myGroups){
-    return myGroups.map(g => (<Group key={g._id} groupName={g.name} userIds={g.userIds}></Group>));
+    return myGroups.map(g => (<Group key={g._id} groupId={g._id} groupName={g.name} userIds={g.userIds}></Group>));
   }
 }
 

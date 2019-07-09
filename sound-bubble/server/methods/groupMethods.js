@@ -23,9 +23,11 @@ function createGroup(args){
 
 function deleteGroup(groupId) {
     // deletes the group and deletes all occurences of that group in the users collection
-    Groups.deleteOne({ _id: groupId }).userIds;
-    let usersIdsInGroup = Meteor.users.find({groupIds:groupId}).map(user => user.profile.id);
-    usersIdsInGroup.map(userId =>{
+    Groups.remove({ _id: groupId });
+    console.log(groupId);
+    let userIdsInGroup = Meteor.users.find({groupIds:groupId}).map(user => user.profile.id);
+    console.log(userIdsInGroup);
+    userIdsInGroup.map(userId =>{
         Meteor.users.upsert({'profile.id': userId}, {$pull: {groupIds: groupId}});
     });
     return "Success: group deleted";
