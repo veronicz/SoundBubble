@@ -28,6 +28,7 @@ class Groups extends Component {
     let groupName = event.target.groupName.value.toString();
     let currentUser = Meteor.user();
     this.props.createGroup(groupName, currentUser.profile.id.toString());
+    this.closeForm();
   }
 
   render() {
