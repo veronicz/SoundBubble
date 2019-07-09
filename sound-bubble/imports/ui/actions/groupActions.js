@@ -36,3 +36,23 @@ const deleteGroupSuccess = result => {
         result: 'success'
     };
 };
+
+
+export const leaveGroup = (groupId, userId, groupName) => {
+    return (dispatch, getState) => {
+        Meteor.call('leaveGroup', [groupId, userId, groupName], (err, result) => {
+            if (err) {
+                console.log('Leaving group failed: ', err);
+            } else {
+                dispatch(leaveGroupSuccess(result));
+            }
+        });
+    };
+};
+
+const leaveGroupSuccess = result => {
+    return {
+        type: 'LEAVE_GROUP',
+        result: 'success'
+    };
+};

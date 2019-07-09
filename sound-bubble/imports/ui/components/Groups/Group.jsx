@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../../stylesheets/Groups.css';
 import GroupMember from './GroupMember.jsx';
-import Groups from '../../../api/groups';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { deleteGroup } from '../../actions/groupActions';
@@ -34,13 +33,13 @@ class Group extends Component {
     this.setState({ deleteGroupDialog: false });
   }
 
-  openSearchUserBar(){
-    this.setState({searchUserBar: true});
+  openSearchUserBar() {
+    this.setState({ searchUserBar: true });
     console.log("opened");
   }
 
-  closeSearchUserBar(){
-    this.setState({searchUserBar: false});
+  closeSearchUserBar() {
+    this.setState({ searchUserBar: false });
   }
 
   deleteGroup(event) {
@@ -72,22 +71,22 @@ class Group extends Component {
 
     }
 
-    let userDivs=createUserDivs(this.props.userIds);
+    let userDivs = createUserDivs(this.props.userIds, this.props.groupId, this.props.groupName);
 
     let searchUserBar = <div></div>;
-    if (this.state.searchUserBar === true){
+    if (this.state.searchUserBar === true) {
       searchUserBar = (<div className="myDropdown" className="dropdown-content">
-      <input type="text" placeholder="Search.." id="myInput" />
-      <a href="#about">About</a>
-      <a href="#base">Base</a>
-      <a href="#blog">Blog</a>
-      <a href="#contact">Contact</a>
-      <a href="#custom">Custom</a>
-      <a href="#support">Support</a>
-      <a href="#tools">Tools</a>
+        <input type="text" placeholder="Search.." id="myInput" />
+        <a href="#about">About</a>
+        <a href="#base">Base</a>
+        <a href="#blog">Blog</a>
+        <a href="#contact">Contact</a>
+        <a href="#custom">Custom</a>
+        <a href="#support">Support</a>
+        <a href="#tools">Tools</a>
 
-      <button className="closeUserSearch" onClick={() => this.closeSearchUserBar}>Close</button>
-    </div>);
+        <button className="closeUserSearch" onClick={() => this.closeSearchUserBar}>Close</button>
+      </div>);
     }
 
     return (<div>
@@ -104,23 +103,23 @@ class Group extends Component {
   }
 }
 
-function createUserDivs(userIds){
+function createUserDivs(userIds, groupId, groupName) {
   return userIds.map(userId => {
-    if (userId){
-    let user = Meteor.users.findOne({ 'profile.id': userId});
-    if (user){
-    let currentUser= Meteor.user();
-    let isCurrentUser=false;
+    if (userId) {
+      let user = Meteor.users.findOne({ 'profile.id': userId });
+      if (user) {
+        let currentUser = Meteor.user();
+        let isCurrentUser = false;
 
-    if (currentUser.profile.id === userId){
-      isCurrentUser=true;
+        if (currentUser.profile.id === userId) {
+          isCurrentUser = true;
+        }
+
+        return (<GroupMember key={userId} userImage={user.profile.images[0].url} userName={user.profile.display_name} isCurrentUser={isCurrentUser} groupId={groupId} groupName={groupName}/>);
+      } else {
+        throw new Error("Cannot find user with user id " + userId);
+      }
     }
-
-    return (<GroupMember key={userId} userImage={user.profile.images[0].url} userName={user.profile.display_name} isCurrentUser={isCurrentUser}/> );
-  } else {
-    throw new Error("Cannot find user with user id " + userId);
-  }
-  }
   })
 
 }

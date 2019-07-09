@@ -1,10 +1,19 @@
 import React from 'react';
 import '../../stylesheets/Groups.css';
+import compose from 'recompose/compose';
+import { connect } from 'react-redux';
+import { leaveGroup } from '../../actions/groupActions';
 
-export default class GroupMember extends React.Component {
+class GroupMember extends React.Component {
 
-    leaveGroup(){
-      // TODO: remove current user from current group
+    constructor(){
+      super();
+      this.leaveGroup = this.leaveGroup.bind(this);
+    }
+
+    leaveGroup(event){
+      event.preventDefault();
+      this.props.leaveGroup(this.props.groupId, Meteor.user().profile.id, this.props.groupName);
     }
 
     render() {
@@ -27,7 +36,7 @@ export default class GroupMember extends React.Component {
                         {this.props.userName} (Me)
                         </p>
                         </div>
-                        <div className="option_container" onClick={() => this.leaveGroup()}><div className="glyphicon glyphicon-log-out white"><span className="tooltiptext">Leave Group</span></div></div>      
+                        <div className="option_container" onClick={this.leaveGroup}><div className="glyphicon glyphicon-log-out white"><span className="tooltiptext">Leave Group</span></div></div>      
                 </span>
         </li>);
         } else {
@@ -50,3 +59,10 @@ export default class GroupMember extends React.Component {
 }
                                 
 }
+
+export default compose(
+  connect(
+    null,
+    { leaveGroup }
+  )
+)(GroupMember);

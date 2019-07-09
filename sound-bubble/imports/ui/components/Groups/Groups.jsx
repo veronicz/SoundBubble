@@ -67,11 +67,11 @@ function findGroups(myGroupsReady){
   if (myGroupsReady) {
     let myGroupIds = Meteor.user().groupIds;
     if (myGroupIds) {
-      myGroups = GroupsApi.find({
+      return GroupsApi.find({
         _id: { $in: myGroupIds }
       }).fetch();
     }
-    return myGroups;
+    return [];
   }
 }
 
