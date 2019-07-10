@@ -15,10 +15,18 @@ class User extends Component {
   render() {
     const { user, myGroupsReady } = this.props;
     let spotifyUrl = 'https://open.spotify.com/user/' + user.id;
+
+    let userImage;
+    if (user.images.length===0){
+      userImage="https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png";
+    } else {
+      userImage = user.images[0].url;
+    }
+
     return (
       <div className="user-container">
         <div className="user-left">
-          <img width="150" src={user.images[0].url} />
+          <img width="150" src={userImage} />
           <br />
         </div>
         <div className="user-right">
