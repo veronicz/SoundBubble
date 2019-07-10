@@ -15,19 +15,21 @@ class UserFeed extends Component {
       _id: { $in: myRecentTracks.map(t => t.songId) }
     }).fetch();
 
-    return myRecentTracks.map(t => {
-      let song = songLogs.find(s => s._id === t.songId);
-      let timestamp = t.timestamps;
-      let show = t.show;
-      return (
-        <Song
-          key={song.id + timestamp}
-          song={song}
-          timestamp={timestamp}
-          show={show}
-        />
-      );
-    });
+    if (myRecentTracks.length > 0) {
+      return myRecentTracks.map(t => {
+        let song = songLogs.find(s => s._id === t.songId);
+        let timestamp = t.timestamps;
+        let show = t.show;
+        return (
+          <Song
+            key={song.id + timestamp}
+            song={song}
+            timestamp={timestamp}
+            show={show}
+          />
+        );
+      });
+    }
   }
 
   render() {
