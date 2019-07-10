@@ -117,7 +117,7 @@ function createUserDivs(userIds, groupId, groupName) {
 
         return (<GroupMember key={userId} userImage={user.profile.images[0].url} userName={user.profile.display_name} isCurrentUser={isCurrentUser} groupId={groupId} groupName={groupName}/>);
       } else {
-        throw new Error("Cannot find user with user id " + userId);
+        log.error("Could not find user with id: " + userId);
       }
     }
   })

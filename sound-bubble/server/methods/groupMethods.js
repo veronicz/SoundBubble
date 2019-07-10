@@ -22,7 +22,6 @@ function createGroup(args){
         userIds: [args[1]]
     });
     Meteor.users.update({_id: Meteor.userId()}, {$push: {groupIds: groupId}});
-    return "Success: group created";
 }
 
 function deleteGroup(groupId) {
@@ -35,20 +34,17 @@ function deleteGroup(groupId) {
         Meteor.users.upsert({'profile.id': userId}, {$pull: {groupIds: groupId}});
     });
    GroupSongs.remove({groupId:groupId});
-
-    return "Success: group deleted";
 }
 
 function leaveGroup(args){
-    Groups.upsert({_id: args[0], name: args[2]}, {$pull: {userIds: args[1]}});
+    Groups.upsert({_id: args[0], name:args[2]}, {$pull: {userIds: args[1]}});
     let group = Groups.findOne({_id:args[0]});
     if (group.userIds.length === 0){
         // deletes the group if the group is empty
         Groups.remove({_id:args[0]});
     }
-    GroupSongs.remove({userId: Meteor.user().profile.id});
+    GroupSongs.remove({userId: args[1]});
     Meteor.users.upsert({'profile.id': args[1]}, {$pull: {groupIds:args[0]}});
-    return "Success: user with id " + args[1] + " has left group with id " + args[0];
 }
 
 
