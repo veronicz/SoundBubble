@@ -46,27 +46,29 @@ function deleteGroup(groupId) {
 function leaveGroup(groupId) {
   let currentUserId = Meteor.user().profile.id;
   Groups.update({ _id: groupId }, { $pull: { userIds: currentUserId } });
-  let group = Groups.findOne({ _id: groupId });
-  if (group.userIds.length === 0) {
-    // deletes the group if the group is empty
-    deleteGroup(groupId);
-  }
   Meteor.users.update(
     { 'profile.id': currentUserId },
     { $pull: { groupIds: groupId } }
   );
-  let userVotedSongs = UserSongs.find({
-    userId: currentUserId,
-    vote: { $ne: 0 }
-  });
-  // remove user vote from group vote
-  userVotedSongs.forEach(song => {
-    let fieldToDecrement = song.vote === 1 ? { upvote: 1 } : { downvote: 1 };
-    GroupSongs.update(
-      { songId: song._id, groupId: groupId },
-      {
-        $dec: fieldToDecrement
-      }
-    );
-  });
+
+  let group = Groups.findOne({ _id: groupId });
+  if (group.userIds.length === 0) {
+    // deletes the group if the group is empty
+    deleteGroup(groupId);
+  } else {
+    let userVotedSongs = UserSongs.find({
+      userId: currentUserId,
+      vote: { $ne: 0 }
+    });
+    // remove user vote from group vote
+    userVotedSongs.forEach(song => {
+      let fieldToDecrement = song.vote === 1 ? { upvote: 1 } : { downvote: 1 };
+      GroupSongs.update(
+        { songId: song._id, groupId: groupId },
+        {
+          $dec: fieldToDecrement
+        }
+      );
+    });
+  }
 }
