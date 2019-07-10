@@ -10,9 +10,10 @@ UserSongSchema = new SimpleSchema({
   vote: {
     type: SimpleSchema.Integer,
     allowedValues: [-1, 0, 1],
-    optional: true
+    optional: true,
+    defaultValue:0
   },
-  show: { type: Boolean, optional: true }
+  show: { type: Boolean, optional: true, defaultValue:true }
 });
 
 UserSongs.attachSchema(UserSongSchema);

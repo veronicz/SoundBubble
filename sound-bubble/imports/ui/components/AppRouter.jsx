@@ -10,7 +10,7 @@ export default class AppRouter extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <div className="pageWrapper">
           <div className="headerContainer">
             <div className="page_title_container">
               <h1 className="header_page_title">SoundBubble</h1>

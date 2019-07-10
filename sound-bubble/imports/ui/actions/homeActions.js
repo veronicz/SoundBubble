@@ -1,15 +1,25 @@
 import Groups from '../../api/groups';
+import { fetchMySongLogs } from './accountActions';
 
 export const fetchGroupSongLogs = () => {
   return (dispatch, getState) => {
-    Meteor.call('getGroupRecentlyPlayed', '1', function(err, songLogs) {
-      if (err) {
-        console.log('get group recently played failed', err);
-      } else {
-        console.log(songLogs);
-        dispatch(fetchGroupSongLogsSuccess(songLogs));
-      }
-    });
+    if (getState().currentGroup) {
+      Meteor.call(
+        'getGroupRecentlyPlayed',
+        getState().currentGroup._id,
+        function(err, songLogs) {
+          if (err) {
+            console.log('get group recently played failed', err);
+          } else {
+            console.log(songLogs);
+            dispatch(fetchGroupSongLogsSuccess(songLogs));
+          }
+        }
+      );
+    } else {
+      //user is not in any group, display own songs
+      dispatch(fetchMySongLogs());
+    }
   };
 };
 
@@ -22,7 +32,36 @@ const fetchGroupSongLogsSuccess = songLogs => {
 
 export const changeCurrentGroup = groupId => {
   return {
-    type: 'USERS_IN_GROUP',
-    users: Groups.findOne({ _id: groupId }).userIds
+    type: 'CHANGE_GROUP',
+    group: Groups.findOne({ _id: groupId })
+  };
+};
+
+export const vote = (songId, option) => {
+  return (dispatch, getState) => {
+    if (getState().currentGroup) {
+      Meteor.call(
+        'voteGroupSong',
+        songId,
+        getState().currentGroup._id,
+        option,
+        (err, result) => {
+          if (err) {
+            console.log(
+              `vote song with ${songId} in group ${
+                getState().currentGroup._id
+              } failed`,
+              err
+            );
+          }
+        }
+      );
+    } else {
+      Meteor.call('voteUserSong', songId, option, (err, result) => {
+        if (err) {
+          console.log(`vote song with ${songId} failed`, err);
+        }
+      });
+    }
   };
 };

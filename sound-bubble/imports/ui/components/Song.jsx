@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import Vote from './Vote.jsx';
+import Vote from './Home/Vote.jsx';
+import HideSongButton from './Account/HideSongButton';
 
 // This class has the following inherited props:
 // song (required)
 // user (optional)
 // Note: - this corresponds to users.services.spotify in the db
-//       - every field on user is null safe
-// upvoteCount, downvoteCount, voteState (optional)
+//       - every field on user has a null check
+// show (required if user is null)
 
 export default class Song extends Component {
   userInfo() {
@@ -43,33 +44,8 @@ export default class Song extends Component {
     }
   }
 
-  //TODO
-  voteInfo() {
-    const { song, upvoteCount, downvoteCount, voteState } = this.props;
-    if (upvoteCount != null && downvoteCount != null && voteState != null) {
-      return (
-        <Vote
-          id={song._id}
-          upAmount={upvoteCount}
-          downAmount={downvoteCount}
-          voteState={voteState}
-        />
-      );
-    } else {
-      return null;
-    }
-  }
-
-  hideButton() {
-    return this.props.user ? null : (
-      <div className="hide_song">
-        <button className="hide_button">Hide</button>
-      </div>
-    );
-  }
-
   render() {
-    const { song, timestamp } = this.props;
+    const { song, timestamp, user } = this.props;
 
     let albumImage =
       song.albumCover ||
@@ -113,9 +89,11 @@ export default class Song extends Component {
             </marquee>
           </div>
 
-          {this.voteInfo()}
+          {user ? <Vote song={song} /> : null}
 
-          {this.hideButton()}
+          {this.props.user ? null : (
+            <HideSongButton show={this.props.show} targetSong={song._id} />
+          )}
 
           <div className="time_stamp">
             <h3 className="time_stamp_stamp">

@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import { changeCurrentGroup } from '../../actions/homeActions';
+import {
+  changeCurrentGroup,
+  fetchGroupSongLogs
+} from '../../actions/homeActions';
 
 class GroupButton extends Component {
-  render() {
-    const { myGroupsReady, changeCurrentGroup } = this.props;
+  getMyGroups() {
+    const {
+      currentGroup,
+      myGroupsReady,
+      changeCurrentGroup,
+      fetchGroupSongLogs
+    } = this.props;
     let myGroups = [];
     if (myGroupsReady) {
       let myGroupIds = Meteor.user().groupIds;
@@ -14,9 +22,20 @@ class GroupButton extends Component {
         myGroups = Groups.find({
           _id: { $in: myGroupIds }
         }).fetch();
+        //set currentGroup to the first group if it is not initialized but the user has groups
+        if (!currentGroup) {
+          changeCurrentGroup(myGroups[0]._id);
+        }
       }
+      //display the initial group song logs (will fetch user song logs if user is not in any groups)
+      fetchGroupSongLogs();
     }
+    return myGroups;
+  }
 
+  render() {
+    const { currentGroup, changeCurrentGroup } = this.props;
+    let myGroups = this.getMyGroups();
     return (
       <div className="dropdown">
         <button
@@ -27,7 +46,7 @@ class GroupButton extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          Choose Group
+          {currentGroup ? currentGroup.name : 'Join a group'}
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {myGroups.map(g => (
@@ -46,6 +65,13 @@ class GroupButton extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  console.log('currentGroup', state.currentGroup);
+  return {
+    currentGroup: state.currentGroup
+  };
+};
+
 export default compose(
   withTracker(props => {
     return {
@@ -53,7 +79,7 @@ export default compose(
     };
   }),
   connect(
-    null,
-    { changeCurrentGroup }
+    mapStateToProps,
+    { changeCurrentGroup, fetchGroupSongLogs }
   )
 )(GroupButton);
