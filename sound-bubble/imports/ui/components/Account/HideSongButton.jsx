@@ -4,12 +4,11 @@ import { hideMySong } from '../../actions/accountActions';
 import compose from 'recompose/compose';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
-import UserSongs from '../../../api/songs';
+import UserSongs from '../../../api/userSongs';
 
 class HideSongButton extends Component {
   render() {
     const { hideMySong, song, show } = this.props;
-    console.log(show)
     return (
       <div className="hide_song">
         <button
@@ -31,14 +30,8 @@ class HideSongButton extends Component {
 export default compose(
   withTracker(props => {
     const hideStatusReady = Meteor.subscribe('currentUserSongs').ready();
-    console.log(props.song._id)
-    const userSong = UserSongs.findOne({
-      songId: props.song._id
-    })
-    console.log(userSong)
-    
     return {
-      show: hideStatusReady && userSong ? userSong.show : true
+      show: hideStatusReady ? UserSongs.findOne({songId:props.song._id}).show : true
     };
   }), connect(
     null,
