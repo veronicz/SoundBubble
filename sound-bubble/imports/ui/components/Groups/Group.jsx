@@ -115,7 +115,11 @@ function createUserDivs(userIds, groupId, groupName) {
           isCurrentUser = true;
         }
 
-        return (<GroupMember key={userId} userImage={user.profile.images[0].url} userName={user.profile.display_name} isCurrentUser={isCurrentUser} groupId={groupId} groupName={groupName}/>);
+        let userImage =
+        (user.profile.images[0] && user.profile.images[0].url) ||
+        "https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png";
+
+        return (<GroupMember key={userId} userImage={userImage} userName={user.profile.display_name} isCurrentUser={isCurrentUser} groupId={groupId} groupName={groupName}/>);
       } else {
         log.error("Could not find user with id: " + userId);
       }
