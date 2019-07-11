@@ -43,11 +43,11 @@ class Song extends Component {
   }
 
   renderVoteOrHide(song) {
-    const { track, home } = this.props;
+    const { home } = this.props;
     if (home) {
       return <Vote song={song} />;
     } else {
-      return <HideSongButton show={track.show} targetSong={song._id} />;
+      return <HideSongButton song={song} />;
     }
   }
 
