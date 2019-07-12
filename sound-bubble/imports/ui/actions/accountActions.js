@@ -18,14 +18,11 @@ const fetchMySongLogsSuccess = songLogs => {
   };
 };
 
-export const hideMySong = (song,user,option) => {
+export const hideMySong = (songId,option) => {
   return (dispatch, getState) => {
-    Meteor.call('hideMySong', song, user, option, (err, songLogs) => {
+    Meteor.call('hideMySong', songId, option, (err) => {
       if(err){
         console.log('Hide my song failed', err)
-      }else{
-        console.log(songLogs);
-        dispatch(fetchMySongLogsSuccess(songLogs));
       }
     })
   }

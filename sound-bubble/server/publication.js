@@ -1,42 +1,34 @@
-Meteor.publish('myGroupIds', function() {
-  if (this.userId) {
-    return Meteor.users.find(
-      { _id: this.userId },
-      {
-        fields: { groupIds: 1 }
-      }
-    );
-  } else {
-    this.ready();
-  }
-});
-
-Meteor.publish('user_songs.vote', function() {
+Meteor.publish('mySongs', function() {
   if (!this.userId) {
     return this.ready();
   }
-
-  return UserSongs.find(
-    {
-      userId: this.userId
-    },
-    {
-      fields: { vote: 1 }
-    }
-  );
+  return UserSongs.find({ userId: Meteor.user().profile.id });
 });
 
-Meteor.publish('group_songs', function() {
+Meteor.publish('groupSongs', function(groupId) {
   if (!this.userId) {
     return this.ready();
   }
+  return GroupSongs.find({ groupId: groupId });
+});
 
-  return GroupSongs.find(
-    {
-      groupId: { $in: Meteor.user().groupIds }
-    },
-    {
-      fields: { upvote: 1, downvote: 1 }
-    }
-  );
+Meteor.publish('songsById', function(songId) {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Songs.find({ _id: songId });
+});
+
+Meteor.publish('usersBySpotifyId', function(userId) {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Meteor.users.find({ 'profile.id': userId });
+});
+
+Meteor.publish('myGroups', function() {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Groups.find({ userIds: Meteor.user().profile.id });
 });
