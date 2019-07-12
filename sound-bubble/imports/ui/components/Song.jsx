@@ -117,8 +117,8 @@ class Song extends Component {
 export default withTracker(props => {
   const songId = props.track.songId;
   const userId = props.track.userId;
-  const songReady = Meteor.subscribe('trackSong', songId).ready();
-  const userReady = Meteor.subscribe('trackUser', userId).ready();
+  const songReady = Meteor.subscribe('songsById', songId).ready();
+  const userReady = Meteor.subscribe('usersBySpotifyId', userId).ready();
   return {
     song: songReady ? Songs.findOne({ _id: songId }) : null,
     user: userReady

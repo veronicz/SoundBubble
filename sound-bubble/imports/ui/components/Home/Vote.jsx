@@ -75,15 +75,12 @@ export default compose(
     const songId = props.song._id;
     const currentGroup = props.currentGroup;
 
-    const voteStateReady = Meteor.subscribe('currentUserSongs').ready();
-    const userSong = UserSongs.findOne({
-      songId: songId,
-      userId: Meteor.user().profile.id
-    });
+    const voteStateReady = Meteor.subscribe('mySongs').ready();
+    const userSong = UserSongs.findOne({ songId: songId });
     const userSongExists = voteStateReady && userSong;
 
     const groupReady = currentGroup
-      ? Meteor.subscribe('currentGroupSongs', currentGroup._id).ready()
+      ? Meteor.subscribe('groupSongs', currentGroup._id).ready()
       : null;
     const groupSong = currentGroup
       ? GroupSongs.findOne({

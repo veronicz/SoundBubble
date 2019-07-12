@@ -13,12 +13,7 @@ class HideSongButton extends Component {
       <div className="hide_song">
         <button
           className="hide_button"
-          onClick={() =>
-            hideMySong(
-              song._id,
-              show ? 'hide' : 'show'
-            )
-          }
+          onClick={() => hideMySong(song._id, show ? 'hide' : 'show')}
         >
           {show ? 'Hide' : 'Show'}
         </button>
@@ -29,11 +24,14 @@ class HideSongButton extends Component {
 
 export default compose(
   withTracker(props => {
-    const hideStatusReady = Meteor.subscribe('currentUserSongs').ready();
+    const hideStatusReady = Meteor.subscribe('mySongs').ready();
     return {
-      show: hideStatusReady ? UserSongs.findOne({songId:props.song._id}).show : true
+      show: hideStatusReady
+        ? UserSongs.findOne({ songId: props.song._id }).show
+        : true
     };
-  }), connect(
+  }),
+  connect(
     null,
     { hideMySong }
   )

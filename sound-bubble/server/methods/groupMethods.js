@@ -27,19 +27,14 @@ function createGroup(groupName) {
 }
 
 function deleteGroup(groupId) {
-  // deletes the group and deletes all occurences of that group in the users collection, also remove from groupSongs
-  Groups.remove({ _id: groupId });
-  console.log(groupId);
-  let userIdsInGroup = Meteor.users
-    .find({ groupIds: groupId })
-    .map(user => user.profile.id);
-  console.log(userIdsInGroup);
-  userIdsInGroup.forEach(userId => {
+  // remove all users from the group, delete the group, also remove from groupSongs
+  Groups.findOne({ _id: groupId }).userIds.forEach(userIdInGroup => {
     Meteor.users.update(
-      { 'profile.id': userId },
+      { 'profile.id': userIdInGroup },
       { $pull: { groupIds: groupId } }
     );
   });
+  Groups.remove({ _id: groupId });
   GroupSongs.remove({ groupId: groupId });
 }
 
