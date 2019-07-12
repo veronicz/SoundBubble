@@ -6,17 +6,16 @@ Meteor.methods({
   getMyRecentlyPlayed: function() {
     return getRecentlyPlayed(Meteor.user().profile.id);
   },
-  hideMySong: function(song,user, option) {
-    hideOrShowMySong(song,user,option)
-    return getRecentlyPlayed(Meteor.user().profile.id)
+  hideMySong: function(songId, option) {
+    updateHideStatus(songId,option);
 }});
 
-function hideOrShowMySong(song,user,option){
+function updateHideStatus(songId,option){
   if(option === 'show'){
     UserSongs.update(
       {
-        userId: user,
-        songId: song
+        userId: Meteor.user().profile.id,
+        songId: songId
       },
       {
         $set: {
@@ -27,8 +26,8 @@ function hideOrShowMySong(song,user,option){
   }else {
     UserSongs.update(
       {
-        userId: user,
-        songId: song
+        userId: Meteor.user().profile.id,
+        songId: songId
       },
       {
         $set: {
