@@ -32,7 +32,6 @@ class Group extends Component {
 
   openSearchUserBar() {
     this.setState({ searchUserBar: true });
-    console.log('opened');
   }
 
   closeSearchUserBar() {
