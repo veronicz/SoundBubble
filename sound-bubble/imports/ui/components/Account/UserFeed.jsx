@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Song from '../Song';
 import '../../stylesheets/Account.css';
+import compose from 'recompose/compose';
 import { connect } from 'react-redux';
+import { withTracker } from 'meteor/react-meteor-data';
 import { fetchMySongLogs } from '../../actions/accountActions';
+import UserSongs from '../../../api/userSongs';
 
 class UserFeed extends Component {
   componentDidMount() {
@@ -11,8 +14,9 @@ class UserFeed extends Component {
 
   getSongDetails() {
     const { myRecentTracks } = this.props;
+    console.log('myrecent', myRecentTracks);
     return myRecentTracks.map(t => {
-      return <Song key={t.songId + t.timestamps} track={t} />;
+      return <Song key={t._id} track={t} />;
     });
   }
 
@@ -38,15 +42,20 @@ class UserFeed extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    myRecentTracks: state.tracks.filter(
-      t => t.userId === Meteor.user().profile.id
-    )
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchMySongLogs }
+export default compose(
+  withTracker(props => {
+    const myRecentTracksReady = Meteor.subscribe('myRecentTracks').ready();
+    return {
+      myRecentTracks: myRecentTracksReady
+        ? UserSongs.find(
+            { userId: Meteor.user().profile.id, timestamps: { $exists: true } },
+            { sort: { timestamps: -1 } }
+          ).fetch()
+        : []
+    };
+  }),
+  connect(
+    null,
+    { fetchMySongLogs }
+  )
 )(UserFeed);

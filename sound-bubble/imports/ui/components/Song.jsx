@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Vote from './Home/Vote.jsx';
 import HideSongButton from './Account/HideSongButton';
 import { withTracker } from 'meteor/react-meteor-data';
+import Songs from '../../api/songs';
 
 // This class has the following inherited props:
 // track (required)
@@ -42,12 +43,12 @@ class Song extends Component {
     }
   }
 
-  renderVoteOrHide(song) {
-    const { home } = this.props;
+  renderVoteOrHide() {
+    const { track, song, home } = this.props;
     if (home) {
       return <Vote song={song} />;
     } else {
-      return <HideSongButton song={song} />;
+      return <HideSongButton song={song} show={track.show} />;
     }
   }
 
@@ -96,7 +97,7 @@ class Song extends Component {
               </marquee>
             </div>
 
-            {this.renderVoteOrHide(song)}
+            {this.renderVoteOrHide()}
 
             <div className="time_stamp">
               <h3 className="time_stamp_stamp">
