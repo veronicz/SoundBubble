@@ -75,7 +75,6 @@ export default class Song extends Component {
 
           <div className="song_details">
             <marquee
-              behaviour="alternate"
               onClick={() => {
                 window.open(
                   song.spotifyUrl.toString(),
@@ -100,7 +99,7 @@ export default class Song extends Component {
               {timestamp.toISOString().substring(11, 16)}
             </h3>
             <h3 className="time_stamp_played_at">
-              {timestamp.toISOString().substring(0, 10)}
+              {timestamp.toISOString().substring(2, 10)}
             </h3>
           </div>
         </span>

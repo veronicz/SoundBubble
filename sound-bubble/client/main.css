@@ -1,5 +1,5 @@
 
-#react-target{
+.react-target{
   padding:0;
   margin:0;
 }
@@ -38,8 +38,9 @@ code {
   display:flex;
   justify-content:center;
   align-items:center;
-  background-color:#121212;
-  height:60px;
+  background-color:#1f1e1e;
+  height:65px;
+  width:94%;
   margin:20px;
   border: 1px solid #414141;
   overflow:hidden;
@@ -75,7 +76,7 @@ display: inline-block;
 }
 
 .option_container .tooltiptext::after{
-  content: "";
+content: "";
 position: absolute;
 top: 100%;
 left: 50%;
@@ -89,6 +90,7 @@ border-color: #555 transparent transparent transparent;
   visibility: visible;
   opacity: 1;
 }
+
 
 .voteButton{
   position: relative;
@@ -147,6 +149,7 @@ border-color: #555 transparent transparent transparent;
 
 .photo_username{
   overflow:hidden;
+  font-family:monospace;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
@@ -173,15 +176,17 @@ border-color: #555 transparent transparent transparent;
   background-color: white;
   border-radius: 50%;
   border: none;
+  margin-bottom:3.5px;
 }
 
 .username{
   text-align:center;
   color:silver;
-  font-family:ubuntu solid bold;
+  font-family:monospace;
   font-size:12px;
   font-weight:bold;
   height:9px;
+  margin-bottom:3px;
 }
 
 .username:hover{
@@ -201,19 +206,30 @@ border-color: #555 transparent transparent transparent;
   align-content:center;
   width:20%;
   text-align:center;
-  margin-left:505px;
-  margin-top:50px;
-  margin-bottom:250px;
+  font-size:20px;
 }
 
-.group_button{
-  height:40px;
+.feed_button{
+  height:30px;
   background-color: rgb(54, 54, 54);
   color:silver;
+  width:170px;
+  margin-bottom:30px;
+  border:0px;
+}
+
+.feed_button:hover{
+  height:30px;
+  background-color: rgb(34, 34, 34);
+  color:silver;
+  width:170px;
+  margin-bottom:30px;
+  border:0px;
 }
 
 .pageContainer{
   overflow:scroll;
+  height:75%;
 }
 
 .pageContainer::-webkit-scrollbar { 
@@ -223,9 +239,11 @@ border-color: #555 transparent transparent transparent;
 .song_details{
  color:silver;
  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
- width:55%;
+ width:40%;
  position:auto;
  font-size:23px;
+ padding:0;
+ margin:0;
 }
 
 .song_details:hover{
@@ -235,10 +253,16 @@ border-color: #555 transparent transparent transparent;
 }
 
 .votes{
+  display:flex;
+  justify-content:center;
+  align-content:center;
+  align-items:center;
   width:10%;
   color:grey;
   margin:0px;
   position:auto;
+  padding:0;
+  font-family:monospace;
 }
 
 .thumbsUp{
@@ -267,11 +291,11 @@ border-color: #555 transparent transparent transparent;
 }
 
 .time_stamp{
-  font-family: Lucida Sans Typewriter;
+  font-family: monospace;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  color:rgb(138, 138, 138);
+  color:rgb(163, 163, 163);
   height:inherit;
   position:auto;
   margin:5px;
@@ -290,10 +314,11 @@ border-color: #555 transparent transparent transparent;
 }
 
 .album_cover{
-  width:40%;
-  height:99%;
+  width:35%;
+  height:100%;
   overflow:hidden;
-  margin-left:0px;
+  padding:0;
+  margin:0;
 }
 
 .album_cover:hover{
@@ -319,7 +344,6 @@ border-color: #555 transparent transparent transparent;
   color:white;
   text-align: center;
   font-size:25px;
-  font-family:lucida console;
  
   background-color:black;
 }
@@ -355,4 +379,7 @@ border-color: #555 transparent transparent transparent;
   width:100%;
   height:100%;
   margin-top:40px;
+  padding:0;
+  margin:0;
 }
+
