@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchGroupSongLogs } from '../../actions/homeActions';
 import Songs from '../../../api/songs';
 import GroupButton from './GroupButton';
+import '../../stylesheets/main.css';
 
 class SongLog extends Component {
   getSongDetails() {
@@ -45,10 +46,11 @@ class SongLog extends Component {
 
         <div className="songs">
           <ul>{this.getSongDetails()}</ul>
-        </div>
-        <div className="show_more_button_container">
+          <div className="show_more_button_container">
           <button className="feed_button btn btn-secondary btn-lg"> Show More </button>
         </div>
+        </div>
+        
       </div>
     );
   }

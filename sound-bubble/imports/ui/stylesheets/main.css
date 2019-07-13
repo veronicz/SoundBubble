@@ -31,20 +31,15 @@ code {
 
 .voteCount{
   font-size:12px;
+  margin-right:15px;
 }
 
-.song_card_container{
-  border-radius:20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:#1f1e1e;
-  height:65px;
-  width:94%;
-  margin:20px;
-  border: 1px solid #414141;
-  overflow:hidden;
-}
+
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+} 
 
 .option_container{
   position: relative;
@@ -176,13 +171,13 @@ border-color: #555 transparent transparent transparent;
   background-color: white;
   border-radius: 50%;
   border: none;
-  margin-bottom:3.5px;
+  margin-bottom:4px !important;
 }
 
 .username{
   text-align:center;
   color:silver;
-  font-family:monospace;
+  font-family:monospace !important;
   font-size:12px;
   font-weight:bold;
   height:9px;
@@ -216,6 +211,7 @@ border-color: #555 transparent transparent transparent;
   width:170px;
   margin-bottom:30px;
   border:0px;
+  animation: fadeIn 0.5s linear;
 }
 
 .feed_button:hover{
@@ -227,9 +223,10 @@ border-color: #555 transparent transparent transparent;
   border:0px;
 }
 
+
 .pageContainer{
   overflow:scroll;
-  height:75%;
+  animation: fadeIn 0.5s linear;
 }
 
 .pageContainer::-webkit-scrollbar { 
@@ -238,8 +235,7 @@ border-color: #555 transparent transparent transparent;
 
 .song_details{
  color:silver;
- font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
- width:40%;
+ width:60%;
  position:auto;
  font-size:23px;
  padding:0;
@@ -247,7 +243,7 @@ border-color: #555 transparent transparent transparent;
 }
 
 .song_details:hover{
-  font-size:31px;
+  font-size:27px;
   font-weight:bold;
   color:#1db954;
 }
@@ -259,35 +255,20 @@ border-color: #555 transparent transparent transparent;
   align-items:center;
   width:10%;
   color:grey;
-  margin:0px;
   position:auto;
-  padding:0;
   font-family:monospace;
 }
 
 .thumbsUp{
   width:30%;
   height:30%;
-  margin:0px;
   margin-right:10px;
-  transform:scaleX(-1);
 }
 
 .thumbsDown{
   width:30%;
   height:30%;
-  margin:0px;
-  transform: scaleY(-1);
-}
-
-.thumbsUp:hover{
-  width:38%;
-  height:38%;
-}
-
-.thumbsDown:hover{
-  width:38%;
-  height:38%;
+  margin-right:10px;
 }
 
 .time_stamp{
@@ -295,7 +276,7 @@ border-color: #555 transparent transparent transparent;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  color:rgb(163, 163, 163);
+  color:rgb(180, 180, 180);
   height:inherit;
   position:auto;
   margin:5px;
@@ -357,6 +338,7 @@ border-color: #555 transparent transparent transparent;
   align-items:center;
   position:auto;
   margin-bottom:0px;
+  animation: fadeIn 0.5s linear;
 }
 
 .refresh_button{
@@ -381,5 +363,19 @@ border-color: #555 transparent transparent transparent;
   margin-top:40px;
   padding:0;
   margin:0;
+}
+
+.song_card_container{
+  border-radius:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color:#292828;
+  height:65px;
+  width:94%;
+  margin:20px;
+  border: 1px solid #585858;
+  overflow:hidden;
+  animation: fadeIn 1s linear;
 }
 

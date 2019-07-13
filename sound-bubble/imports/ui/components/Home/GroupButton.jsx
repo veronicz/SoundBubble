@@ -6,6 +6,7 @@ import {
   changeCurrentGroup,
   fetchGroupSongLogs
 } from '../../actions/homeActions';
+import '../../stylesheets/main.css';
 
 class GroupButton extends Component {
   getMyGroups() {
