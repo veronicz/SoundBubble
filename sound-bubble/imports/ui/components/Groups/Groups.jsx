@@ -30,9 +30,15 @@ class Groups extends Component {
   }
 
   render() {
-    const { myGroupsReady } = this.props;
-    let myGroups = findGroups(myGroupsReady);
-    let groupDivs = createGroupDivs(myGroups);
+    const { myGroups } = this.props;
+    let groupDivs = myGroups.map(g => (
+      <Group
+        key={g._id}
+        groupId={g._id}
+        groupName={g.name}
+        userIds={g.userIds}
+      />
+    ));
 
     let popup = <div />;
     if (this.state.createGroupPopup === true) {
@@ -83,35 +89,11 @@ class Groups extends Component {
   }
 }
 
-function findGroups(myGroupsReady) {
-  if (myGroupsReady) {
-    let myGroupIds = Meteor.user().groupIds;
-    if (myGroupIds) {
-      return GroupsApi.find({
-        _id: { $in: myGroupIds }
-      }).fetch();
-    }
-    return [];
-  }
-}
-
-function createGroupDivs(myGroups) {
-  if (myGroups) {
-    return myGroups.map(g => (
-      <Group
-        key={g._id}
-        groupId={g._id}
-        groupName={g.name}
-        userIds={g.userIds}
-      />
-    ));
-  }
-}
-
 export default compose(
   withTracker(props => {
+    const myGroupsReady = Meteor.subscribe('myGroups').ready();
     return {
-      myGroupsReady: Meteor.subscribe('myGroupIds').ready()
+      myGroups: myGroupsReady ? GroupsApi.find().fetch() : []
     };
   }),
   connect(

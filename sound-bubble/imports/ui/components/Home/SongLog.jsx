@@ -11,15 +11,11 @@ class SongLog extends Component {
     return this.props.groupRecentTracks
       .filter(t => t.show)
       .map(t => {
-        let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
-        let song = Songs.findOne({ _id: t.songId });
-        let timestamp = t.timestamps;
         return (
           <Song
-            key={song.id + user.id + timestamp}
-            song={song}
-            user={user}
-            timestamp={timestamp}
+            key={t.songId + t.userId + t.timestamps}
+            track={t}
+            home={true}
           />
         );
       });
