@@ -106,7 +106,7 @@ class Song extends Component {
                 {track.timestamps.toISOString().substring(11, 16)}
               </h3>
               <h3 className="time_stamp_played_at">
-                {track.timestamps.toISOString().substring(0, 10)}
+                {track.timestamps.toISOString().substring(2, 10)}
               </h3>
             </div>
           </span>

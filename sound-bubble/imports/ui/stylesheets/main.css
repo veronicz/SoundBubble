@@ -276,7 +276,7 @@ border-color: #555 transparent transparent transparent;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  color:rgb(180, 180, 180);
+  color:rgb(190, 184, 184);
   height:inherit;
   position:auto;
   margin:5px;
@@ -286,7 +286,7 @@ border-color: #555 transparent transparent transparent;
 
 .time_stamp_played_at{
   margin:0px;
-  font-size:10px;
+  font-size:8px;
   font-weight:bold;
 }
 
