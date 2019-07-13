@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import AccountsUIWrapper from './AccountsUIWrapper.jsx';
+import Groups from '../../../api/groups';
+import { Meteor } from 'meteor/meteor';
 
 class User extends Component {
   formatUserInfo(title, detail) {
@@ -13,11 +15,11 @@ class User extends Component {
   }
 
   render() {
-    const { user, myGroupsReady } = this.props;
+    const { user, myGroupsCount } = this.props;
     let spotifyUrl = 'https://open.spotify.com/user/' + user.id;
     let userImage =
-        (user.images[0] && user.images[0].url) ||
-        "https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png";
+      (user.images[0] && user.images[0].url) ||
+      'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
 
     return (
       <div className="user-container">
@@ -28,12 +30,7 @@ class User extends Component {
         <div className="user-right">
           <h3>{user.display_name}</h3>
           <div className="user-info">
-            {this.formatUserInfo(
-              'Groups',
-              myGroupsReady && Meteor.user().groupIds
-                ? Meteor.user().groupIds.length
-                : 0
-            )}
+            {this.formatUserInfo('Groups', myGroupsCount)}
             {this.formatUserInfo('Email', user.email)}
           </div>
           <a className="profileLink" href={spotifyUrl}>Go To Your Spotify</a>
@@ -51,7 +48,8 @@ class User extends Component {
 }
 
 export default withTracker(props => {
+  const myGroupsReady = Meteor.subscribe('myGroups').ready();
   return {
-    myGroupsReady: Meteor.subscribe('myGroupIds').ready()
+    myGroupsCount: myGroupsReady ? Groups.find().fetch().length : 0
   };
 })(User);

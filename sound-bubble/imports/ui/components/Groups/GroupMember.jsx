@@ -1,7 +1,10 @@
 import React from 'react';
 import '../../stylesheets/Groups.css';
 import { connect } from 'react-redux';
+import compose from 'recompose/compose';
+import { withTracker } from 'meteor/react-meteor-data';
 import { leaveGroup } from '../../actions/groupActions';
+import { Meteor } from 'meteor/meteor';
 
 class GroupMember extends React.Component {
   constructor() {
@@ -14,25 +17,27 @@ class GroupMember extends React.Component {
     this.props.leaveGroup(this.props.groupId);
   }
 
+  isCurrentUser() {
+    return Meteor.user().profile.id === this.props.userId;
+  }
+
   render() {
-    let groupMemberDiv;
+    const { user } = this.props;
+    if (user) {
+      let userImage =
+        (user.images[0] && user.images[0].url) ||
+        'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
 
-    if (this.props.userImage === '') {
-      this.props.userImage =
-        'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
-    }
-
-    if (this.props.isCurrentUser === true) {
-      groupMemberDiv = (
+      return (
         <li className="groupMember_container">
           <span className="groupMember_card">
             <div className="profile_photo">
               <img
                 className="user_photo"
-                src={this.props.userImage}
+                src={userImage}
                 onClick={() => {
                   window.open(
-                    this.props.userImage.toString(),
+                    userImage.toString(),
                     'popup',
                     'width=650,height=450'
                   );
@@ -43,49 +48,39 @@ class GroupMember extends React.Component {
 
             <div className="username">
               <p className="group_member_username">
-                {this.props.userName} (Me)
+                {user.display_name} {this.isCurrentUser() ? '(Me)' : null}
               </p>
             </div>
-            <div className="option_container" onClick={this.leaveGroup}>
-              <div className="leaveGroup glyphicon glyphicon-log-out white">
-                <span className="tooltiptext">Leave Group</span>
+            {this.isCurrentUser() ? (
+              <div className="option_container" onClick={this.leaveGroup}>
+                <div className="leaveGroup glyphicon glyphicon-log-out white">
+                  <span className="tooltiptext">Leave Group</span>
+                </div>
               </div>
-            </div>
+            ) : null}
           </span>
         </li>
       );
     } else {
-      groupMemberDiv = (
-        <li className="groupMember_container">
-          <span className="groupMember_card">
-            <div className="profile_photo">
-              <img
-                className="user_photo"
-                src={this.props.userImage}
-                onClick={() => {
-                  window.open(
-                    this.props.userImage.toString(),
-                    'popup',
-                    'width=650,height=450'
-                  );
-                  return false;
-                }}
-              />
-            </div>
-
-            <div className="username">
-              <p className="group_member_username">{this.props.userName}</p>
-            </div>
-          </span>
-        </li>
-      );
+      return null;
     }
-
-    return <div>{groupMemberDiv}</div>;
   }
 }
 
-export default connect(
-  null,
-  { leaveGroup }
+export default compose(
+  withTracker(props => {
+    const userReady = Meteor.subscribe(
+      'usersBySpotifyId',
+      props.userId
+    ).ready();
+    return {
+      user: userReady
+        ? Meteor.users.findOne({ 'profile.id': props.userId }).profile
+        : null
+    };
+  }),
+  connect(
+    null,
+    { leaveGroup }
+  )
 )(GroupMember);
