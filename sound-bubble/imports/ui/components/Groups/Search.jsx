@@ -21,7 +21,6 @@ class Search extends React.Component {
 
     searchUser(userName){
       const foundUsers = this.props.allUsers.filter(user => user.profile.display_name.toLowerCase().includes(userName.toLowerCase()));
-      console.log(foundUsers);
       this.setState({foundUsers: foundUsers})
     }
 
