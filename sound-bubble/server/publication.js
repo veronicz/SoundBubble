@@ -32,3 +32,10 @@ Meteor.publish('myGroups', function() {
   }
   return Groups.find({ userIds: Meteor.user().profile.id });
 });
+
+Meteor.publish('allUsers', function() {
+  if(!this.userId) {
+    return this.ready();
+  }
+  return Meteor.users.find();
+})

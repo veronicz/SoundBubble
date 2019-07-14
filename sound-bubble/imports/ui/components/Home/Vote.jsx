@@ -25,7 +25,9 @@ class Vote extends React.Component {
               <span className="tooltiptext">Undo Upvote</span>
             </div>
           </div>
-          <span className="voteCount">{upvoteCount} likes</span>
+          <span className='voteCount' style={{ color: '#1db954'}}>{upvoteCount}</span>
+          <span className='voteCount'> / </span>
+          <span className='voteCount' style={{ color: '#DC143C' }}>{downvoteCount}</span>
         </div>
       );
     }
@@ -35,12 +37,14 @@ class Vote extends React.Component {
           <div onClick={() => vote(songId, 4)} className="voteButton">
             <div
               className="glyphicon glyphicon-thumbs-down"
-              style={{ color: '#1db954' }}
+              style={{ color: '#DC143C' }}
             >
               <span className="tooltiptext">Undo Downvote</span>
             </div>
           </div>
-          <span className="voteCount">{downvoteCount} dislikes</span>
+          <span className='voteCount' style={{ color: '#1db954'}}>{upvoteCount}</span>
+          <span className='voteCount'> / </span>
+          <span className='voteCount' style={{ color: '#DC143C' }}>{downvoteCount}</span>
         </div>
       );
     } else {

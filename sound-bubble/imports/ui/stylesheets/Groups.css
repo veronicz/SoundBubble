@@ -235,3 +235,34 @@ div{
   .dropdown a:hover {background-color: #ddd;}
   
   .show {display: block;}
+
+  .searchBar-Container{
+    align-items:center;
+    padding: 5px;
+    background-color: rgb(145, 144, 144);
+    font-family:monospace;
+}
+
+.searchBar{
+  width: 80%;
+  padding: 5px;
+}
+
+.closeUserSearch{
+  width: 20%;
+  padding: 5px;
+}
+
+.detailContainer {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
+
+.addMember {
+  float: right;
+  cursor: pointer;
+  font-size: 12px;
+}
+
