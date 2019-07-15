@@ -1,11 +1,11 @@
 import '../spotify-api';
-import { getRecentlyPlayed } from './commonMethods';
+import { getAllRecentlyPlayed } from './commonMethods';
 import Groups from '../../imports/api/groups';
 import GroupSongs from '../../imports/api/groupSongs';
 import UserSongs from '../../imports/api/userSongs';
 
 Meteor.methods({
-  getGroupRecentlyPlayed: function(groupId) {
+  getGroupRecentlyPlayed: function(groupId = null) {
     updateGroupRecentlyPlayed(groupId);
   },
   voteGroupSong: function(songId, groupId, option) {
@@ -18,7 +18,9 @@ Meteor.methods({
 });
 
 function updateGroupRecentlyPlayed(groupId) {
-  let userIds = Groups.findOne({ _id: groupId }).userIds;
+  let userIds = groupId
+    ? Groups.findOne({ _id: groupId }).userIds
+    : Meteor.users.find().map(u => u.profile.id);
   userIds.forEach(userId => {
     let tokens = {};
     try {
@@ -26,7 +28,7 @@ function updateGroupRecentlyPlayed(groupId) {
     } catch (error) {
       throw new Meteor.Error(error);
     }
-    getRecentlyPlayed(userId, tokens);
+    getAllRecentlyPlayed(userId, tokens);
   });
 }
 
