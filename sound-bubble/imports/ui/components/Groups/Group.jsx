@@ -136,9 +136,10 @@ class Group extends Component {
           {deleteGroupPopUp}
         </div>
 
-        {userDivs}
+      <div className="groupMembers">
+      {userDivs}
       </div>
-    );
+    </div>);
   }
 }
 

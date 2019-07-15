@@ -14,7 +14,7 @@ export default class About extends Component {
   render() {
     return (
       <div className="container">
-        <h1>About SoundBubble</h1>
+        <h1 className="about_header">About SoundBubble</h1>
         <p>
           This application is a platform for integrating songs played on Spotify
           and for sharing music with other users. Users are able to view song
@@ -23,7 +23,7 @@ export default class About extends Component {
           expand your bubble!
         </p>
 
-        <h1>About Us</h1>
+        <h1 className="about_us_header">About Us</h1>
         <Developers />
         <References references={references} />
       </div>

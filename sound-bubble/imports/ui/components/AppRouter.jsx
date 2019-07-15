@@ -23,21 +23,24 @@ export default class AppRouter extends Component {
                 activeClassName="activeLink"
               >
                 <span className="glyphicon glyphicon-home" area-hidden="true" />
-                Home
+                
+                <h1 className="navLink_title">Home</h1>
               </NavLink>
               <NavLink
                 to={'/Account'}
                 className="navLink"
                 activeClassName="activeLink"
               >
-                My Profile
+              <span className="glyphicon glyphicon-headphones" area-hidden="true" />
+                <h1 className="navLink_title">My Profile</h1>
               </NavLink>
               <NavLink
                 to={'/Groups'}
                 className="navLink"
                 activeClassName="activeLink"
               >
-                My Groups
+              <span className="glyphicon glyphicon-tasks" area-hidden="true" />
+                <h1 className="navLink_title">My Groups</h1>
               </NavLink>
               <NavLink
                 to={'/About'}
@@ -45,7 +48,8 @@ export default class AppRouter extends Component {
                 className="navLink"
                 activeClassName="activeLink"
               >
-                About
+              <span className="glyphicon glyphicon-info-sign" area-hidden="true" />
+                <h1 className="navLink_title">About</h1>
               </NavLink>
             </div>
           </div>
