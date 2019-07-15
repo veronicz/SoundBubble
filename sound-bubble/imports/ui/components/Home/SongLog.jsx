@@ -50,14 +50,14 @@ class SongLog extends Component {
         <div className="songs">
           <ul>{this.getSongDetails()}</ul>
           <div className="show_more_button_container">
-          <button className="feed_button btn btn-secondary btn-lg"> Show More </button>
+            <button
+              className="btn btn-secondary btn-sm"
+              onClick={this.loadMore}
+            >
+              Show More
+            </button>
+          </div>
         </div>
-        <div className="show_more_button_container">
-          <button className="btn btn-secondary btn-sm" onClick={this.loadMore}>
-            Show More
-          </button>
-        </div>
-
       </div>
     );
   }

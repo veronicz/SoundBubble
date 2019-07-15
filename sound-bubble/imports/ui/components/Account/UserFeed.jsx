@@ -12,10 +12,6 @@ const LIMIT_INCREMENT = 20;
 const limit = new ReactiveVar(DEFAULT_LIMIT);
 
 class UserFeed extends Component {
-  componentDidMount() {
-    this.props.fetchMySongLogs();
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.myRecentTracksReady;
   }

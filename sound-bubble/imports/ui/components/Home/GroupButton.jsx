@@ -2,26 +2,15 @@ import React, { Component } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import {
-  changeCurrentGroup,
-  fetchGroupSongLogs
-} from '../../actions/homeActions';
-import '../../stylesheets/main.css';
+import { changeCurrentGroup } from '../../actions/homeActions';
 
 class GroupButton extends Component {
   setDefaultGroup() {
-    const {
-      currentGroup,
-      myGroups,
-      changeCurrentGroup,
-      fetchGroupSongLogs
-    } = this.props;
+    const { currentGroup, myGroups, changeCurrentGroup } = this.props;
     //set currentGroup to the first group if it is not initialized but the user has groups
     if (!currentGroup && myGroups[0]) {
       changeCurrentGroup(myGroups[0]._id);
     }
-    //display the initial group song logs (will fetch user song logs if user is not in any groups)
-    fetchGroupSongLogs();
   }
 
   handleChangeGroup(newGroupId) {
@@ -73,7 +62,7 @@ const mapStateToProps = state => {
 export default compose(
   connect(
     mapStateToProps,
-    { changeCurrentGroup, fetchGroupSongLogs }
+    { changeCurrentGroup }
   ),
   withTracker(props => {
     const myGroupsReady = Meteor.subscribe('myGroups').ready();
