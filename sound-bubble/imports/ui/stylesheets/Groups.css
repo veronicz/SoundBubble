@@ -277,9 +277,10 @@
   font-size: 12px;
 }
 
-  .group_header{
+.group_header{
     display:flex;
-    justify-content:space-around;
+    justify-content:center;
+    align-content:center ;
     align-items:center;
     margin-top:50px;
 }
