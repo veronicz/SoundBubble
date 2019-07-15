@@ -11,6 +11,9 @@ Meteor.methods({
   },
   leaveGroup: function(groupId) {
     return leaveGroup(groupId);
+  },
+  addGroupMember: function(groupId, userId) {
+    addGroupMember(groupId,userId)
   }
 });
 
@@ -66,4 +69,28 @@ function leaveGroup(groupId) {
       );
     });
   }
+}
+
+function addGroupMember(groupId, userId) {
+  Groups.update(
+    {_id: groupId},
+    {$push: { userIds: userId}}
+  );
+  Meteor.users.update(
+    {'profile.id': userId},
+    {$push: {groupIds: groupId}}
+  );
+  //add the user vote to the group vote count
+  let userVotedSongs = UserSongs.find(
+    {userId: userId,
+    vote: {$ne: 0}}
+  );
+  userVotedSongs.forEach(song => {
+    let fieldToIncrement = song.vote === 1 ? {upvote: 1} : {downvote: 1};
+    GroupSongs.upsert({
+      songId: song._id,
+      groupId: groupId
+    },
+    {$inc: fieldToIncrement})
+  });
 }
