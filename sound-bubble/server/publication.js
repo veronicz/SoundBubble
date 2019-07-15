@@ -38,7 +38,7 @@ Meteor.publish('myGroups', function() {
   return Groups.find({ userIds: Meteor.user().profile.id });
 });
 
-Meteor.publish('myRecentTracks', function(limit = 10) {
+Meteor.publish('myRecentTracks', function(limit) {
   if (!this.userId) {
     return this.ready();
   }
@@ -78,7 +78,7 @@ Meteor.publish('myRecentTracks', function(limit = 10) {
   ]);
 });
 
-Meteor.publish('groupRecentTracks', function(group, limit = 50) {
+Meteor.publish('groupRecentTracks', function(group, limit) {
   if (!this.userId) {
     return this.ready();
   }
