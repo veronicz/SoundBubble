@@ -4,8 +4,9 @@ import UserSongs from '../../imports/api/userSongs';
 
 export function getAllRecentlyPlayed(userId, config = null) {
   do {
-    let lastFetchedTime = Meteor.users.findOne({ 'profile.id': userId })
-      .lastFetched;
+    let lastFetchedTime =
+      Meteor.users.findOne({ 'profile.id': userId }).lastFetched ||
+      '1546300800000'; //fetch from 2019/01/01 12:00am UTC
     let options = { after: lastFetchedTime, limit: 50 };
     let response = getFromSpotifyWithOptionsChecked(
       'getMyRecentlyPlayedTracks',
