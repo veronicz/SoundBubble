@@ -6,7 +6,7 @@ export default class DeveloperInfo extends Component {
     let zepetoPath = `/About/${zepeto || 'developer'}.png`;
     return (
       <div className="developer-card">
-        <div className="dev_info_container">
+        <div className="container">
           <img src={zepetoPath} alt="developer zepeto" className="dev-zepeto" />
           {formatNameAndTitle(name, title)}
           {formatGithub(github)}
@@ -30,7 +30,7 @@ function formatNameAndTitle(name, title) {
 function formatGithub(link) {
   return (
     <div>
-      <img src={'/About/github.png'} alt="github logo" className="github" />
+      <img src={'/About/github.png'} alt="github logo" id="github" />
       :&nbsp;
       <a href={link}>{link}</a>
     </div>

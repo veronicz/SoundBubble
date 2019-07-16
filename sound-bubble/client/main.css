@@ -1,69 +1,35 @@
-.user-container {
-  margin-left: 180px;
-  display: flex;
-  border: 1px solid rgb(71, 71, 71);
-  padding: 1em;
-  border-radius: 5px;
-  color: silver;
-  width: 70%;
-  margin-top: 30px;
-  background: rgb(43, 42, 42);
-  font-size: 16px;
-}
-
-.me {
-  margin-top: 40px;
-  text-align: center;
-  font-family: monospace;
-  font-size: 40px;
-  color: silver;
-}
-.user-left {
-  text-align: center;
-}
-
-.user-right {
-  margin-left: 1em;
-  flex-grow: 2;
-  position: relative;
-}
-
-.user-info {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.user-detail {
-  margin: 0 3em 0 0;
-}
-
-.logout {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-
-body {
-  padding: 10px;
-  font-family: sans-serif;
-}
-body {
-  padding: 10px;
-  font-family: comic sans ms;
-}
-
-body {
+#react-target {
+  padding: 0;
   margin: 0;
+}
+
+.pageWrapper {
+  padding: 0;
+  margin: 0;
+}
+
+.app {
+  padding: 0;
+  margin: 0;
+}
+
+body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  margin: 0;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.voteCount {
+  font-size: 12px;
 }
 
 .song_card_container {
@@ -74,8 +40,92 @@ code {
   background-color: #121212;
   height: 60px;
   margin: 20px;
-  border: 1px solid #232323;
+  border: 1px solid #414141;
   overflow: hidden;
+}
+
+.option_container {
+  position: relative;
+  display: inline-block;
+}
+
+.option_container .tooltiptext {
+  visibility: hidden;
+  background-color: silver;
+  color: black;
+  font-family: monospace;
+  text-align: center;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: -50%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltiptext {
+  font-size: 16px;
+}
+
+.option_container .tooltiptext::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.option_container:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.voteButton {
+  position: relative;
+  display: inline-block;
+}
+
+.voteButton .tooltiptext {
+  visibility: hidden;
+  background-color: silver;
+  color: black;
+  font-family: monospace;
+  text-align: center;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: -50%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.voteButton .tooltiptext::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.voteButton:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 .song_card_container:hover {
@@ -136,6 +186,18 @@ code {
   text-decoration: underline;
 }
 
+.headerContainer {
+  width: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.group_button {
+  height: 40px;
+  background-color: rgb(54, 54, 54);
+  color: silver;
+}
+
 .pageContainer {
   overflow: scroll;
 }
@@ -159,35 +221,35 @@ code {
 }
 
 .votes {
-  width: 20%;
+  width: 10%;
   color: grey;
   margin: 0px;
   position: auto;
 }
 
 .thumbsUp {
-  width: 20%;
-  height: 20%;
+  width: 30%;
+  height: 30%;
   margin: 0px;
   margin-right: 10px;
   transform: scaleX(-1);
 }
 
 .thumbsDown {
-  width: 20%;
-  height: 20%;
+  width: 30%;
+  height: 30%;
   margin: 0px;
   transform: scaleY(-1);
 }
 
 .thumbsUp:hover {
-  width: 28%;
-  height: 28%;
+  width: 38%;
+  height: 38%;
 }
 
 .thumbsDown:hover {
-  width: 28%;
-  height: 28%;
+  width: 38%;
+  height: 38%;
 }
 
 .time_stamp {
@@ -248,23 +310,9 @@ code {
   background-color: black;
 }
 
-.hide_button {
-  border: none;
-  background: rgb(97, 97, 97);
-  color: black;
-  font-size: 15px;
-  margin-bottom: 10px;
-}
-
-.hide_button:hover {
-  border: none;
-  background: black;
-  color: white;
-  font-size: 15px;
-}
-
 .song_feed_header {
-  margin-top: 30px;
+  margin-top: 50px;
+  margin-bottom: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;

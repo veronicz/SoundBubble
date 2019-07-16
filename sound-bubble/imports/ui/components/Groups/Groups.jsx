@@ -74,7 +74,7 @@ class Groups extends Component {
       <div className="groups_container">
         <div className="heading_container">
           <h1 className="group_heading"> Groups </h1>
-          <div className="groups_options">
+          <div className="group_options">
             <div className="option_container" onClick={() => this.openForm()}>
               <div className="glyphicon glyphicon-plus white">
                 <span className="tooltiptext">Create New Group</span>
