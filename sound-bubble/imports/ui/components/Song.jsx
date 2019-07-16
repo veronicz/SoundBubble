@@ -53,6 +53,25 @@ class Song extends Component {
     }
   }
 
+  parseTimeStamp(datetime){
+    //format time and date
+    let hours = datetime.getHours();
+    let minutes = datetime.getMinutes();
+
+    let time = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes);
+
+    let month = datetime.getMonth();
+    let day = datetime.getDate();
+    let year = datetime.getFullYear().toString().substring(2,4);
+
+    let date = (month < 10 ? "0" + month : month) + "/" + (day < 10 ? "0" + day : day) + "/" + year;
+
+    return ({
+      date: date,
+      time: time
+    });
+  }
+
   render() {
     const { track, song, home } = this.props;
     if (song) {
@@ -104,10 +123,10 @@ class Song extends Component {
 
             <div className="time_stamp">
               <h3 className="time_stamp_stamp">
-                {track.timestamps.toISOString().substring(11, 16)}
+                {this.parseTimeStamp(track.timestamps).time}
               </h3>
               <h3 className="time_stamp_played_at">
-                {track.timestamps.toISOString().substring(2, 10)}
+                {this.parseTimeStamp(track.timestamps).date}
               </h3>
             </div>
           </span>
