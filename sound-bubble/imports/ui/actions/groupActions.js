@@ -13,6 +13,8 @@ export const deleteGroup = groupId => {
     Meteor.call('deleteGroup', groupId, (err, result) => {
       if (err) {
         console.log('Deleting group failed: ', err);
+      }else{
+        dispatch(removeGroupSuccess(groupId));
       }
     });
   };
@@ -23,10 +25,19 @@ export const leaveGroup = groupId => {
     Meteor.call('leaveGroup', groupId, (err, result) => {
       if (err) {
         console.log('Leaving group failed: ', err);
+      }else{
+        dispatch(removeGroupSuccess(groupId));
       }
     });
   };
 };
+
+export const removeGroupSuccess = (groupId) => {
+  return {
+    type: 'REMOVE_GROUP',
+    group: groupId
+  }
+}
 
 export const addGroupMember = (groupId, userId) => {
   return (dispatch, getState) => {
