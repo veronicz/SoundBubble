@@ -6,7 +6,7 @@ import './methods/groupMethods';
 import './publication';
 
 SyncedCron.add({
-  name: 'Update rencently played for all users',
+  name: 'Update recently played for all users',
   schedule: function(parser) {
     return parser.text('every 1 hour');
   },
