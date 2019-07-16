@@ -1,6 +1,6 @@
 .headImg {
     width: 100%;
-    height: 200px;
+    height: 160px;
     z-index: -1;
     padding: 0;
     margin:0;
@@ -23,20 +23,17 @@
     flex-direction: column;
     justify-content:center;
     align-content:center;
-    height:175px;
+    height:160px;
     text-align:center;
     padding:0;
     margin:0;
 }
 
 .navLink_title{
-    margin-left:5px;
-}
-
-.navLink_title{
     font-size:15px;
     padding:0;
-    margin:0;
+    margin-top:0px;
+    margin-bottom:2px;
 }
 
 body{
@@ -48,7 +45,7 @@ body{
     display:inline-block;
     position:relative;
     color:white;
-    font-size: 105px;
+    font-size: 90px;
     font-family:impact;
     background: url(https://media1.giphy.com/media/AWzvQj7sEkiBy/giphy.webp?cid=790b76115d0d55c14d3571436b84d920&rid=giphy.webp) repeat;
    -webkit-background-clip: text;
