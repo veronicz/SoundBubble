@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../stylesheets/Groups.css';
 import GroupMember from './GroupMember.jsx';
+import Search from './Search.jsx'
 import { connect } from 'react-redux';
 import { deleteGroup } from '../../actions/groupActions';
 
@@ -32,10 +33,9 @@ class Group extends Component {
 
   openSearchUserBar() {
     this.setState({ searchUserBar: true });
-    console.log('opened');
   }
 
-  closeSearchUserBar() {
+  closeSearchUserBar = () => {
     this.setState({ searchUserBar: false });
   }
 
@@ -89,27 +89,9 @@ class Group extends Component {
 
     let userDivs = this.createGroupMembersComponents(userIds, groupId);
 
-    let searchUserBar = <div />;
+    let searchUserBar = <div />; 
     if (this.state.searchUserBar === true) {
-      searchUserBar = (
-        <div className="myDropdown" className="dropdown-content">
-          <input type="text" placeholder="Search.." id="myInput" />
-          <a href="#about">About</a>
-          <a href="#base">Base</a>
-          <a href="#blog">Blog</a>
-          <a href="#contact">Contact</a>
-          <a href="#custom">Custom</a>
-          <a href="#support">Support</a>
-          <a href="#tools">Tools</a>
-
-          <button
-            className="closeUserSearch"
-            onClick={() => this.closeSearchUserBar}
-          >
-            Close
-          </button>
-        </div>
-      );
+      searchUserBar = (<Search existUsers={userIds} groupId={groupId} closeSearch={this.closeSearchUserBar}/>);
     }
 
     return (
@@ -119,7 +101,7 @@ class Group extends Component {
           <div className="group_options">
             <div
               className="option_container"
-              onClick={() => this.addNewGroupMember()}
+              onClick={() => this.openSearchUserBar()}
             >
               <div className="glyphicon glyphicon-user white">
                 <span className="tooltiptext">Add User</span>
@@ -136,10 +118,11 @@ class Group extends Component {
           </div>
           {deleteGroupPopUp}
         </div>
-
-        {userDivs}
+        {searchUserBar}
+      <div className="groupMembers">
+      {userDivs}
       </div>
-    );
+    </div>);
   }
 }
 
