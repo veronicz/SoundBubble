@@ -1,8 +1,13 @@
 import { combineReducers } from 'redux';
-import SongLogReducer from './songLogReducer';
-import CurrentGroupReducer from './currentGroupReducer';
+
+const currentGroupReducer = (currentGroup = null, action) => {
+  switch (action.type) {
+    case 'CHANGE_GROUP':
+      return action.group;
+  }
+  return currentGroup;
+};
 
 export default combineReducers({
-  tracks: SongLogReducer,
-  currentGroup: CurrentGroupReducer
+  currentGroup: currentGroupReducer
 });

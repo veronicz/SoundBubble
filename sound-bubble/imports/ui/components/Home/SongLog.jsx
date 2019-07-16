@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
 import Song from '../Song';
+import compose from 'recompose/compose';
 import { connect } from 'react-redux';
+import { withTracker } from 'meteor/react-meteor-data';
 import { fetchGroupSongLogs } from '../../actions/homeActions';
-import Songs from '../../../api/songs';
 import GroupButton from './GroupButton';
-import '../../stylesheets/main.css';
+import UserSongs from '../../../api/userSongs';
 
 class SongLog extends Component {
   getSongDetails() {
-    return this.props.groupRecentTracks
-      .filter(t => t.show)
-      .map(t => {
-        return (
-          <Song
-            key={t.songId + t.userId + t.timestamps}
-            track={t}
-            home={true}
-          />
-        );
-      });
+    console.log('groupRecent', this.props.groupRecentTracks);
+    return this.props.groupRecentTracks.map(t => {
+      return <Song key={t._id + t.userId} track={t} home={true} />;
+    });
   }
 
   render() {
@@ -53,21 +47,31 @@ class SongLog extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('allTracks', state.tracks);
-  return {
-    groupRecentTracks: state.tracks.filter(t => {
-      if (state.currentGroup) {
-        return state.currentGroup.userIds.includes(t.userId);
-      } else {
-        //user is not in any group, display own songs
-        return t.userId === Meteor.user().profile.id;
-      }
-    }),
-    currentGroup: state.currentGroup
-  };
+  return { currentGroup: state.currentGroup };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchGroupSongLogs }
+export default compose(
+  connect(
+    mapStateToProps,
+    { fetchGroupSongLogs }
+  ),
+  withTracker(props => {
+    const currentGroup = props.currentGroup;
+    const groupRecentTracksReady = currentGroup
+      ? Meteor.subscribe('groupRecentTracks', currentGroup).ready()
+      : false;
+
+    return {
+      groupRecentTracks: groupRecentTracksReady
+        ? UserSongs.find(
+            {
+              userId: { $in: currentGroup.userIds },
+              show: true,
+              timestamps: { $exists: true }
+            },
+            { sort: { timestamps: -1 } }
+          ).fetch()
+        : []
+    };
+  })
 )(SongLog);

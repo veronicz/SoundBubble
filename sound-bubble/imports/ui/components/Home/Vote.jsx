@@ -87,16 +87,23 @@ const mapStateToProps = state => {
 };
 
 export default compose(
+  connect(
+    mapStateToProps,
+    { vote }
+  ),
   withTracker(props => {
     const songId = props.song._id;
     const currentGroup = props.currentGroup;
 
-    const voteStateReady = Meteor.subscribe('mySongs').ready();
-    const userSong = UserSongs.findOne({ songId: songId });
+    const voteStateReady = Meteor.subscribe('myVote', songId).ready();
+    const userSong = UserSongs.findOne({
+      songId: songId,
+      userId: Meteor.user().profile.id
+    });
     const userSongExists = voteStateReady && userSong;
 
     const groupReady = currentGroup
-      ? Meteor.subscribe('groupSongs', currentGroup._id).ready()
+      ? Meteor.subscribe('groupSong', currentGroup._id, songId).ready()
       : null;
     const groupSong = currentGroup
       ? GroupSongs.findOne({
@@ -105,14 +112,11 @@ export default compose(
         })
       : null;
     const groupSongExists = groupReady && groupSong;
+
     return {
       voteState: userSongExists ? userSong.vote : 0,
       groupUpvote: groupSongExists ? groupSong.upvote : null,
       groupDownvote: groupSongExists ? groupSong.downvote : null
     };
-  }),
-  connect(
-    mapStateToProps,
-    { vote }
-  )
+  })
 )(Vote);

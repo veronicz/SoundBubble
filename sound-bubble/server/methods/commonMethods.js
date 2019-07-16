@@ -9,7 +9,6 @@ export function getRecentlyPlayed(userId, config = null) {
   );
   let songs = response.data.body.items;
   updateUserSongs(songs, userId);
-  return getRecentlyPlayedSorted(userId);
 }
 
 function getFromSpotifyWithOptionsChecked(methodName, config, options = {}) {
@@ -53,28 +52,18 @@ function updateUserSongs(songs, userId) {
 }
 
 function updateSongs(songs) {
-  songs
-    .map(s => s.track)
-    .forEach(song => {
-      Songs.upsert(
-        { _id: song.id },
-        {
-          $set: {
-            name: song.name,
-            artists: song.artists.map(artist => artist.name),
-            spotifyUrl: song.external_urls.spotify,
-            albumCover: song.album.images[0].url
-          }
+  songs.forEach(s => {
+    let song = s.track;
+    Songs.upsert(
+      { _id: song.id },
+      {
+        $set: {
+          name: song.name,
+          artists: song.artists.map(artist => artist.name),
+          spotifyUrl: song.external_urls.spotify,
+          albumCover: song.album.images[0].url
         }
-      );
-    });
-}
-
-function getRecentlyPlayedSorted(userId, limit = 10) {
-  return UserSongs.aggregate([
-    { $match: { userId: userId } },
-    { $unwind: '$timestamps' },
-    { $sort: { timestamps: -1 } },
-    { $limit: limit }
-  ]);
+      }
+    );
+  });
 }

@@ -7,12 +7,9 @@ export const fetchGroupSongLogs = () => {
       Meteor.call(
         'getGroupRecentlyPlayed',
         getState().currentGroup._id,
-        function(err, songLogs) {
+        function(err) {
           if (err) {
             console.log('get group recently played failed', err);
-          } else {
-            console.log(songLogs);
-            dispatch(fetchGroupSongLogsSuccess(songLogs));
           }
         }
       );
@@ -20,13 +17,6 @@ export const fetchGroupSongLogs = () => {
       //user is not in any group, display own songs
       dispatch(fetchMySongLogs());
     }
-  };
-};
-
-const fetchGroupSongLogsSuccess = songLogs => {
-  return {
-    type: 'FETCH',
-    songLogs: songLogs
   };
 };
 
@@ -45,7 +35,7 @@ export const vote = (songId, option) => {
         songId,
         getState().currentGroup._id,
         option,
-        (err, result) => {
+        err => {
           if (err) {
             console.log(
               `vote song with ${songId} in group ${
@@ -57,7 +47,7 @@ export const vote = (songId, option) => {
         }
       );
     } else {
-      Meteor.call('voteUserSong', songId, option, (err, result) => {
+      Meteor.call('voteUserSong', songId, option, err => {
         if (err) {
           console.log(`vote song with ${songId} failed`, err);
         }

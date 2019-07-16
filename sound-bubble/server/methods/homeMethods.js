@@ -6,7 +6,7 @@ import UserSongs from '../../imports/api/userSongs';
 
 Meteor.methods({
   getGroupRecentlyPlayed: function(groupId) {
-    return updateGroupRecentlyPlayed(groupId);
+    updateGroupRecentlyPlayed(groupId);
   },
   voteGroupSong: function(songId, groupId, option) {
     updateGroupVote(songId, groupId, option);
@@ -19,7 +19,6 @@ Meteor.methods({
 
 function updateGroupRecentlyPlayed(groupId) {
   let userIds = Groups.findOne({ _id: groupId }).userIds;
-  let tracks = [];
   userIds.forEach(userId => {
     let tokens = {};
     try {
@@ -27,9 +26,8 @@ function updateGroupRecentlyPlayed(groupId) {
     } catch (error) {
       throw new Meteor.Error(error);
     }
-    tracks = tracks.concat(getRecentlyPlayed(userId, tokens));
+    getRecentlyPlayed(userId, tokens);
   });
-  return tracks;
 }
 
 function getTokensForUser(userId) {
@@ -95,7 +93,7 @@ function updateUserSongs(songId, vote) {
 function incGroupVote(songId, groupId, field, value) {
   let fieldValue = {};
   fieldValue[field] = value;
-  GroupSongs.update(
+  GroupSongs.upsert(
     {
       songId: songId,
       groupId: groupId
