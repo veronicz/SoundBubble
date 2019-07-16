@@ -27,3 +27,14 @@ export const leaveGroup = groupId => {
     });
   };
 };
+
+export const addGroupMember = (groupId, userId) => {
+  return (dispatch, getState) => {
+    Meteor.call('addGroupMember', groupId,userId, err => {
+      if(err){
+        console.log('Add new group member failed: ', err);
+      }
+    })
+  }
+};
+
