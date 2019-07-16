@@ -35,7 +35,7 @@ class UserFeed extends Component {
           <ul>{this.getSongDetails()}</ul>
         </div>
         <div className="show_more_button_container">
-          <button className="btn btn-secondary btn-sm"> Show More </button>
+          <button className="feed_button btn btn-secondary btn-lg"> Show More </button>
         </div>
       </div>
     );

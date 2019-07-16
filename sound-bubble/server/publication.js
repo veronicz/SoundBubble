@@ -119,3 +119,10 @@ Meteor.publish('groupRecentTracks', function(group, limit = 50) {
     { $limit: limit }
   ]);
 });
+
+Meteor.publish('allUsers', function() {
+  if(!this.userId) {
+    return this.ready();
+  }
+  return Meteor.users.find();
+})

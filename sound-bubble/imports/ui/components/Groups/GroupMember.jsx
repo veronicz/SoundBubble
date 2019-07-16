@@ -53,7 +53,7 @@ class GroupMember extends React.Component {
             </div>
             {this.isCurrentUser() ? (
               <div className="option_container" onClick={this.leaveGroup}>
-                <div className="glyphicon glyphicon-log-out white">
+                <div className="leaveGroup glyphicon glyphicon-log-out white">
                   <span className="tooltiptext">Leave Group</span>
                 </div>
               </div>
