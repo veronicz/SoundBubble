@@ -14,7 +14,7 @@ export const deleteGroup = groupId => {
       if (err) {
         console.log('Deleting group failed: ', err);
       }else{
-        dispatch(removeGroupSuccess());
+        dispatch(removeGroupSuccess(groupId));
       }
     });
   };
@@ -26,15 +26,16 @@ export const leaveGroup = groupId => {
       if (err) {
         console.log('Leaving group failed: ', err);
       }else{
-        dispatch(removeGroupSuccess());
+        dispatch(removeGroupSuccess(groupId));
       }
     });
   };
 };
 
-export const removeGroupSuccess = () => {
+export const removeGroupSuccess = (groupId) => {
   return {
-    type: 'REMOVE_GROUP'
+    type: 'REMOVE_GROUP',
+    group: groupId
   }
 }
 

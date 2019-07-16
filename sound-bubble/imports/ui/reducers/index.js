@@ -5,7 +5,9 @@ const currentGroupReducer = (currentGroup = null, action) => {
     case 'CHANGE_GROUP':
       return action.group;
     case 'REMOVE_GROUP':
-      return null;
+      if(currentGroup._id === action.group){
+        return null;
+      }
   }
   return currentGroup;
 };
