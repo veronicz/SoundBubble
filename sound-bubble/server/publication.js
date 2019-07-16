@@ -144,10 +144,3 @@ Meteor.publish('groupSongLogsCount', function(group) {
     { countFromFieldLength: 'timestamps' }
   );
 });
-
-Meteor.publish('allUsers', function() {
-  if (!this.userId) {
-    return this.ready();
-  }
-  return Meteor.users.find();
-});

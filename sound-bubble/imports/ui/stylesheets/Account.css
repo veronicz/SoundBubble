@@ -1,33 +1,23 @@
 .user-container {
+  margin-left: 180px;
   display: flex;
   border: 1px solid rgb(71, 71, 71);
   padding: 1em;
-  border-radius: 15px;
+  border-radius: 5px;
   color: silver;
-  width: 50%;
+  width: 70%;
   margin-top: 30px;
   background: rgb(43, 42, 42);
   font-size: 16px;
 }
 
-.myProfileContainer {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  animation: fadeIn 1s linear;
-}
-
 .me {
-  margin-top: 63px;
+  margin-top: 40px;
   text-align: center;
   font-family: monospace;
-  font-size: 46px;
+  font-size: 40px;
   color: silver;
-  margin-bottom: 40px;
 }
-
 .user-left {
   text-align: center;
 }
@@ -40,18 +30,7 @@
 
 .user-info {
   display: flex;
-  flex-direction: column;
-  align-content: left;
-  justify-content: space-between;
   flex-wrap: wrap;
-  font-family: monospace;
-}
-
-.profileLink {
-  font-family: monospace;
-  color: #1db954;
-  font-weight: bold;
-  text-align: center;
 }
 
 .user-detail {
@@ -62,7 +41,6 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  font-family: monospace;
 }
 
 body {
@@ -89,7 +67,15 @@ code {
 }
 
 .song_card_container {
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #121212;
+  height: 60px;
+  margin: 20px;
+  border: 1px solid #232323;
+  overflow: hidden;
 }
 
 .song_card_container:hover {
@@ -159,27 +145,57 @@ code {
 }
 
 .song_details {
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   color: silver;
-  width: 60%;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  width: 55%;
   position: auto;
   font-size: 23px;
-  padding: 0;
-  margin: 0;
 }
 
 .song_details:hover {
-  font-size: 27px;
+  font-size: 31px;
   font-weight: bold;
   color: #1db954;
 }
 
+.votes {
+  width: 20%;
+  color: grey;
+  margin: 0px;
+  position: auto;
+}
+
+.thumbsUp {
+  width: 20%;
+  height: 20%;
+  margin: 0px;
+  margin-right: 10px;
+  transform: scaleX(-1);
+}
+
+.thumbsDown {
+  width: 20%;
+  height: 20%;
+  margin: 0px;
+  transform: scaleY(-1);
+}
+
+.thumbsUp:hover {
+  width: 28%;
+  height: 28%;
+}
+
+.thumbsDown:hover {
+  width: 28%;
+  height: 28%;
+}
+
 .time_stamp {
-  font-family: monospace;
+  font-family: Lucida Sans Typewriter;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: rgb(180, 180, 180);
+  color: rgb(138, 138, 138);
   height: inherit;
   position: auto;
   margin: 5px;
@@ -233,14 +249,11 @@ code {
 }
 
 .hide_button {
-  border-radius: 20px;
   border: none;
   background: rgb(97, 97, 97);
   color: black;
   font-size: 15px;
   margin-bottom: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 .hide_button:hover {

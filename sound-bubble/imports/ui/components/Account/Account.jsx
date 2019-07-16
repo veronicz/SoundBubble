@@ -7,7 +7,7 @@ export default class Account extends Component {
   render() {
     const spotifyUser = Meteor.user().profile;
     return (
-      <div className="myProfileContainer">
+      <div className="pageContainer">
         <h1 className="me">My Info</h1>
         <User user={spotifyUser} />
         <UserFeed user={spotifyUser} />

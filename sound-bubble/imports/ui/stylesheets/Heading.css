@@ -3,17 +3,7 @@
     height: 200px;
     z-index: -1;
     padding: 0;
-    margin:0;
 }
-
-.wrapper{
-    overflow:scroll;
-    height:75vh;
-}
-
-.wrapper::-webkit-scrollbar { 
-    display: none; 
-  }
 
 
 .page_title_container {
@@ -23,40 +13,21 @@
     flex-direction: column;
     justify-content:center;
     align-content:center;
-    height:175px;
+    height:230px;
     text-align:center;
-    padding:0;
-    margin:0;
-}
-
-.navLink_title{
-    margin-left:5px;
-}
-
-.navLink_title{
-    font-size:15px;
-    padding:0;
-    margin:0;
-}
-
-body{
-    padding:0;
-    margin:0;
 }
 
 .header_page_title{
     display:inline-block;
     position:relative;
     color:white;
-    font-size: 105px;
+    font-size: 130px;
     font-family:impact;
     background: url(https://media1.giphy.com/media/AWzvQj7sEkiBy/giphy.webp?cid=790b76115d0d55c14d3571436b84d920&rid=giphy.webp) repeat;
    -webkit-background-clip: text;
    -webkit-text-fill-color: transparent;
    -webkit-text-stroke: 3px white;
    animation:fadeIn 3s linear;
-   padding:0;
-    margin:0;
   }
   
 .navContainer {
@@ -68,9 +39,6 @@ body{
     background-color: black;
     height: 10%;
     text-decoration: none;
-    border:1px;
-    border-color:silver;
-    color:black;
 }
 
 .navContainer >a{
@@ -96,12 +64,8 @@ body{
     text-align: center;
 }
 
-span{
-    padding:2px;
-}
-
 .activeLink {
-    background-color: grey;
+    background-color: white;
     color: black; 
 }
 

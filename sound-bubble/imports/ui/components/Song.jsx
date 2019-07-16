@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Vote from './Home/Vote.jsx';
 import HideSongButton from './Account/HideSongButton';
-import '../stylesheets/main.css';
 import { withTracker } from 'meteor/react-meteor-data';
 import Songs from '../../api/songs';
 
@@ -67,7 +66,6 @@ class Song extends Component {
           <span className="song_card">
             {home ? this.userInfo() : null}
 
-
             <div className="album_cover">
               <img
                 className="album_image"
@@ -101,13 +99,12 @@ class Song extends Component {
 
             {this.renderVoteOrHide()}
 
-
             <div className="time_stamp">
               <h3 className="time_stamp_stamp">
                 {track.timestamps.toISOString().substring(11, 16)}
               </h3>
               <h3 className="time_stamp_played_at">
-                {track.timestamps.toISOString().substring(2, 10)}
+                {track.timestamps.toISOString().substring(0, 10)}
               </h3>
             </div>
           </span>

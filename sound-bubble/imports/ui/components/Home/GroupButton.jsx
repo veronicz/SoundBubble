@@ -26,7 +26,7 @@ class GroupButton extends Component {
     return (
       <div className="dropdown">
         <button
-          className="feed_button btn btn-secondary btn-lg dropdown-toggle"
+          className="group_button btn btn-secondary btn-sm dropdown-toggle"
           type="button"
           id="dropdownMenuButton"
           data-toggle="dropdown"

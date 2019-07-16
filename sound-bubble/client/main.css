@@ -1,4 +1,4 @@
-.react-target {
+#react-target {
   padding: 0;
   margin: 0;
 }
@@ -30,16 +30,18 @@ code {
 
 .voteCount {
   font-size: 12px;
-  margin-right: 15px;
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.song_card_container {
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #121212;
+  height: 60px;
+  margin: 20px;
+  border: 1px solid #414141;
+  overflow: hidden;
 }
 
 .option_container {
@@ -142,7 +144,6 @@ code {
 
 .photo_username {
   overflow: hidden;
-  font-family: monospace;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -169,17 +170,15 @@ code {
   background-color: white;
   border-radius: 50%;
   border: none;
-  margin-bottom: 4px !important;
 }
 
 .username {
   text-align: center;
   color: silver;
-  font-family: monospace !important;
+  font-family: ubuntu solid bold;
   font-size: 12px;
   font-weight: bold;
   height: 9px;
-  margin-bottom: 3px;
 }
 
 .username:hover {
@@ -187,33 +186,20 @@ code {
   text-decoration: underline;
 }
 
-.username:hover {
-  color: silver;
-  text-decoration: underline;
+.headerContainer {
+  width: inherit;
+  padding: 0;
+  margin: 0;
 }
 
-.feed_button {
-  height: 30px;
+.group_button {
+  height: 40px;
   background-color: rgb(54, 54, 54);
   color: silver;
-  width: 170px;
-  margin-bottom: 30px;
-  border: 0px;
-  animation: fadeIn 0.5s linear;
-}
-
-.feed_button:hover {
-  height: 30px;
-  background-color: rgb(34, 34, 34);
-  color: silver;
-  width: 170px;
-  margin-bottom: 30px;
-  border: 0px;
 }
 
 .pageContainer {
   overflow: scroll;
-  animation: fadeIn 0.5s linear;
 }
 
 .pageContainer::-webkit-scrollbar {
@@ -222,48 +208,56 @@ code {
 
 .song_details {
   color: silver;
-  width: 60%;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  width: 55%;
   position: auto;
   font-size: 23px;
-  padding: 0;
-  margin: 0;
 }
 
 .song_details:hover {
-  font-size: 27px;
+  font-size: 31px;
   font-weight: bold;
   color: #1db954;
 }
 
 .votes {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
   width: 10%;
   color: grey;
+  margin: 0px;
   position: auto;
-  font-family: monospace;
 }
 
 .thumbsUp {
   width: 30%;
   height: 30%;
+  margin: 0px;
   margin-right: 10px;
+  transform: scaleX(-1);
 }
 
 .thumbsDown {
   width: 30%;
   height: 30%;
-  margin-right: 10px;
+  margin: 0px;
+  transform: scaleY(-1);
+}
+
+.thumbsUp:hover {
+  width: 38%;
+  height: 38%;
+}
+
+.thumbsDown:hover {
+  width: 38%;
+  height: 38%;
 }
 
 .time_stamp {
-  font-family: monospace;
+  font-family: Lucida Sans Typewriter;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: rgb(190, 184, 184);
+  color: rgb(138, 138, 138);
   height: inherit;
   position: auto;
   margin: 5px;
@@ -273,7 +267,7 @@ code {
 
 .time_stamp_played_at {
   margin: 0px;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: bold;
 }
 
@@ -282,11 +276,10 @@ code {
 }
 
 .album_cover {
-  width: 35%;
-  height: 100%;
+  width: 40%;
+  height: 99%;
   overflow: hidden;
-  padding: 0;
-  margin: 0;
+  margin-left: 0px;
 }
 
 .album_cover:hover {
@@ -309,9 +302,10 @@ code {
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: silver;
+  color: white;
   text-align: center;
   font-size: 25px;
+  font-family: lucida console;
 
   background-color: black;
 }
@@ -325,8 +319,6 @@ code {
   align-items: center;
   position: auto;
   margin-bottom: 0px;
-  animation: fadeIn 0.5s linear;
-  color: silver;
 }
 
 .refresh_button {
@@ -349,20 +341,4 @@ code {
   width: 100%;
   height: 100%;
   margin-top: 40px;
-  padding: 0;
-  margin: 0;
-}
-
-.song_card_container {
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #292828;
-  height: 65px;
-  width: 94%;
-  margin: 20px;
-  border: 1px solid #585858;
-  overflow: hidden;
-  animation: fadeIn 1s linear;
 }
