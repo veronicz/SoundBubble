@@ -26,3 +26,4 @@ ultimatejs:tracker-react
 sakulstra:aggregate
 tunguska:reactive-aggregate
 littledata:synced-cron
+ros:publish-counts
