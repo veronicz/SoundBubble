@@ -13,17 +13,12 @@ const limit = new ReactiveVar(DEFAULT_LIMIT);
 
 class SongLog extends Component {
   shouldComponentUpdate(nextProps) {
-    return nextProps.groupRecentTracksReady;
+    return nextProps.recentTracksReady;
   }
 
-  loadMore = e => {
-    if (e) e.preventDefault();
-    limit.set(limit.get() + LIMIT_INCREMENT);
-  };
-
   getSongDetails() {
-    console.log('groupRecent', this.props.groupRecentTracks);
-    return this.props.groupRecentTracks.map(t => {
+    console.log('groupRecent', this.props.recentTracks);
+    return this.props.recentTracks.map(t => {
       return <Song key={t._id + t.userId} track={t} home={true} />;
     });
   }
@@ -38,8 +33,7 @@ class SongLog extends Component {
 
   handleScroll = () => {
     const songLogs = document.getElementById('song_logs');
-    console.log(this.props.groupTracksCount);
-    if (this.isBottom(songLogs) && this.props.groupTracksCount > limit.get()) {
+    if (this.isBottom(songLogs) && this.props.tracksCount > limit.get()) {
       limit.set(limit.get() + LIMIT_INCREMENT);
     }
   };
@@ -86,28 +80,55 @@ export default compose(
   ),
   withTracker(props => {
     const currentGroup = props.currentGroup;
-    const groupTracksCountReady = currentGroup
-      ? Meteor.subscribe('groupSongLogsCount', currentGroup).ready()
-      : false;
-    const groupRecentTracksReady = currentGroup
-      ? Meteor.subscribe('groupRecentTracks', currentGroup, limit.get()).ready()
-      : false;
 
-    return {
-      groupTracksCount: groupTracksCountReady
-        ? Counts.get('groupSongLogsCount')
-        : Number.POSITIVE_INFINITY,
-      groupRecentTracksReady: groupRecentTracksReady,
-      groupRecentTracks: groupRecentTracksReady
-        ? UserSongs.find(
-            {
-              userId: { $in: currentGroup.userIds },
-              show: true,
-              timestamps: { $exists: true }
-            },
-            { sort: { timestamps: -1 } }
-          ).fetch()
-        : []
-    };
+    if (currentGroup) {
+      const groupTracksCountReady = Meteor.subscribe(
+        'groupSongLogsCount',
+        currentGroup
+      ).ready();
+      const groupRecentTracksReady = Meteor.subscribe(
+        'groupRecentTracks',
+        currentGroup,
+        limit.get()
+      ).ready();
+      return {
+        tracksCount: groupTracksCountReady
+          ? Counts.get('groupSongLogsCount')
+          : Number.POSITIVE_INFINITY,
+        recentTracksReady: groupRecentTracksReady,
+        recentTracks: groupRecentTracksReady
+          ? UserSongs.find(
+              {
+                userId: { $in: currentGroup.userIds },
+                show: true,
+                timestamps: { $exists: true }
+              },
+              { sort: { timestamps: -1 } }
+            ).fetch()
+          : []
+      };
+    } else {
+      //display current user's song logs
+      const myTracksCountReady = Meteor.subscribe('mySongLogsCount').ready();
+      const myRecentTracksReady = Meteor.subscribe(
+        'myRecentTracks',
+        limit.get()
+      ).ready();
+      return {
+        tracksCount: myTracksCountReady
+          ? Counts.get('mySongLogsCount')
+          : Number.POSITIVE_INFINITY,
+        recentTracksReady: myRecentTracksReady,
+        recentTracks: myRecentTracksReady
+          ? UserSongs.find(
+              {
+                userId: Meteor.user().profile.id,
+                timestamps: { $exists: true }
+              },
+              { sort: { timestamps: -1 } }
+            ).fetch()
+          : []
+      };
+    }
   })
 )(SongLog);
