@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { fetchGroupSongLogs } from '../../actions/homeActions';
 import GroupButton from './GroupButton';
 import UserSongs from '../../../api/userSongs';
+import Groups from '../../../api/groups';
 
 const DEFAULT_LIMIT = 50;
 const LIMIT_INCREMENT = 30;
@@ -70,7 +71,7 @@ class SongLog extends Component {
 }
 
 const mapStateToProps = state => {
-  return { currentGroup: state.currentGroup };
+  return { currentGroupId: state.currentGroupId };
 };
 
 export default compose(
@@ -79,7 +80,13 @@ export default compose(
     { fetchGroupSongLogs }
   ),
   withTracker(props => {
-    const currentGroup = props.currentGroup;
+    const currentGroupId = props.currentGroupId;
+    const currentGroupReady = currentGroupId
+      ? Meteor.subscribe('group', currentGroupId).ready()
+      : false;
+    const currentGroup = currentGroupReady
+      ? Groups.findOne({ _id: currentGroupId })
+      : null;
 
     if (currentGroup) {
       const groupTracksCountReady = Meteor.subscribe(

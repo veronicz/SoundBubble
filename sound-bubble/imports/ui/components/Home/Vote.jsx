@@ -25,13 +25,29 @@ class Vote extends React.Component {
               <span className="tooltiptext">Undo Upvote</span>
             </div>
           </div>
-          <span className="voteCount">{upvoteCount} likes</span>
+          <span className="voteCount" style={{ color: 'green' }}>
+            {upvoteCount}
+          </span>
+          <div onClick={() => vote(songId, 3)} className="voteButton">
+            <div className="thumbsDown glyphicon glyphicon-thumbs-down white">
+              <span className="tooltiptext">Downvote</span>
+            </div>
+          </div>
+          <span className="voteCount">{downvoteCount}</span>
         </div>
       );
     }
     if (voteState === -1) {
       return (
         <div className="votes">
+          <div onClick={() => vote(songId, 1)} className="voteButton">
+            <div className="thumbsUp glyphicon glyphicon-thumbs-up white">
+              <span className="tooltiptext">Upvote</span>
+            </div>
+          </div>
+
+          <span className="voteCount">{upvoteCount}</span>
+
           <div onClick={() => vote(songId, 4)} className="voteButton">
             <div
               className="glyphicon glyphicon-thumbs-down"
@@ -40,7 +56,9 @@ class Vote extends React.Component {
               <span className="tooltiptext">Undo Downvote</span>
             </div>
           </div>
-          <span className="voteCount">{downvoteCount} dislikes</span>
+          <span className="voteCount" style={{ color: 'red' }}>
+            {downvoteCount}
+          </span>
         </div>
       );
     } else {
@@ -66,7 +84,7 @@ class Vote extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentGroup: state.currentGroup
+    currentGroupId: state.currentGroupId
   };
 };
 
@@ -77,7 +95,7 @@ export default compose(
   ),
   withTracker(props => {
     const songId = props.song._id;
-    const currentGroup = props.currentGroup;
+    const currentGroupId = props.currentGroupId;
 
     const voteStateReady = Meteor.subscribe('myVote', songId).ready();
     const userSong = UserSongs.findOne({
@@ -86,12 +104,12 @@ export default compose(
     });
     const userSongExists = voteStateReady && userSong;
 
-    const groupReady = currentGroup
-      ? Meteor.subscribe('groupSong', currentGroup._id, songId).ready()
+    const groupReady = currentGroupId
+      ? Meteor.subscribe('groupSong', currentGroupId, songId).ready()
       : null;
-    const groupSong = currentGroup
+    const groupSong = currentGroupId
       ? GroupSongs.findOne({
-          groupId: currentGroup._id,
+          groupId: currentGroupId,
           songId: songId
         })
       : null;
