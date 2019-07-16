@@ -123,10 +123,10 @@ class Song extends Component {
 
             <div className="time_stamp">
               <h3 className="time_stamp_stamp">
-                {this.parseTimeStamp(track.timestamps).time}
+                {track.timestamps.toString().substring(16,21)}
               </h3>
               <h3 className="time_stamp_played_at">
-                {this.parseTimeStamp(track.timestamps).date}
+              {track.timestamps.toString().substring(4,15)}
               </h3>
             </div>
           </span>
