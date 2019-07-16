@@ -136,20 +136,6 @@ code {
   text-decoration: underline;
 }
 
-.headerContainer {
-}
-
-.show_more_button_container {
-  display: flex;
-  justify-content: center;
-  align-content: center;
-  width: 20%;
-  text-align: center;
-  margin-left: 505px;
-  margin-top: 50px;
-  margin-bottom: 250px;
-}
-
 .pageContainer {
   overflow: scroll;
 }

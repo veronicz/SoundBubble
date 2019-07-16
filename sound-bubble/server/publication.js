@@ -119,3 +119,28 @@ Meteor.publish('groupRecentTracks', function(group, limit) {
     { $limit: limit }
   ]);
 });
+
+Meteor.publish('mySongLogsCount', function() {
+  Counts.publish(
+    this,
+    'mySongLogsCount',
+    UserSongs.find({
+      userId: Meteor.user().profile.id,
+      timestamps: { $exists: true }
+    }),
+    { countFromFieldLength: 'timestamps' }
+  );
+});
+
+Meteor.publish('groupSongLogsCount', function(group) {
+  Counts.publish(
+    this,
+    'groupSongLogsCount',
+    UserSongs.find({
+      userId: { $in: group.userIds },
+      show: true,
+      timestamps: { $exists: true }
+    }),
+    { countFromFieldLength: 'timestamps' }
+  );
+});

@@ -12,7 +12,7 @@ const LIMIT_INCREMENT = 30;
 const limit = new ReactiveVar(DEFAULT_LIMIT);
 
 class SongLog extends Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     return nextProps.groupRecentTracksReady;
   }
 
@@ -26,6 +26,26 @@ class SongLog extends Component {
     return this.props.groupRecentTracks.map(t => {
       return <Song key={t._id + t.userId} track={t} home={true} />;
     });
+  }
+
+  componentDidMount() {
+    document.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const songLogs = document.getElementById('song_logs');
+    console.log(this.props.groupTracksCount);
+    if (this.isBottom(songLogs) && this.props.groupTracksCount > limit.get()) {
+      limit.set(limit.get() + LIMIT_INCREMENT);
+    }
+  };
+
+  isBottom(el) {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
   }
 
   render() {
@@ -47,13 +67,8 @@ class SongLog extends Component {
 
         <GroupButton />
 
-        <div className="songs">
+        <div className="songs" id="song_logs">
           <ul>{this.getSongDetails()}</ul>
-        </div>
-        <div className="show_more_button_container">
-          <button className="btn btn-secondary btn-sm" onClick={this.loadMore}>
-            Show More
-          </button>
         </div>
       </div>
     );
@@ -71,11 +86,17 @@ export default compose(
   ),
   withTracker(props => {
     const currentGroup = props.currentGroup;
+    const groupTracksCountReady = currentGroup
+      ? Meteor.subscribe('groupSongLogsCount', currentGroup).ready()
+      : false;
     const groupRecentTracksReady = currentGroup
       ? Meteor.subscribe('groupRecentTracks', currentGroup, limit.get()).ready()
       : false;
 
     return {
+      groupTracksCount: groupTracksCountReady
+        ? Counts.get('groupSongLogsCount')
+        : Number.POSITIVE_INFINITY,
       groupRecentTracksReady: groupRecentTracksReady,
       groupRecentTracks: groupRecentTracksReady
         ? UserSongs.find(
