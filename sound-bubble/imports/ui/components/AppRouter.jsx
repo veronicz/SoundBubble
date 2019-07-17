@@ -23,7 +23,7 @@ export default class AppRouter extends Component {
                 activeClassName="activeLink"
               >
                 <span className="glyphicon glyphicon-home" area-hidden="true" />
-                
+
                 <h1 className="navLink_title">Home</h1>
               </NavLink>
               <NavLink
@@ -31,7 +31,10 @@ export default class AppRouter extends Component {
                 className="navLink"
                 activeClassName="activeLink"
               >
-              <span className="glyphicon glyphicon-headphones" area-hidden="true" />
+                <span
+                  className="glyphicon glyphicon-headphones"
+                  area-hidden="true"
+                />
                 <h1 className="navLink_title">My Profile</h1>
               </NavLink>
               <NavLink
@@ -39,7 +42,10 @@ export default class AppRouter extends Component {
                 className="navLink"
                 activeClassName="activeLink"
               >
-              <span className="glyphicon glyphicon-tasks" area-hidden="true" />
+                <span
+                  className="glyphicon glyphicon-tasks"
+                  area-hidden="true"
+                />
                 <h1 className="navLink_title">My Groups</h1>
               </NavLink>
               <NavLink
@@ -48,19 +54,20 @@ export default class AppRouter extends Component {
                 className="navLink"
                 activeClassName="activeLink"
               >
-              <span className="glyphicon glyphicon-info-sign" area-hidden="true" />
+                <span
+                  className="glyphicon glyphicon-info-sign"
+                  area-hidden="true"
+                />
                 <h1 className="navLink_title">About</h1>
               </NavLink>
             </div>
           </div>
-          <div className="wrapper">
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/about/" component={About} />
             <Route path="/account/" component={Account} />
             <Route path="/groups/" component={Groups} />
           </Switch>
-          </div>
         </div>
       </BrowserRouter>
     );
