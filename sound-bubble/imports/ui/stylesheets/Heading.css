@@ -3,7 +3,17 @@
     height: 160px;
     z-index: -1;
     padding: 0;
+    margin:0;
 }
+
+.wrapper{
+    overflow:scroll;
+    height:75vh;
+}
+
+.wrapper::-webkit-scrollbar { 
+    display: none; 
+  }
 
 
 .page_title_container {
@@ -42,6 +52,8 @@ body{
    -webkit-text-fill-color: transparent;
    -webkit-text-stroke: 3px white;
    animation:fadeIn 3s linear;
+   padding:0;
+    margin:0;
   }
   
 .navContainer {
@@ -53,6 +65,9 @@ body{
     background-color: black;
     height: 10%;
     text-decoration: none;
+    border:1px;
+    border-color:silver;
+    color:black;
 }
 
 .navContainer >a{
@@ -78,8 +93,12 @@ body{
     text-align: center;
 }
 
+span{
+    padding:2px;
+}
+
 .activeLink {
-    background-color: white;
+    background-color: grey;
     color: black; 
 }
 

@@ -5,6 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { vote } from '../../actions/homeActions';
 import UserSongs from '../../../api/userSongs';
 import GroupSongs from '../../../api/groupSongs';
+import '../../stylesheets/main.css';
 import { Meteor } from 'meteor/meteor';
 
 class Vote extends React.Component {
@@ -19,15 +20,13 @@ class Vote extends React.Component {
         <div className="votes">
           <div onClick={() => vote(songId, 2)} className="voteButton">
             <div
-              className="glyphicon glyphicon-thumbs-up"
+              className="thumbsUp glyphicon glyphicon-thumbs-up green"
               style={{ color: '#1db954' }}
             >
               <span className="tooltiptext">Undo Upvote</span>
             </div>
           </div>
-          <span className="voteCount" style={{ color: 'green' }}>
-            {upvoteCount}
-          </span>
+          <span className="voteCount" style={{ color: 'green' }}>{upvoteCount}</span>
           <div onClick={() => vote(songId, 3)} className="voteButton">
             <div className="thumbsDown glyphicon glyphicon-thumbs-down white">
               <span className="tooltiptext">Downvote</span>
@@ -40,6 +39,7 @@ class Vote extends React.Component {
     if (voteState === -1) {
       return (
         <div className="votes">
+
           <div onClick={() => vote(songId, 1)} className="voteButton">
             <div className="thumbsUp glyphicon glyphicon-thumbs-up white">
               <span className="tooltiptext">Upvote</span>
@@ -50,28 +50,26 @@ class Vote extends React.Component {
 
           <div onClick={() => vote(songId, 4)} className="voteButton">
             <div
-              className="glyphicon glyphicon-thumbs-down"
-              style={{ color: '#1db954' }}
+              className="thumbsDown glyphicon glyphicon-thumbs-down red"
+              style={{ color: 'red' }}
             >
               <span className="tooltiptext">Undo Downvote</span>
             </div>
           </div>
-          <span className="voteCount" style={{ color: 'red' }}>
-            {downvoteCount}
-          </span>
+          <span className="voteCount" style={{ color: 'red' }}>{downvoteCount}</span>
         </div>
       );
     } else {
       return (
         <div className="votes">
           <div onClick={() => vote(songId, 1)} className="voteButton">
-            <div className="glyphicon glyphicon-thumbs-up white">
+            <div className="thumbsUp glyphicon glyphicon-thumbs-up white">
               <span className="tooltiptext">Upvote</span>
             </div>
           </div>
           <span className="voteCount">{upvoteCount}</span>
           <div onClick={() => vote(songId, 3)} className="voteButton">
-            <div className="glyphicon glyphicon-thumbs-down white">
+            <div className="thumbsDown glyphicon glyphicon-thumbs-down white">
               <span className="tooltiptext">Downvote</span>
             </div>
           </div>
@@ -84,7 +82,7 @@ class Vote extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentGroupId: state.currentGroupId
+    currentGroup: state.currentGroup
   };
 };
 
@@ -95,7 +93,7 @@ export default compose(
   ),
   withTracker(props => {
     const songId = props.song._id;
-    const currentGroupId = props.currentGroupId;
+    const currentGroup = props.currentGroup;
 
     const voteStateReady = Meteor.subscribe('myVote', songId).ready();
     const userSong = UserSongs.findOne({
@@ -104,12 +102,12 @@ export default compose(
     });
     const userSongExists = voteStateReady && userSong;
 
-    const groupReady = currentGroupId
-      ? Meteor.subscribe('groupSong', currentGroupId, songId).ready()
+    const groupReady = currentGroup
+      ? Meteor.subscribe('groupSong', currentGroup._id, songId).ready()
       : null;
-    const groupSong = currentGroupId
+    const groupSong = currentGroup
       ? GroupSongs.findOne({
-          groupId: currentGroupId,
+          groupId: currentGroup._id,
           songId: songId
         })
       : null;
