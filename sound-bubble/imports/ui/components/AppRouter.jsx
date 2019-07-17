@@ -53,14 +53,12 @@ export default class AppRouter extends Component {
               </NavLink>
             </div>
           </div>
-          <div className="wrapper">
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/about/" component={About} />
             <Route path="/account/" component={Account} />
             <Route path="/groups/" component={Groups} />
           </Switch>
-          </div>
         </div>
       </BrowserRouter>
     );

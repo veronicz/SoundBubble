@@ -6,15 +6,6 @@
     margin:0;
 }
 
-.wrapper{
-    overflow:scroll;
-    height:75vh;
-}
-
-.wrapper::-webkit-scrollbar { 
-    display: none; 
-  }
-
 
 .page_title_container {
     background: url(https://cdn.wallpapersafari.com/89/22/SY1W38.jpg) no-repeat;
