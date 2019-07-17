@@ -7,10 +7,23 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { fetchMySongLogs } from '../../actions/accountActions';
 import UserSongs from '../../../api/userSongs';
 
+const DEFAULT_LIMIT = 20;
+const LIMIT_INCREMENT = 20;
+const limit = new ReactiveVar(DEFAULT_LIMIT);
+
 class UserFeed extends Component {
   componentDidMount() {
     this.props.fetchMySongLogs();
   }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.myRecentTracksReady;
+  }
+
+  loadMore = e => {
+    if (e) e.preventDefault();
+    limit.set(limit.get() + LIMIT_INCREMENT);
+  };
 
   getSongDetails() {
     const { myRecentTracks } = this.props;
@@ -35,7 +48,9 @@ class UserFeed extends Component {
           <ul>{this.getSongDetails()}</ul>
         </div>
         <div className="show_more_button_container">
-          <button className="feed_button btn btn-secondary btn-lg"> Show More </button>
+          <button className="btn btn-secondary btn-sm" onClick={this.loadMore}>
+            Show More
+          </button>
         </div>
       </div>
     );
@@ -44,8 +59,12 @@ class UserFeed extends Component {
 
 export default compose(
   withTracker(props => {
-    const myRecentTracksReady = Meteor.subscribe('myRecentTracks').ready();
+    const myRecentTracksReady = Meteor.subscribe(
+      'myRecentTracks',
+      limit.get()
+    ).ready();
     return {
+      myRecentTracksReady: myRecentTracksReady,
       myRecentTracks: myRecentTracksReady
         ? UserSongs.find(
             { userId: Meteor.user().profile.id, timestamps: { $exists: true } },

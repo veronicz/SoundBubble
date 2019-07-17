@@ -7,7 +7,20 @@ import { fetchGroupSongLogs } from '../../actions/homeActions';
 import GroupButton from './GroupButton';
 import UserSongs from '../../../api/userSongs';
 
+const DEFAULT_LIMIT = 50;
+const LIMIT_INCREMENT = 30;
+const limit = new ReactiveVar(DEFAULT_LIMIT);
+
 class SongLog extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.groupRecentTracksReady;
+  }
+
+  loadMore = e => {
+    if (e) e.preventDefault();
+    limit.set(limit.get() + LIMIT_INCREMENT);
+  };
+
   getSongDetails() {
     console.log('groupRecent', this.props.groupRecentTracks);
     return this.props.groupRecentTracks.map(t => {
@@ -39,8 +52,12 @@ class SongLog extends Component {
           <div className="show_more_button_container">
           <button className="feed_button btn btn-secondary btn-lg"> Show More </button>
         </div>
+        <div className="show_more_button_container">
+          <button className="btn btn-secondary btn-sm" onClick={this.loadMore}>
+            Show More
+          </button>
         </div>
-        
+
       </div>
     );
   }
@@ -58,10 +75,11 @@ export default compose(
   withTracker(props => {
     const currentGroup = props.currentGroup;
     const groupRecentTracksReady = currentGroup
-      ? Meteor.subscribe('groupRecentTracks', currentGroup).ready()
+      ? Meteor.subscribe('groupRecentTracks', currentGroup, limit.get()).ready()
       : false;
 
     return {
+      groupRecentTracksReady: groupRecentTracksReady,
       groupRecentTracks: groupRecentTracksReady
         ? UserSongs.find(
             {
