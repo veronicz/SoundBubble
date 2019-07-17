@@ -38,7 +38,7 @@ Meteor.publish('myGroups', function() {
   return Groups.find({ userIds: Meteor.user().profile.id });
 });
 
-Meteor.publish('myRecentTracks', function(limit = 10) {
+Meteor.publish('myRecentTracks', function(limit) {
   if (!this.userId) {
     return this.ready();
   }
@@ -78,7 +78,7 @@ Meteor.publish('myRecentTracks', function(limit = 10) {
   ]);
 });
 
-Meteor.publish('groupRecentTracks', function(group, limit = 50) {
+Meteor.publish('groupRecentTracks', function(group, limit) {
   if (!this.userId) {
     return this.ready();
   }
@@ -121,8 +121,33 @@ Meteor.publish('groupRecentTracks', function(group, limit = 50) {
 });
 
 Meteor.publish('allUsers', function() {
-  if(!this.userId) {
+  if (!this.userId) {
     return this.ready();
   }
   return Meteor.users.find();
-})
+});
+
+Meteor.publish('mySongLogsCount', function() {
+  Counts.publish(
+    this,
+    'mySongLogsCount',
+    UserSongs.find({
+      userId: Meteor.user().profile.id,
+      timestamps: { $exists: true }
+    }),
+    { countFromFieldLength: 'timestamps' }
+  );
+});
+
+Meteor.publish('groupSongLogsCount', function(group) {
+  Counts.publish(
+    this,
+    'groupSongLogsCount',
+    UserSongs.find({
+      userId: { $in: group.userIds },
+      show: true,
+      timestamps: { $exists: true }
+    }),
+    { countFromFieldLength: 'timestamps' }
+  );
+});
