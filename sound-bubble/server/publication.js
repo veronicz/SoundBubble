@@ -128,6 +128,9 @@ Meteor.publish('allUsers', function() {
 });
 
 Meteor.publish('mySongLogsCount', function() {
+  if (!this.userId) {
+    return this.ready();
+  }
   Counts.publish(
     this,
     'mySongLogsCount',
@@ -140,6 +143,9 @@ Meteor.publish('mySongLogsCount', function() {
 });
 
 Meteor.publish('groupSongLogsCount', function(group) {
+  if (!this.userId) {
+    return this.ready();
+  }
   Counts.publish(
     this,
     'groupSongLogsCount',

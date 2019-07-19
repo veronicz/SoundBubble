@@ -12,8 +12,8 @@ class Vote extends React.Component {
   render() {
     const { song, voteState, groupUpvote, groupDownvote, vote } = this.props;
     let songId = song._id;
-    let upvoteCount = groupUpvote || voteState === 1 ? 1 : 0; //use user's own vote if groupVote does not exist
-    let downvoteCount = groupDownvote || voteState === -1 ? 1 : 0;
+    let upvoteCount = groupUpvote || (voteState === 1 ? 1 : 0); //use user's own vote if groupVote does not exist
+    let downvoteCount = groupDownvote || (voteState === -1 ? 1 : 0);
 
     if (voteState === 1) {
       return (
