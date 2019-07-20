@@ -1,10 +1,10 @@
 import '../spotify-api';
-import { getAllRecentlyPlayed } from './commonMethods';
+import { getRecentlyPlayed } from './commonMethods';
 import UserSongs from '../../imports/api/userSongs';
 
 Meteor.methods({
   getMyRecentlyPlayed: function() {
-    getAllRecentlyPlayed(Meteor.user().profile.id);
+    getRecentlyPlayed(Meteor.user().profile.id);
   },
   hideMySong: function(songId, option) {
     updateHideStatus(songId, option);

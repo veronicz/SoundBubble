@@ -2,35 +2,37 @@ import React, { Component } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import { changeCurrentGroup } from '../../actions/homeActions';
+import {
+  changeCurrentGroup,
+  fetchGroupSongLogs
+} from '../../actions/homeActions';
+import '../../stylesheets/main.css';
 
 class GroupButton extends Component {
   setDefaultGroup() {
-    const { currentGroupId, myGroups, changeCurrentGroup } = this.props;
+    const {
+      currentGroup,
+      myGroups,
+      changeCurrentGroup,
+      fetchGroupSongLogs
+    } = this.props;
     //set currentGroup to the first group if it is not initialized but the user has groups
-    if (!currentGroupId && myGroups[0]) {
+    if (!currentGroup && myGroups[0]) {
       changeCurrentGroup(myGroups[0]._id);
     }
+    //display the initial group song logs (will fetch user song logs if user is not in any groups)
+    fetchGroupSongLogs();
   }
 
   handleChangeGroup(newGroupId) {
-    const { currentGroupId, changeCurrentGroup } = this.props;
-    if (newGroupId != currentGroupId) {
+    const { currentGroup, changeCurrentGroup } = this.props;
+    if (newGroupId != currentGroup._id) {
       changeCurrentGroup(newGroupId);
     }
   }
 
-  renderCurrentGroupName() {
-    const { currentGroupId, myGroups } = this.props;
-    if (currentGroupId && myGroups.length !== 0) {
-      return myGroups.find(g => g._id === currentGroupId).name;
-    } else {
-      return 'Join a group';
-    }
-  }
-
   render() {
-    const { myGroups } = this.props;
+    const { currentGroup, myGroups } = this.props;
     this.setDefaultGroup();
     return (
       <div className="dropdown">
@@ -42,7 +44,7 @@ class GroupButton extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          {this.renderCurrentGroupName()}
+          {currentGroup ? currentGroup.name : 'Join a group'}
         </button>
         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
           {myGroups.map(g => (
@@ -62,16 +64,16 @@ class GroupButton extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('currentGroupId', state.currentGroupId);
+  console.log('currentGroup', state.currentGroup);
   return {
-    currentGroupId: state.currentGroupId
+    currentGroup: state.currentGroup
   };
 };
 
 export default compose(
   connect(
     mapStateToProps,
-    { changeCurrentGroup }
+    { changeCurrentGroup, fetchGroupSongLogs }
   ),
   withTracker(props => {
     const myGroupsReady = Meteor.subscribe('myGroups').ready();

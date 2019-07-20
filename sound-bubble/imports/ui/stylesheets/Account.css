@@ -186,6 +186,31 @@ code {
 }
 
 
+.time_stamp {
+  font-family: monospace;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  color:rgb(180, 180, 180);
+  height:inherit;
+  position:auto;
+  margin:5px;
+  margin-right:10px;
+  font-size:15px;
+}
+
+
+
+.time_stamp_played_at {
+  margin: 0px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.time_stamp_stamp {
+  margin: 0px;
+}
+
 .album_cover {
   width: 40%;
   height: 99%;
