@@ -7,8 +7,10 @@ const references = [
   'https://www.w3schools.com/howto/howto_css_cards.asp',
   'https://github.com/thelinmichael/spotify-web-api-node',
   'https://github.com/xinranxiao/meteor-spotify-web-api',
-  'https://github.com/xinranxiao/meteor-accounts-spotify', 
-  'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_filter'
+  'https://github.com/xinranxiao/meteor-accounts-spotify',
+  'https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_filter',
+  'https://forums.meteor.com/t/infinite-scroll-in-meteor-react/36958/2',
+  'https://github.com/percolatestudio/meteor-synced-cron'
 ];
 export default class About extends Component {
   render() {
