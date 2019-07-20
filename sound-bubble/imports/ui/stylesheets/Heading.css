@@ -6,17 +6,34 @@
 }
 
 
-.headId {
-    width: 100%;
-    color: white;
-    margin: 0;
-    font-size: 50px;
-    position: absolute;
-    top:75px;
-    text-align: center;
+.page_title_container {
+    background: url(https://cdn.wallpapersafari.com/89/22/SY1W38.jpg) no-repeat;
+    background-size: cover;
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-content:center;
+    height:230px;
+    text-align:center;
 }
 
+.header_page_title{
+    display:inline-block;
+    position:relative;
+    color:white;
+    font-size: 130px;
+    font-family:impact;
+    background: url(https://media1.giphy.com/media/AWzvQj7sEkiBy/giphy.webp?cid=790b76115d0d55c14d3571436b84d920&rid=giphy.webp) repeat;
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   -webkit-text-stroke: 3px white;
+   animation:fadeIn 2s linear;
+   margin-top:20px;
+  }
+  
+
 .navContainer {
+    display:flex;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -41,13 +58,13 @@
 
 .navLink {
     color: white;
+    font-family:monospace;
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
     width: 33%;
     float: left;
     text-align: center;
 }
-
 
 .activeLink {
     background-color: white;

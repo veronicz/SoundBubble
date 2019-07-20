@@ -21,13 +21,17 @@ code {
     monospace;
 }
 
+.voteCount{
+  font-size:12px;
+}
+
 .song_card_container{
   border-radius:20px;
   display:flex;
   justify-content:center;
   align-items:center;
   background-color:#121212;
-  height:92px;
+  height:60px;
   margin:20px;
   border: 1px solid #232323;
   overflow:hidden;
@@ -56,12 +60,12 @@ code {
   position:auto;
   width:11%;
   height:inherit;
-  margin-top:20px;
+  margin-top:10px;
 }
 
 .profile_photo{
-  height: 60px;
-  width: 60px;
+  height: 35px;
+  width: 35px;
   background-color: white;
   border-radius: 50%;
   border: none;
@@ -83,7 +87,7 @@ code {
   font-family:ubuntu solid bold;
   font-size:12px;
   font-weight:bold;
-  height:12px;
+  height:9px;
 }
 
 .username:hover{
@@ -91,12 +95,41 @@ code {
   text-decoration:underline;
 }
 
+.headerContainer{
+  
+}
+
+.show_more_button_container{
+  display:flex;
+  justify-content:center;
+  align-content:center;
+  width:20%;
+  text-align:center;
+  margin-left:505px;
+  margin-top:50px;
+  margin-bottom:250px;
+}
+
+.group_button{
+  height:40px;
+  background-color: rgb(54, 54, 54);
+  color:silver;
+}
+
+.pageContainer{
+  overflow:scroll;
+}
+
+.pageContainer::-webkit-scrollbar { 
+  display: none; 
+}
+
 .song_details{
  color:silver;
  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
  width:55%;
  position:auto;
- font-size:30px;
+ font-size:23px;
 }
 
 .song_details:hover{
@@ -142,12 +175,12 @@ code {
   display:flex;
   flex-direction:column;
   justify-content:center;
-  color:#434342;
+  color:rgb(138, 138, 138);
   height:inherit;
   position:auto;
   margin:5px;
   margin-right:10px;
-  font-size:20px;
+  font-size:15px;
 }
 
 .time_stamp_played_at{
@@ -197,6 +230,7 @@ code {
 
 .song_feed_header{
   margin-top:50px;
+  margin-bottom:40px;
   display:flex;
   flex-direction:row;
   justify-content:center;

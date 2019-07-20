@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Song from './Song.jsx';
 import { connect } from 'react-redux';
+import { fetchSongLogs } from '../../actions';
 
 class SongLog extends Component {
   getSongDetails(s, i) {
@@ -31,12 +32,16 @@ class SongLog extends Component {
         songTimeStampTime={s.played_at.substring(11, 16)}
         songTimeStampDate={s.played_at.substring(0, 10)}
         songExternalUrl={songUrl}
+        upAmount = {s.upAmount}
+        downAmount = {s.downAmount}
+        voteState = {s.voteState}
+        id={i}
       />
     );
   }
 
   render() {
-    const { tracks } = this.props;
+    const { tracks, fetchSongLogs } = this.props;
     let songDivs = tracks.map((s, i) => this.getSongDetails(s, i));
 
     return (
@@ -46,10 +51,39 @@ class SongLog extends Component {
           <img
             className="refresh_button"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
+            onClick={() => fetchSongLogs()}
           />
         </div>
+
+        <div className="dropdown">
+          <button
+            className="group_button btn btn-secondary btn-sm dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Choose Group
+          </button>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a className="dropdown-item" href="#">
+              Group 1
+            </a>
+            <a className="dropdown-item" href="#">
+              Group 2
+            </a>
+            <a className="dropdown-item" href="#">
+              Group 3
+            </a>
+          </div>
+        </div>
+
         <div className="songs">
           <ul>{songDivs}</ul>
+        </div>
+        <div className="show_more_button_container">
+          <button className="btn btn-secondary btn-sm"> Show More </button>
         </div>
       </div>
     );
@@ -60,4 +94,7 @@ const mapStateToProps = state => {
   return { tracks: state.tracks, profiles: state.profiles };
 };
 
-export default connect(mapStateToProps)(SongLog);
+export default connect(
+  mapStateToProps,
+  { fetchSongLogs }
+)(SongLog);

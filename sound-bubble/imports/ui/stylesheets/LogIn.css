@@ -1,4 +1,4 @@
-#welcome_container{
+.welcome_container{
     justify-content:center;
     background-color:black;
     display:flex;
@@ -28,18 +28,18 @@
    }
  }
  
- #page_title{
+ .page_title{
    color:white;
    font-size: 80px;
    font-family:impact;
-   background: url(https://media0.giphy.com/media/3og0INtldac8gncQO4/200w.webp?cid=790b76115d0d2b724c45305055bdce10&rid=200w.webp) repeat;
+   background: url(https://media1.giphy.com/media/AWzvQj7sEkiBy/giphy.webp?cid=790b76115d0d55c14d3571436b84d920&rid=giphy.webp) repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 0.3px silver;
+  -webkit-text-stroke: 2px silver;
   animation:fadeIn 2s linear;
  }
  
- #welcome_description{
+ .welcome_description{
    font-family:verdana;
    color:grey;
    text-align:center;
@@ -58,8 +58,12 @@
                  transform: perspective(500px) translate3d(0, 0, 0);
              }
          }
+
+
  
- #login{
+.login{
+    background:none;
+   opacity:1.0;
    font-family: arial black;
    color:white;
    border:0.3px solid silver;
@@ -69,7 +73,7 @@
    margin-bottom: 20px;
  }
  
- #login:hover{
+.login:hover{
    background:none;
    color:black;
    border:none;

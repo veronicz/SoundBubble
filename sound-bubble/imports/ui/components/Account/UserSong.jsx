@@ -1,5 +1,4 @@
 import React from 'react';
-import Vote from './Vote.jsx';
 
 // This class has the following inherited props:
 // userName
@@ -11,12 +10,12 @@ import Vote from './Vote.jsx';
 // songTimeStampDate
 // songExternalUrl
 
-export default class Song extends React.Component {
+
+export default class UserSong extends React.Component {
 
     render() {
         let externalUrl = this.props.songExternalUrl;
         let albumImage = this.props.songAlbumCover;
-
 
         if (this.props.userImage === ""){
             this.props.userImage ="https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png";
@@ -29,17 +28,7 @@ export default class Song extends React.Component {
         return (
             <li className="song_card_container">
                 <span className="song_card">
-                    <div className="photo_username">
-                        <div className="profile_photo">
-                            <img className="user_photo" src={this.props.userImage} onClick={() => {window.open(this.props.userImage.toString(), 'popup', 'width=650,height=450' ); return false;}}/>
-                        </div>
-
-                        <div className="username">
-                        <p className="username_name">
-                        {this.props.userName}
-                        </p>
-                        </div>
-                    </div>
+                    
 
                     <div className="album_cover">
                         <img className="album_image" src={this.props.songAlbumCover} onClick={() => {window.open(albumImage.toString(), 'popup', 'width=400,height=400' ); return false;}}></img>
@@ -49,7 +38,9 @@ export default class Song extends React.Component {
                         <marquee behaviour="alternate" onClick={() => {window.open(externalUrl.toString(), 'popup', 'width=650,height=450' ); return false;}}>{this.props.songName} by {this.props.songArtist}</marquee>
                     </div>
 
-                    <Vote id={this.props.id} upAmount={this.props.upAmount} downAmount={this.props.downAmount} voteState={this.props.voteState}></Vote>
+                    <div className="hide_song">
+                        <button className="hide_button">Hide</button>
+                    </div>
 
                     <div className="time_stamp">
                         <h3 className="time_stamp_stamp">

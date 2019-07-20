@@ -311,7 +311,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:8,
+      downAmount: 83,
+      voteState: 0
     },
     {
       track: {
@@ -564,7 +567,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:94,
+      downAmount: 25,
+      voteState: 0
     },
     {
       track: {
@@ -817,7 +823,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:84,
+      downAmount: 53,
+      voteState: 0
     },
     {
       track: {
@@ -1070,7 +1079,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:58,
+      downAmount: 50,
+      voteState: 2
     },
     {
       track: {
@@ -1303,7 +1315,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:86,
+      downAmount: 10,
+      voteState: 2
     },
     {
       track: {
@@ -1556,7 +1571,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:60,
+      downAmount: 67,
+      voteState: 0
     },
     {
       track: {
@@ -1807,7 +1825,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:9,
+      downAmount: 81,
+      voteState: 0
     },
     {
       track: {
@@ -2060,7 +2081,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:96,
+      downAmount: 89,
+      voteState: 0
     },
     {
       track: {
@@ -2313,7 +2337,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:88,
+      downAmount: 68,
+      voteState: 0
     },
     {
       track: {
@@ -2566,7 +2593,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:93,
+      downAmount: 17,
+      voteState: 2
     },
     {
       track: {
@@ -2819,7 +2849,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:27,
+      downAmount: 38,
+      voteState: 1
     },
     {
       track: {
@@ -3092,7 +3125,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/4IHjVbZ3MJSFLLcTFB2ySv',
         type: 'playlist'
-      }
+      },
+      upAmount:54,
+      downAmount: 62,
+      voteState: 1
     },
     {
       track: {
@@ -3212,7 +3248,10 @@ export const songSampleDataRaw = {
         uri: 'spotify:track:6y2UJULeMyGCOKX77rrGy8'
       },
       played_at: '2019-06-07T06:46:28.692Z',
-      context: null
+      context: null,
+      upAmount:12,
+      downAmount: 64,
+      voteState: 0
     },
     {
       track: {
@@ -3332,7 +3371,10 @@ export const songSampleDataRaw = {
         uri: 'spotify:track:23kHhoihFmHmjqdaQQIpwF'
       },
       played_at: '2019-06-07T06:45:25.314Z',
-      context: null
+      context: null,
+      upAmount:44,
+      downAmount: 59,
+      voteState: 0
     },
     {
       track: {
@@ -3585,7 +3627,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/artists/5l8VQNuIg0turYE1VtM9zV',
         type: 'artist'
-      }
+      },
+      upAmount:68,
+      downAmount: 1,
+      voteState: 2
     },
     {
       track: {
@@ -3838,7 +3883,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/artists/5l8VQNuIg0turYE1VtM9zV',
         type: 'artist'
-      }
+      },
+      upAmount:17,
+      downAmount: 41,
+      voteState: 2
     },
     {
       track: {
@@ -4091,7 +4139,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/artists/3qnGvpP8Yth1AqSBMqON5x',
         type: 'artist'
-      }
+      },
+      upAmount:43,
+      downAmount: 39,
+      voteState: 0
     },
     {
       track: {
@@ -4344,7 +4395,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/artists/3qnGvpP8Yth1AqSBMqON5x',
         type: 'artist'
-      }
+      },
+      upAmount:32,
+      downAmount: 23,
+      voteState: 2
     },
     {
       track: {
@@ -4595,7 +4649,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/37i9dQZF1E9IWWVkxMTToY',
         type: 'playlist'
-      }
+      },
+      upAmount:73,
+      downAmount: 27,
+      voteState: 2
     },
     {
       track: {
@@ -4858,7 +4915,10 @@ export const songSampleDataRaw = {
         },
         href: 'https://api.spotify.com/v1/playlists/37i9dQZF1E9IWWVkxMTToY',
         type: 'playlist'
-      }
+      },
+      upAmount:33,
+      downAmount: 28,
+      voteState: 2
     }
   ],
   next:

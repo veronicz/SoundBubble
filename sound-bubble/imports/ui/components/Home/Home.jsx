@@ -3,7 +3,7 @@ import SongLog from './SongLog.jsx';
 
 export default class Home extends Component {
   render() {
-    return (<div>
+    return (<div className="pageContainer">
       <SongLog/>
     </div>);
   }
