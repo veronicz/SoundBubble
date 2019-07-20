@@ -1,15 +1,17 @@
 import { combineReducers } from 'redux';
 
-const currentGroupReducer = (currentGroupId = null, action) => {
+const currentGroupReducer = (currentGroup = null, action) => {
   switch (action.type) {
     case 'CHANGE_GROUP':
-      return action.groupId;
+      return action.group;
     case 'REMOVE_GROUP':
-      return null;
+      if(currentGroup._id === action.group){
+        return null;
+      }
   }
-  return currentGroupId;
+  return currentGroup;
 };
 
 export default combineReducers({
-  currentGroupId: currentGroupReducer
+  currentGroup: currentGroupReducer
 });

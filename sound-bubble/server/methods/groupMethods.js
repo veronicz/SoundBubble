@@ -60,11 +60,11 @@ function leaveGroup(groupId) {
     });
     // remove user vote from group vote
     userVotedSongs.forEach(song => {
-      let fieldToDecrement = song.vote === 1 ? { upvote: -1 } : { downvote: -1 };
+      let fieldToDecrement = song.vote === 1 ? { upvote: 1 } : { downvote: 1 };
       GroupSongs.update(
-        { songId: song.songId, groupId: groupId },
+        { songId: song._id, groupId: groupId },
         {
-          $inc: fieldToDecrement
+          $dec: fieldToDecrement
         }
       );
     });
@@ -88,7 +88,7 @@ function addGroupMember(groupId, userId) {
   userVotedSongs.forEach(song => {
     let fieldToIncrement = song.vote === 1 ? {upvote: 1} : {downvote: 1};
     GroupSongs.upsert({
-      songId: song.songId,
+      songId: song._id,
       groupId: groupId
     },
     {$inc: fieldToIncrement})

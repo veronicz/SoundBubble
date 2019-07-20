@@ -6,41 +6,13 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { fetchGroupSongLogs } from '../../actions/homeActions';
 import GroupButton from './GroupButton';
 import UserSongs from '../../../api/userSongs';
-import Groups from '../../../api/groups';
-
-const DEFAULT_LIMIT = 50;
-const LIMIT_INCREMENT = 30;
-const limit = new ReactiveVar(DEFAULT_LIMIT);
 
 class SongLog extends Component {
-  shouldComponentUpdate(nextProps) {
-    return nextProps.recentTracksReady;
-  }
-
   getSongDetails() {
-    console.log('groupRecent', this.props.recentTracks);
-    return this.props.recentTracks.map(t => {
+    console.log('groupRecent', this.props.groupRecentTracks);
+    return this.props.groupRecentTracks.map(t => {
       return <Song key={t._id + t.userId} track={t} home={true} />;
     });
-  }
-
-  componentDidMount() {
-    document.addEventListener('scroll', this.handleScroll);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('scroll', this.handleScroll);
-  }
-
-  handleScroll = () => {
-    const songLogs = document.getElementById('song_logs');
-    if (this.isBottom(songLogs) && this.props.tracksCount > limit.get()) {
-      limit.set(limit.get() + LIMIT_INCREMENT);
-    }
-  };
-
-  isBottom(el) {
-    return el.getBoundingClientRect().bottom <= window.innerHeight;
   }
 
   render() {
@@ -62,16 +34,20 @@ class SongLog extends Component {
 
         <GroupButton />
 
-        <div className="songs" id="song_logs">
+        <div className="songs">
           <ul>{this.getSongDetails()}</ul>
+          <div className="show_more_button_container">
+          <button className="feed_button btn btn-secondary btn-lg"> Show More </button>
         </div>
+        </div>
+        
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
-  return { currentGroupId: state.currentGroupId };
+  return { currentGroup: state.currentGroup };
 };
 
 export default compose(
@@ -80,62 +56,22 @@ export default compose(
     { fetchGroupSongLogs }
   ),
   withTracker(props => {
-    const currentGroupId = props.currentGroupId;
-    const currentGroupReady = currentGroupId
-      ? Meteor.subscribe('group', currentGroupId).ready()
+    const currentGroup = props.currentGroup;
+    const groupRecentTracksReady = currentGroup
+      ? Meteor.subscribe('groupRecentTracks', currentGroup).ready()
       : false;
-    const currentGroup = currentGroupReady
-      ? Groups.findOne({ _id: currentGroupId })
-      : null;
 
-    if (currentGroup) {
-      const groupTracksCountReady = Meteor.subscribe(
-        'groupSongLogsCount',
-        currentGroup
-      ).ready();
-      const groupRecentTracksReady = Meteor.subscribe(
-        'groupRecentTracks',
-        currentGroup,
-        limit.get()
-      ).ready();
-      return {
-        tracksCount: groupTracksCountReady
-          ? Counts.get('groupSongLogsCount')
-          : Number.POSITIVE_INFINITY,
-        recentTracksReady: groupRecentTracksReady,
-        recentTracks: groupRecentTracksReady
-          ? UserSongs.find(
-              {
-                userId: { $in: currentGroup.userIds },
-                show: true,
-                timestamps: { $exists: true }
-              },
-              { sort: { timestamps: -1 } }
-            ).fetch()
-          : []
-      };
-    } else {
-      //display current user's song logs
-      const myTracksCountReady = Meteor.subscribe('mySongLogsCount').ready();
-      const myRecentTracksReady = Meteor.subscribe(
-        'myRecentTracks',
-        limit.get()
-      ).ready();
-      return {
-        tracksCount: myTracksCountReady
-          ? Counts.get('mySongLogsCount')
-          : Number.POSITIVE_INFINITY,
-        recentTracksReady: myRecentTracksReady,
-        recentTracks: myRecentTracksReady
-          ? UserSongs.find(
-              {
-                userId: Meteor.user().profile.id,
-                timestamps: { $exists: true }
-              },
-              { sort: { timestamps: -1 } }
-            ).fetch()
-          : []
-      };
-    }
+    return {
+      groupRecentTracks: groupRecentTracksReady
+        ? UserSongs.find(
+            {
+              userId: { $in: currentGroup.userIds },
+              show: true,
+              timestamps: { $exists: true }
+            },
+            { sort: { timestamps: -1 } }
+          ).fetch()
+        : []
+    };
   })
 )(SongLog);
