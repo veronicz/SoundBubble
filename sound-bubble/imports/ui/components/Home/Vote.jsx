@@ -12,8 +12,8 @@ class Vote extends React.Component {
   render() {
     const { song, voteState, groupUpvote, groupDownvote, vote } = this.props;
     let songId = song._id;
-    let upvoteCount = groupUpvote || voteState === 1 ? 1 : 0; //use user's own vote if groupVote does not exist
-    let downvoteCount = groupDownvote || voteState === -1 ? 1 : 0;
+    let upvoteCount = groupUpvote || (voteState === 1 ? 1 : 0); //use user's own vote if groupVote does not exist
+    let downvoteCount = groupDownvote || (voteState === -1 ? 1 : 0);
 
     if (voteState === 1) {
       return (
@@ -26,7 +26,9 @@ class Vote extends React.Component {
               <span className="tooltiptext">Undo Upvote</span>
             </div>
           </div>
-          <span className="voteCount" style={{ color: 'green' }}>{upvoteCount}</span>
+          <span className="voteCount" style={{ color: 'green' }}>
+            {upvoteCount}
+          </span>
           <div onClick={() => vote(songId, 3)} className="voteButton">
             <div className="thumbsDown glyphicon glyphicon-thumbs-down white">
               <span className="tooltiptext">Downvote</span>
@@ -39,7 +41,6 @@ class Vote extends React.Component {
     if (voteState === -1) {
       return (
         <div className="votes">
-
           <div onClick={() => vote(songId, 1)} className="voteButton">
             <div className="thumbsUp glyphicon glyphicon-thumbs-up white">
               <span className="tooltiptext">Upvote</span>
@@ -56,7 +57,9 @@ class Vote extends React.Component {
               <span className="tooltiptext">Undo Downvote</span>
             </div>
           </div>
-          <span className="voteCount" style={{ color: 'red' }}>{downvoteCount}</span>
+          <span className="voteCount" style={{ color: 'red' }}>
+            {downvoteCount}
+          </span>
         </div>
       );
     } else {
@@ -82,7 +85,7 @@ class Vote extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    currentGroup: state.currentGroup
+    currentGroupId: state.currentGroupId
   };
 };
 
@@ -93,7 +96,7 @@ export default compose(
   ),
   withTracker(props => {
     const songId = props.song._id;
-    const currentGroup = props.currentGroup;
+    const currentGroupId = props.currentGroupId;
 
     const voteStateReady = Meteor.subscribe('myVote', songId).ready();
     const userSong = UserSongs.findOne({
@@ -102,12 +105,12 @@ export default compose(
     });
     const userSongExists = voteStateReady && userSong;
 
-    const groupReady = currentGroup
-      ? Meteor.subscribe('groupSong', currentGroup._id, songId).ready()
+    const groupReady = currentGroupId
+      ? Meteor.subscribe('groupSong', currentGroupId, songId).ready()
       : null;
-    const groupSong = currentGroup
+    const groupSong = currentGroupId
       ? GroupSongs.findOne({
-          groupId: currentGroup._id,
+          groupId: currentGroupId,
           songId: songId
         })
       : null;
