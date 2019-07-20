@@ -38,6 +38,13 @@ Meteor.publish('myGroups', function() {
   return Groups.find({ userIds: Meteor.user().profile.id });
 });
 
+Meteor.publish('group', function(groupId) {
+  if (!this.userId) {
+    return this.ready();
+  }
+  return Groups.find({ _id: groupId });
+});
+
 Meteor.publish('myRecentTracks', function(limit) {
   if (!this.userId) {
     return this.ready();
