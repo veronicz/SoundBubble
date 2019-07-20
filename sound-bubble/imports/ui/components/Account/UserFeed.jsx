@@ -1,32 +1,45 @@
 import React, { Component } from 'react';
 import Song from '../Song';
 import '../../stylesheets/Account.css';
+import compose from 'recompose/compose';
 import { connect } from 'react-redux';
+import { withTracker } from 'meteor/react-meteor-data';
 import { fetchMySongLogs } from '../../actions/accountActions';
+import UserSongs from '../../../api/userSongs';
+
+const DEFAULT_LIMIT = 20;
+const LIMIT_INCREMENT = 20;
+const limit = new ReactiveVar(DEFAULT_LIMIT);
 
 class UserFeed extends Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.myRecentTracksReady;
+  }
+
   componentDidMount() {
-    this.props.fetchMySongLogs();
+    document.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const songLogs = document.getElementById('song_logs');
+    if (this.isBottom(songLogs) && this.props.myTracksCount > limit.get()) {
+      limit.set(limit.get() + LIMIT_INCREMENT);
+    }
+  };
+
+  isBottom(el) {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
   }
 
   getSongDetails() {
     const { myRecentTracks } = this.props;
-    let songLogs = Songs.find({
-      _id: { $in: myRecentTracks.map(t => t.songId) }
-    }).fetch();
-
+    console.log('myrecent', myRecentTracks);
     return myRecentTracks.map(t => {
-      let song = songLogs.find(s => s._id === t.songId);
-      let timestamp = t.timestamps;
-      let show = t.show;
-      return (
-        <Song
-          key={song.id + timestamp}
-          song={song}
-          timestamp={timestamp}
-          show={show}
-        />
-      );
+      return <Song key={t._id} track={t} />;
     });
   }
 
@@ -38,29 +51,39 @@ class UserFeed extends Component {
           <img
             className="refresh_button"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
-            onClick={() => this.propsfetchMySongLogs()}
+            onClick={() => this.props.fetchMySongLogs()}
           />
         </div>
-        <div className="songs">
+        <div className="songs" id="song_logs">
           <ul>{this.getSongDetails()}</ul>
-        </div>
-        <div className="show_more_button_container">
-          <button className="btn btn-secondary btn-sm"> Show More </button>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    myRecentTracks: state.tracks.filter(
-      t => t.userId === Meteor.user().profile.id
-    )
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  { fetchMySongLogs }
+export default compose(
+  withTracker(props => {
+    const myTracksCountReady = Meteor.subscribe('mySongLogsCount').ready();
+    const myRecentTracksReady = Meteor.subscribe(
+      'myRecentTracks',
+      limit.get()
+    ).ready();
+    return {
+      myTracksCount: myTracksCountReady
+        ? Counts.get('mySongLogsCount')
+        : Number.POSITIVE_INFINITY,
+      myRecentTracksReady: myRecentTracksReady,
+      myRecentTracks: myRecentTracksReady
+        ? UserSongs.find(
+            { userId: Meteor.user().profile.id, timestamps: { $exists: true } },
+            { sort: { timestamps: -1 } }
+          ).fetch()
+        : []
+    };
+  }),
+  connect(
+    null,
+    { fetchMySongLogs }
+  )
 )(UserFeed);

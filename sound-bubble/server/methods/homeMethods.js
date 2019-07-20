@@ -1,22 +1,26 @@
 import '../spotify-api';
-import { getRecentlyPlayed } from './commonMethods';
+import { getAllRecentlyPlayed } from './commonMethods';
 import Groups from '../../imports/api/groups';
 import GroupSongs from '../../imports/api/groupSongs';
 import UserSongs from '../../imports/api/userSongs';
 
 Meteor.methods({
-  getGroupRecentlyPlayed: function(group) {
-    return updateGroupRecentlyPlayed(group);
+  getGroupRecentlyPlayed: function(groupId = null) {
+    updateGroupRecentlyPlayed(groupId);
   },
-  vote: function(songId,userId,groupId, option) {
-    voteSong(songId,userId,groupId,option)
-    return updateGroupRecentlyPlayed(groupId);
+  voteGroupSong: function(songId, groupId, option) {
+    updateGroupVote(songId, groupId, option);
+    updateUserVote(songId, option);
+  },
+  voteUserSong(songId, option) {
+    updateUserVote(songId, option);
   }
 });
 
 function updateGroupRecentlyPlayed(groupId) {
-  let userIds = Groups.findOne({ _id: groupId }).userIds;
-  let tracks = [];
+  let userIds = groupId
+    ? Groups.findOne({ _id: groupId }).userIds
+    : Meteor.users.find().map(u => u.profile.id);
   userIds.forEach(userId => {
     let tokens = {};
     try {
@@ -24,10 +28,8 @@ function updateGroupRecentlyPlayed(groupId) {
     } catch (error) {
       throw new Meteor.Error(error);
     }
-    tracks = tracks.concat(getRecentlyPlayed(userId, tokens));
-    getGroupVote(tracks, groupId);
+    getAllRecentlyPlayed(userId, tokens);
   });
-  return tracks;
 }
 
 function getTokensForUser(userId) {
@@ -41,90 +43,65 @@ function getTokensForUser(userId) {
   };
 }
 
-function getGroupVote(tracks, groupId) {
-  tracks.forEach(track => {
-    GroupSongs.upsert({
-      songId: track.songId,
-      groupId: groupId
-    },{
-      $set: {songId: track.songId,
-             groupId: groupId}
-    })
-  })
-}
-
-function voteSong(songId,userId,groupId,option){
-  if(option === 1){
-    GroupSongs.update({
-      songId:songId,
-      groupId: groupId
-    },{
-      $inc: {
-        upvote: 1
-      }
-    });
-    UserSongs.upsert({
-      songId:songId,
-      userId:userId
-    },{
-      $set: {
-        vote: 1
-      }
-    })
-  }
-  if(option === 2){
-    GroupSongs.update({
-      songId:songId,
-      groupId:groupId
-    },{
-      $inc: {
-        upvote: -1
-      }
-    });
-    UserSongs.upsert({
-      songId:songId,
-      userId:userId
-    },{
-      $set: {
-        vote: 0
-      }
-    })
-  }
-  if(option === 3){
-    GroupSongs.update({
-      songId:songId,
-      groupId:groupId
-    },{
-      $inc: {
-        downvote: 1
-      }
-    });
-    UserSongs.upsert({
-      songId:songId,
-      userId:userId
-    },{
-      $set: {
-        vote: -1
-      }
-    })
-  }
-  if(option === 4){
-    GroupSongs.update({
-      songId:songId,
-      groupId:groupId
-    },{
-      $inc: {
-        downvote: -1
-      }
-    });
-    UserSongs.upsert({
-      songId:songId,
-      userId:userId
-    },{
-      $set: {
-        vote: 0
-      }
-    })
+//TODO: what are these option numbers?
+function updateGroupVote(songId, groupId, option) {
+  switch (option) {
+    case 1:
+      incGroupVote(songId, groupId, 'upvote', 1);
+      break;
+    case 2:
+      incGroupVote(songId, groupId, 'upvote', -1);
+      break;
+    case 3:
+      incGroupVote(songId, groupId, 'downvote', 1);
+      break;
+    case 4:
+      incGroupVote(songId, groupId, 'downvote', -1);
+      break;
   }
 }
 
+function updateUserVote(songId, option) {
+  switch (option) {
+    case 1:
+      updateUserSongs(songId, 1);
+      break;
+    case 2:
+      updateUserSongs(songId, 0);
+      break;
+    case 3:
+      updateUserSongs(songId, -1);
+      break;
+    case 4:
+      updateUserSongs(songId, 0);
+      break;
+  }
+}
+
+function updateUserSongs(songId, vote) {
+  UserSongs.upsert(
+    {
+      songId: songId,
+      userId: Meteor.user().profile.id
+    },
+    {
+      $set: {
+        vote: vote
+      }
+    }
+  );
+}
+
+function incGroupVote(songId, groupId, field, value) {
+  let fieldValue = {};
+  fieldValue[field] = value;
+  GroupSongs.upsert(
+    {
+      songId: songId,
+      groupId: groupId
+    },
+    {
+      $inc: fieldValue
+    }
+  );
+}

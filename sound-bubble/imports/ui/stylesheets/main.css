@@ -1,5 +1,5 @@
 
-#react-target{
+.react-target{
   padding:0;
   margin:0;
 }
@@ -31,19 +31,15 @@ code {
 
 .voteCount{
   font-size:12px;
+  margin-right:15px;
 }
 
-.song_card_container{
-  border-radius:20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:#121212;
-  height:60px;
-  margin:20px;
-  border: 1px solid #414141;
-  overflow:hidden;
-}
+
+
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+} 
 
 .option_container{
   position: relative;
@@ -75,7 +71,7 @@ display: inline-block;
 }
 
 .option_container .tooltiptext::after{
-  content: "";
+content: "";
 position: absolute;
 top: 100%;
 left: 50%;
@@ -89,6 +85,7 @@ border-color: #555 transparent transparent transparent;
   visibility: visible;
   opacity: 1;
 }
+
 
 .voteButton{
   position: relative;
@@ -147,6 +144,7 @@ border-color: #555 transparent transparent transparent;
 
 .photo_username{
   overflow:hidden;
+  font-family:monospace;
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
@@ -173,15 +171,17 @@ border-color: #555 transparent transparent transparent;
   background-color: white;
   border-radius: 50%;
   border: none;
+  margin-bottom:4px !important;
 }
 
 .username{
   text-align:center;
   color:silver;
-  font-family:ubuntu solid bold;
+  font-family:monospace !important;
   font-size:12px;
   font-weight:bold;
   height:9px;
+  margin-bottom:3px;
 }
 
 .username:hover{
@@ -201,19 +201,32 @@ border-color: #555 transparent transparent transparent;
   align-content:center;
   width:20%;
   text-align:center;
-  margin-left:505px;
-  margin-top:50px;
-  margin-bottom:250px;
+  font-size:20px;
 }
 
-.group_button{
-  height:40px;
+.feed_button{
+  height:30px;
   background-color: rgb(54, 54, 54);
   color:silver;
+  width:170px;
+  margin-bottom:30px;
+  border:0px;
+  animation: fadeIn 0.5s linear;
 }
+
+.feed_button:hover{
+  height:30px;
+  background-color: rgb(34, 34, 34);
+  color:silver;
+  width:170px;
+  margin-bottom:30px;
+  border:0px;
+}
+
 
 .pageContainer{
   overflow:scroll;
+  animation: fadeIn 0.5s linear;
 }
 
 .pageContainer::-webkit-scrollbar { 
@@ -222,66 +235,59 @@ border-color: #555 transparent transparent transparent;
 
 .song_details{
  color:silver;
- font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
- width:55%;
+ width:60%;
  position:auto;
  font-size:23px;
+ padding:0;
+ margin:0;
 }
 
 .song_details:hover{
-  font-size:31px;
+  font-size:27px;
   font-weight:bold;
   color:#1db954;
 }
 
 .votes{
+  display:flex;
+  justify-content:center;
+  align-content:center;
+  align-items:center;
   width:10%;
   color:grey;
-  margin:0px;
   position:auto;
+  font-family:monospace;
 }
 
 .thumbsUp{
   width:30%;
   height:30%;
-  margin:0px;
   margin-right:10px;
-  transform:scaleX(-1);
 }
 
 .thumbsDown{
   width:30%;
   height:30%;
-  margin:0px;
-  transform: scaleY(-1);
-}
-
-.thumbsUp:hover{
-  width:38%;
-  height:38%;
-}
-
-.thumbsDown:hover{
-  width:38%;
-  height:38%;
+  margin-right:10px;
 }
 
 .time_stamp{
-  font-family: Lucida Sans Typewriter;
+  font-family: monospace;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  color:rgb(138, 138, 138);
+  color:rgb(190, 184, 184);
   height:inherit;
   position:auto;
   margin:5px;
   margin-right:10px;
   font-size:15px;
+  width:70px;
 }
 
 .time_stamp_played_at{
   margin:0px;
-  font-size:10px;
+  font-size:8px;
   font-weight:bold;
 }
 
@@ -290,10 +296,11 @@ border-color: #555 transparent transparent transparent;
 }
 
 .album_cover{
-  width:40%;
-  height:99%;
+  width:35%;
+  height:100%;
   overflow:hidden;
-  margin-left:0px;
+  padding:0;
+  margin:0;
 }
 
 .album_cover:hover{
@@ -316,10 +323,9 @@ border-color: #555 transparent transparent transparent;
   justify-content:center;
   width:100%;
   height:100%;
-  color:white;
+  color:silver;
   text-align: center;
   font-size:25px;
-  font-family:lucida console;
  
   background-color:black;
 }
@@ -333,6 +339,8 @@ border-color: #555 transparent transparent transparent;
   align-items:center;
   position:auto;
   margin-bottom:0px;
+  animation: fadeIn 0.5s linear;
+  color:silver;
 }
 
 .refresh_button{
@@ -355,4 +363,21 @@ border-color: #555 transparent transparent transparent;
   width:100%;
   height:100%;
   margin-top:40px;
+  padding:0;
+  margin:0;
 }
+
+.song_card_container{
+  border-radius:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color:#292828;
+  height:65px;
+  width:94%;
+  margin:20px;
+  border: 1px solid #585858;
+  overflow:hidden;
+  animation: fadeIn 1s linear;
+}
+

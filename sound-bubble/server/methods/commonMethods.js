@@ -2,27 +2,32 @@ import '../spotify-api';
 import Songs from '../../imports/api/songs';
 import UserSongs from '../../imports/api/userSongs';
 
-export function getRecentlyPlayed(userId, config = null) {
-  let response = getFromSpotifyWithOptionsChecked(
-    'getMyRecentlyPlayedTracks',
-    config
-  );
-  let songs = response.data.body.items;
-  updateUserSongs(songs, userId);
-  return getRecentlyPlayedSorted(userId);
+export function getAllRecentlyPlayed(userId, config = null) {
+  do {
+    let lastFetchedTime =
+      Meteor.users.findOne({ 'profile.id': userId }).lastFetched ||
+      '1546300800000'; //fetch from 2019/01/01 12:00am UTC
+    let options = { after: lastFetchedTime, limit: 50 };
+    let response = getFromSpotifyWithOptionsChecked(
+      'getMyRecentlyPlayedTracks',
+      options,
+      config
+    );
+
+    let newSongs = response.items;
+    if (newSongs.length === 0) break;
+    updateUserLastFetched(response.cursors, userId);
+    updateUserSongs(newSongs, userId);
+  } while (true);
 }
 
-function getFromSpotifyWithOptionsChecked(methodName, config, options = {}) {
-  var spotifyApi = new SpotifyWebApi();
-  if (config) {
-    spotifyApi.setAccessToken(config.accessToken);
-    spotifyApi.setRefreshToken(config.refreshToken);
-  }
+function getFromSpotifyWithOptionsChecked(methodName, options, config) {
+  var spotifyApi = config ? new SpotifyWebApi(config) : new SpotifyWebApi();
   var response = spotifyApi[methodName](options);
   if (checkTokenRefreshed(response, spotifyApi)) {
     response = spotifyApi[methodName](options);
   }
-  return response;
+  return response.data.body;
 }
 
 function checkTokenRefreshed(response, api) {
@@ -32,6 +37,14 @@ function checkTokenRefreshed(response, api) {
   } else {
     return false;
   }
+}
+
+function updateUserLastFetched(cursors, userId) {
+  let lastPlayedTime = cursors.after;
+  Meteor.users.update(
+    { 'profile.id': userId },
+    { $max: { lastFetched: lastPlayedTime } }
+  );
 }
 
 function updateUserSongs(songs, userId) {
@@ -53,28 +66,18 @@ function updateUserSongs(songs, userId) {
 }
 
 function updateSongs(songs) {
-  songs
-    .map(s => s.track)
-    .forEach(song => {
-      Songs.upsert(
-        { _id: song.id },
-        {
-          $set: {
-            name: song.name,
-            artists: song.artists.map(artist => artist.name),
-            spotifyUrl: song.external_urls.spotify,
-            albumCover: song.album.images[0].url
-          }
+  songs.forEach(s => {
+    let song = s.track;
+    Songs.upsert(
+      { _id: song.id },
+      {
+        $set: {
+          name: song.name,
+          artists: song.artists.map(artist => artist.name),
+          spotifyUrl: song.external_urls.spotify,
+          albumCover: song.album.images[0].url
         }
-      );
-    });
-}
-
-function getRecentlyPlayedSorted(userId, limit = 10) {
-  return UserSongs.aggregate([
-    { $match: { userId: userId } },
-    { $unwind: '$timestamps' },
-    { $sort: { timestamps: -1 } },
-    { $limit: limit }
-  ]);
+      }
+    );
+  });
 }
