@@ -7,9 +7,32 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { fetchMySongLogs } from '../../actions/accountActions';
 import UserSongs from '../../../api/userSongs';
 
+const DEFAULT_LIMIT = 20;
+const LIMIT_INCREMENT = 20;
+const limit = new ReactiveVar(DEFAULT_LIMIT);
+
 class UserFeed extends Component {
+  shouldComponentUpdate(nextProps) {
+    return nextProps.myRecentTracksReady;
+  }
+
   componentDidMount() {
-    this.props.fetchMySongLogs();
+    document.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const songLogs = document.getElementById('song_logs');
+    if (this.isBottom(songLogs) && this.props.myTracksCount > limit.get()) {
+      limit.set(limit.get() + LIMIT_INCREMENT);
+    }
+  };
+
+  isBottom(el) {
+    return el.getBoundingClientRect().bottom <= window.innerHeight;
   }
 
   getSongDetails() {
@@ -31,11 +54,8 @@ class UserFeed extends Component {
             onClick={() => this.props.fetchMySongLogs()}
           />
         </div>
-        <div className="songs">
+        <div className="songs" id="song_logs">
           <ul>{this.getSongDetails()}</ul>
-        </div>
-        <div className="show_more_button_container">
-          <button className="feed_button btn btn-secondary btn-lg"> Show More </button>
         </div>
       </div>
     );
@@ -44,8 +64,16 @@ class UserFeed extends Component {
 
 export default compose(
   withTracker(props => {
-    const myRecentTracksReady = Meteor.subscribe('myRecentTracks').ready();
+    const myTracksCountReady = Meteor.subscribe('mySongLogsCount').ready();
+    const myRecentTracksReady = Meteor.subscribe(
+      'myRecentTracks',
+      limit.get()
+    ).ready();
     return {
+      myTracksCount: myTracksCountReady
+        ? Counts.get('mySongLogsCount')
+        : Number.POSITIVE_INFINITY,
+      myRecentTracksReady: myRecentTracksReady,
       myRecentTracks: myRecentTracksReady
         ? UserSongs.find(
             { userId: Meteor.user().profile.id, timestamps: { $exists: true } },
