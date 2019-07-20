@@ -1,86 +1,57 @@
 import React, { Component } from 'react';
-import Song from './Song.jsx';
+import Song from '../Song';
 import { connect } from 'react-redux';
-import { fetchSongLogs } from '../../actions';
+import { fetchGroupSongLogs } from '../../actions/homeActions';
+import Songs from '../../../api/songs';
+import GroupButton from './GroupButton';
+import GroupSongs from '../../../api/groupSongs';
 
 class SongLog extends Component {
-  getSongDetails(s, i) {
-    const { profiles } = this.props;
-    let randIndex = Math.floor(Math.random() * 5);
-    let randProfile = profiles[randIndex];
-    let song = s.track;
-    let songUrl;
-
-    if (s.context === null) {
-      songUrl = 'https://support.spotify.com/tr/article/Error-code-404/';
-    } else {
-      songUrl = song.external_urls.spotify;
-    }
-
-    let artists = song.artists;
-    let artistNames = artists.map(artist => artist.name).join(' & ');
-    // TODO: calls below need to be made null safe
-
-    return (
-      <Song
-        key={i}
-        userName={randProfile.username}
-        userImage={randProfile.profile_photo}
-        songName={song.name}
-        songArtist={artistNames}
-        songAlbumCover={song.album.images[0].url}
-        songTimeStampTime={s.played_at.substring(11, 16)}
-        songTimeStampDate={s.played_at.substring(0, 10)}
-        songExternalUrl={songUrl}
-        upAmount = {s.upAmount}
-        downAmount = {s.downAmount}
-        voteState = {s.voteState}
-        id={i}
-      />
-    );
-  }
+  getSongDetails() {
+    return this.props.groupRecentTracks
+      .filter(t => t.show)
+      .map(t => {
+        let user = Meteor.users.findOne({ 'profile.id': t.userId }).profile;
+        let song = Songs.findOne({ _id: t.songId });
+        let timestamp = t.timestamps;
+        let upVoteCount = GroupSongs.findOne({groupId: this.props.currentGroup._id,songId:t.songId}).upvote;
+        let downVoteCount = GroupSongs.findOne({groupId:this.props.currentGroup._id,songId:t.songId}).downvote;
+        let voteState = t.vote;
+        return (
+          <Song
+            key={song.id + user.id + timestamp}
+            song={song}
+            user={user}
+            timestamp={timestamp}
+            upVoteCount={upVoteCount}
+            downVoteCount={downVoteCount} 
+            voteState={voteState} 
+          />
+        );
+      });
+}
 
   render() {
-    const { tracks, fetchSongLogs } = this.props;
-    let songDivs = tracks.map((s, i) => this.getSongDetails(s, i));
-
     return (
       <div className="feed_container">
         <div className="song_feed_header">
           <h1 className="song_feed_title">Your Feed</h1>
-          <img
+          <div
             className="refresh_button"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
-            onClick={() => fetchSongLogs()}
-          />
-        </div>
-
-        <div className="dropdown">
-          <button
-            className="group_button btn btn-secondary btn-sm dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
+            onClick={() => this.props.fetchGroupSongLogs()}
           >
-            Choose Group
-          </button>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a className="dropdown-item" href="#">
-              Group 1
-            </a>
-            <a className="dropdown-item" href="#">
-              Group 2
-            </a>
-            <a className="dropdown-item" href="#">
-              Group 3
-            </a>
+            <div className="option_container">
+              <div className="glyphicon glyphicon-refresh white">
+                <span className="tooltiptext">Refresh</span>
+              </div>
+            </div>
           </div>
         </div>
 
+        <GroupButton />
+
         <div className="songs">
-          <ul>{songDivs}</ul>
+          <ul>{this.getSongDetails()}</ul>
         </div>
         <div className="show_more_button_container">
           <button className="btn btn-secondary btn-sm"> Show More </button>
@@ -91,10 +62,21 @@ class SongLog extends Component {
 }
 
 const mapStateToProps = state => {
-  return { tracks: state.tracks, profiles: state.profiles };
+  console.log('allTracks', state.tracks);
+  return {
+    groupRecentTracks: state.tracks.filter(t => {
+      if (state.currentGroup) {
+        return state.currentGroup.userIds.includes(t.userId);
+      } else {
+        //user is not in any group, display own songs
+        return t.userId === Meteor.user().profile.id;
+      }
+    }),
+    currentGroup: state.currentGroup
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchSongLogs }
+  { fetchGroupSongLogs }
 )(SongLog);

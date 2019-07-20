@@ -3,31 +3,18 @@ import Home from '../components/Home/Home.jsx';
 import Account from '../components/Account/Account.jsx';
 import About from '../components/About/About.jsx';
 import Groups from '../components/Groups/Groups.jsx';
-import LogInPage from '../components/LogInPage.jsx';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 import '../stylesheets/Heading.css';
-import Blaze from 'meteor/gadicc:blaze-react-component';
 
-class AppRouter extends Component {
-  constructor() {
-    super();
-    this.state = { loggedIn: false };
-  }
-
-  logIn() {
-    this.setState({ loggedIn: true });
-  }
-
+export default class AppRouter extends Component {
   render() {
-    if (this.state.loggedIn === true) {
-      return (
-        <BrowserRouter>
-        <div>
-          <div className = "headerContainer">
+    return (
+      <BrowserRouter>
+        <div className="pageWrapper">
+          <div className="headerContainer">
             <div className="page_title_container">
               <h1 className="header_page_title">SoundBubble</h1>
             </div>
-            <Blaze template="loginButtons" />
             <div className="navContainer">
               <NavLink
                 exact
@@ -35,23 +22,23 @@ class AppRouter extends Component {
                 className="navLink"
                 activeClassName="activeLink"
               >
-                <span className="glyphicon glyphicon-home" area-hidden="true"></span>Home
-                
-            </NavLink>
+                <span className="glyphicon glyphicon-home" area-hidden="true" />
+                Home
+              </NavLink>
               <NavLink
                 to={'/Account'}
                 className="navLink"
                 activeClassName="activeLink"
               >
                 My Profile
-            </NavLink>
-            <NavLink
+              </NavLink>
+              <NavLink
                 to={'/Groups'}
                 className="navLink"
                 activeClassName="activeLink"
               >
                 My Groups
-            </NavLink>
+              </NavLink>
               <NavLink
                 to={'/About'}
                 id="rest"
@@ -59,23 +46,17 @@ class AppRouter extends Component {
                 activeClassName="activeLink"
               >
                 About
-            </NavLink>
+              </NavLink>
             </div>
-            </div>
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <Route path="/about/" component={About} />
-              <Route path="/account/" component={Account} />
-              <Route path="/groups/" component={Groups}/>
-            </Switch>
           </div>
-
-        </BrowserRouter>
-      );
-    } else {
-      return (<LogInPage logIn={this.logIn.bind(this)} />)
-    }
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/about/" component={About} />
+            <Route path="/account/" component={Account} />
+            <Route path="/groups/" component={Groups} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+    );
   }
 }
-
-export default AppRouter;

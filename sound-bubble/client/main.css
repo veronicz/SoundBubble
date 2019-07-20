@@ -1,19 +1,27 @@
-body {
-  padding: 10px;
-  font-family: sans-serif;
+
+#react-target{
+  padding:0;
+  margin:0;
 }
-body {
-  padding: 10px;
-  font-family: comic sans ms;
+
+.pageWrapper{
+  padding:0;
+  margin:0;
+}
+
+.app{
+  padding:0;
+  margin:0;
 }
 
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding:0;
+  margin:0;
 }
 
 code {
@@ -33,9 +41,95 @@ code {
   background-color:#121212;
   height:60px;
   margin:20px;
-  border: 1px solid #232323;
+  border: 1px solid #414141;
   overflow:hidden;
 }
+
+.option_container{
+  position: relative;
+display: inline-block;
+}
+
+
+.option_container .tooltiptext {
+  visibility: hidden;
+  background-color:silver;
+  color:black;
+  font-family:monospace;
+  text-align: center;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: -50%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.tooltiptext{
+  font-size:16px;
+}
+
+.option_container .tooltiptext::after{
+  content: "";
+position: absolute;
+top: 100%;
+left: 50%;
+margin-left: -5px;
+border-width: 5px;
+border-style: solid;
+border-color: #555 transparent transparent transparent;
+}
+
+.option_container:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.voteButton{
+  position: relative;
+display: inline-block;
+}
+
+.voteButton .tooltiptext {
+  visibility: hidden;
+  background-color:silver;
+  color:black;
+  font-family:monospace;
+  text-align: center;
+  border-radius: 6px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: -50%;
+
+  /* Fade in tooltip */
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.voteButton .tooltiptext::after{
+  content: "";
+position: absolute;
+top: 100%;
+left: 50%;
+margin-left: -5px;
+border-width: 5px;
+border-style: solid;
+border-color: #555 transparent transparent transparent;
+}
+
+.voteButton:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 
 .song_card_container:hover{
   overflow:visible;
@@ -96,7 +190,9 @@ code {
 }
 
 .headerContainer{
-  
+  width:inherit;
+  padding:0;
+  margin:0;
 }
 
 .show_more_button_container{
