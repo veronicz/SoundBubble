@@ -62,7 +62,6 @@ class GroupButton extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('currentGroupId', state.currentGroupId);
   return {
     currentGroupId: state.currentGroupId
   };

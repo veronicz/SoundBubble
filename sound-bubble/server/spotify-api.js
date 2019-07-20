@@ -18,18 +18,21 @@ SpotifyWebApi = function(config) {
       // Update the current API instance
       api.setAccessToken(response.data.body.access_token);
 
-      // Update the current user (if available)
-      if (Meteor.userId()) {
-        Meteor.users.update(
-          { _id: Meteor.userId() },
-          {
-            $set: {
-              'services.spotify.accessToken': response.data.body.access_token,
-              'services.spotify.expiresAt':
-                +new Date() + 1000 * response.data.body.expires_in
-            }
+      // Update the user's access token (if available)
+      let userQuery = null;
+      if (config.userId) {
+        userQuery = { 'profile.id': config.userId };
+      } else if (Meteor.userId()) {
+        userQuery = { _id: Meteor.userId() };
+      }
+      if (userQuery) {
+        Meteor.users.update(userQuery, {
+          $set: {
+            'services.spotify.accessToken': response.data.body.access_token,
+            'services.spotify.expiresAt':
+              +new Date() + 1000 * response.data.body.expires_in
           }
-        );
+        });
       }
 
       callback(null, response);

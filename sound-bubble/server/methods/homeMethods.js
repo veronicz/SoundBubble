@@ -21,26 +21,7 @@ function updateGroupRecentlyPlayed(groupId) {
   let userIds = groupId
     ? Groups.findOne({ _id: groupId }).userIds
     : Meteor.users.find().map(u => u.profile.id);
-  userIds.forEach(userId => {
-    let tokens = {};
-    try {
-      tokens = getTokensForUser(userId);
-    } catch (error) {
-      throw new Meteor.Error(error);
-    }
-    getAllRecentlyPlayed(userId, tokens);
-  });
-}
-
-function getTokensForUser(userId) {
-  let user = Meteor.users.findOne({ 'profile.id': userId });
-  if (!user) {
-    throw `User with id: ${userId} is not in the database`;
-  }
-  return {
-    accessToken: user.services.spotify.accessToken,
-    refreshToken: user.services.spotify.refreshToken
-  };
+  userIds.forEach(userId => getAllRecentlyPlayed(userId));
 }
 
 //TODO: what are these option numbers?
