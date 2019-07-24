@@ -8,8 +8,7 @@ class User extends Component {
   formatUserInfo(title, detail) {
     return (
       <dl className="user-detail">
-        <dt>{title}</dt>
-        <dd>{detail}</dd>
+        <dt>{title}:<div className="detail">{detail}</div></dt>
       </dl>
     );
   }
@@ -23,12 +22,13 @@ class User extends Component {
 
     return (
       <div className="user-container">
+      
         <div className="user-left">
-          <img width="150" src={userImage} />
+          <img className="user-image" width="150" src={userImage} />
           <br />
         </div>
         <div className="user-right">
-          <h3>{user.display_name}</h3>
+        <h3 className="display-name">{user.display_name}</h3>
           <div className="user-info">
             {this.formatUserInfo('Groups', myGroupsCount)}
             {this.formatUserInfo('Email', user.email)}

@@ -24,7 +24,10 @@ class Group extends Component {
   // group members will be passed down as a prop from Groups
 
   openDeleteForm() {
-    this.setState({ deleteGroupDialog: true });
+    this.setState({
+      deleteGroupDialog: true,
+      searchUserBar: false
+    });
   }
 
   closeDeleteForm() {
@@ -32,7 +35,10 @@ class Group extends Component {
   }
 
   openSearchUserBar() {
-    this.setState({ searchUserBar: true });
+    this.setState({
+      searchUserBar: true,
+      deleteGroupDialog: false
+    });
   }
 
   closeSearchUserBar = () => {
@@ -65,7 +71,7 @@ class Group extends Component {
           <form className="form-container" onSubmit={this.deleteGroup}>
             <label htmlFor="groupName">
               <b>
-                Warning: You are about to permanently delete this group. All
+                <h3 className="warning">Warning!</h3> You are about to permanently delete this group. All
                 members will be removed from this group and all group
                 information will be lost. You cannot undo this action. Are you
                 sure?
@@ -73,7 +79,7 @@ class Group extends Component {
             </label>
 
             <button type="submit" className="btn">
-              Yes, Delete This Group.
+              Yes, Delete
             </button>
             <button
               type="button"
@@ -89,9 +95,9 @@ class Group extends Component {
 
     let userDivs = this.createGroupMembersComponents(userIds, groupId);
 
-    let searchUserBar = <div />; 
+    let searchUserBar = <div />;
     if (this.state.searchUserBar === true) {
-      searchUserBar = (<Search existUsers={userIds} groupId={groupId} closeSearch={this.closeSearchUserBar}/>);
+      searchUserBar = (<Search existUsers={userIds} groupId={groupId} closeSearch={this.closeSearchUserBar} />);
     }
 
     return (
@@ -118,11 +124,14 @@ class Group extends Component {
           </div>
           {deleteGroupPopUp}
         </div>
+        <div className="search-align">
         {searchUserBar}
-      <div className="groupMembers">
-      {userDivs}
-      </div>
-    </div>);
+        </div>
+        <div className="groupMembers">
+          {userDivs}
+        </div>
+        
+      </div>);
   }
 }
 

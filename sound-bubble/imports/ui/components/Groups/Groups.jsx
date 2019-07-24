@@ -50,7 +50,7 @@ class Groups extends Component {
             </label>
             <input
               type="text"
-              placeholder="Enter Group Name"
+              placeholder="Enter group name..."
               name="groupName"
               required
             />
@@ -63,7 +63,7 @@ class Groups extends Component {
               className="btn cancel"
               onClick={() => this.closeForm()}
             >
-              Cancel
+              Close
             </button>
           </form>
         </div>
