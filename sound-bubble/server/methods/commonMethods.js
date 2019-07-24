@@ -2,16 +2,22 @@ import '../spotify-api';
 import Songs from '../../imports/api/songs';
 import UserSongs from '../../imports/api/userSongs';
 
-export function getAllRecentlyPlayed(userId, config = null) {
+export function getAllRecentlyPlayed(userId) {
   do {
     let lastFetchedTime =
       Meteor.users.findOne({ 'profile.id': userId }).lastFetched ||
       '1546300800000'; //fetch from 2019/01/01 12:00am UTC
     let options = { after: lastFetchedTime, limit: 50 };
+    let tokens = {};
+    try {
+      tokens = getTokensForUser(userId);
+    } catch (error) {
+      throw new Meteor.Error(error);
+    }
     let response = getFromSpotifyWithOptionsChecked(
       'getMyRecentlyPlayedTracks',
       options,
-      config
+      tokens
     );
 
     let newSongs = response.items;
@@ -21,8 +27,20 @@ export function getAllRecentlyPlayed(userId, config = null) {
   } while (true);
 }
 
+function getTokensForUser(userId) {
+  let user = Meteor.users.findOne({ 'profile.id': userId });
+  if (!user) {
+    throw `User with id: ${userId} is not in the database`;
+  }
+  return {
+    userId: userId,
+    accessToken: user.services.spotify.accessToken,
+    refreshToken: user.services.spotify.refreshToken
+  };
+}
+
 function getFromSpotifyWithOptionsChecked(methodName, options, config) {
-  var spotifyApi = config ? new SpotifyWebApi(config) : new SpotifyWebApi();
+  var spotifyApi = new SpotifyWebApi(config);
   var response = spotifyApi[methodName](options);
   if (checkTokenRefreshed(response, spotifyApi)) {
     response = spotifyApi[methodName](options);

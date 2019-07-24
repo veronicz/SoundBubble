@@ -37,7 +37,6 @@ class UserFeed extends Component {
 
   getSongDetails() {
     const { myRecentTracks } = this.props;
-    console.log('myrecent', myRecentTracks);
     return myRecentTracks.map(t => {
       return <Song key={t._id} track={t} />;
     });

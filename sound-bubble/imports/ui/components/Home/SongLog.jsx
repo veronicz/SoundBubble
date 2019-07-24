@@ -18,7 +18,6 @@ class SongLog extends Component {
   }
 
   getSongDetails() {
-    console.log('groupRecent', this.props.recentTracks);
     return this.props.recentTracks.map(t => {
       return <Song key={t._id + t.userId} track={t} home={true} />;
     });
