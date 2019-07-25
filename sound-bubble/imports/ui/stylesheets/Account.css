@@ -32,6 +32,10 @@
   text-align: center;
 }
 
+.user-image{
+  border-radius:15px;
+}
+
 .user-right {
   margin-left: 1em;
   flex-grow: 2;
@@ -52,6 +56,10 @@
   color:#1db954;
   font-weight:bold;
   text-align:center;
+}
+
+.profileLink:hover{
+  color:black;
 }
 
 .user-detail {
@@ -104,6 +112,21 @@ code {
   height: 100%;
   text-align: center;
   border: 1px;
+}
+
+.detail{
+  display:inline-block;
+  margin-left:50px;
+  font-weight:normal;
+}
+
+.display-name{
+  font-family:monospace;
+  text-align:center;
+  color:silver;
+  margin-bottom:20px;
+  font-weight:bold;
+  font-size:26px;
 }
 
 .photo_username {
@@ -222,6 +245,7 @@ code {
 }
 
 .hide_button {
+  width:60px;
   border-radius:20px;
   border: none;
   background: rgb(97, 97, 97);

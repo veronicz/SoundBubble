@@ -343,6 +343,10 @@ border-color: #555 transparent transparent transparent;
   color:silver;
 }
 
+.song_feed_title{
+  font-family:monospace;
+}
+
 .refresh_button{
   margin:18px;
   width:25px;
