@@ -53,7 +53,7 @@ class GroupMember extends React.Component {
 
             <div className="username">
               <p className="group_member_username">
-                {user.display_name} {this.isAdmin() ? '(Admin)' : null} {this.isCurrentUser() ? '(Me)' : null} 
+                {user.display_name} {this.isCurrentUser() ? '(Me)' : null} {this.isAdmin() ? '(Admin)' : null}
               </p>
             </div>
             {(this.isCurrentUser() && !this.isAdmin()) ? (
