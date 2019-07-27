@@ -36,6 +36,7 @@ class Groups extends Component {
         key={g._id}
         groupId={g._id}
         groupName={g.name}
+        adminId={g.adminId}
         userIds={g.userIds}
       />
     ));

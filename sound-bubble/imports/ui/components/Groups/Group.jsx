@@ -13,10 +13,10 @@ class Group extends Component {
     // userIds
     super();
     this.state = {
-      groupID: '',
-      members: [],
       deleteGroupDialog: false,
-      searchUserBar: false
+      searchUserBar: false,
+      adminPromote: false,
+      removeStatus: false,
     };
     this.deleteGroup = this.deleteGroup.bind(this);
   }
@@ -26,7 +26,9 @@ class Group extends Component {
   openDeleteForm() {
     this.setState({
       deleteGroupDialog: true,
-      searchUserBar: false
+      searchUserBar: false,
+      adminPromote: false,
+      removeStatus: false,
     });
   }
 
@@ -37,7 +39,9 @@ class Group extends Component {
   openSearchUserBar() {
     this.setState({
       searchUserBar: true,
-      deleteGroupDialog: false
+      deleteGroupDialog: false,
+      adminPromote: false,
+      removeStatus: false,
     });
   }
 
@@ -45,25 +49,46 @@ class Group extends Component {
     this.setState({ searchUserBar: false });
   }
 
+  openPromotion() {
+    this.setState({
+      adminPromote:true,
+      searchUserBar:false,
+      deleteGroupDialog:false,
+      removeStatus: false,
+    })
+  }
+
+  closePromotion () {
+    this.setState({adminPromote:false});
+  }
+
+  openRemoveForm() {
+    this.setState({
+      adminPromote:false,
+      searchUserBar:false,
+      deleteGroupDialog:false,
+      removeStatus: true,
+    })
+  }
+
+  closeRemoveForm () {
+    this.setState({removeStatus:false});
+  }
+
   deleteGroup(event) {
-    // TODO: delete group from db. Should only an "admin" user be able to do this? Maybe stretch requirement?
     event.preventDefault();
     this.props.deleteGroup(this.props.groupId);
     this.closeDeleteForm();
   }
 
-  addNewGroupMember() {
-    // TODO: Add member to group in db
-  }
-
-  createGroupMembersComponents(userIds, groupId) {
+  createGroupMembersComponents(userIds, groupId, adminId, promotion, remove) {
     return userIds.map(userId => (
-      <GroupMember key={userId} userId={userId} groupId={groupId} />
+      <GroupMember key={userId} userId={userId} groupId={groupId} adminId={adminId} promotion={promotion} remove={remove}/>
     ));
   }
 
   render() {
-    const { groupId, groupName, userIds } = this.props;
+    const { groupId, groupName, userIds, adminId } = this.props;
     let deleteGroupPopUp = <div />;
     if (this.state.deleteGroupDialog === true) {
       deleteGroupPopUp = (
@@ -93,7 +118,52 @@ class Group extends Component {
       );
     }
 
-    let userDivs = this.createGroupMembersComponents(userIds, groupId);
+    let promotePop = <div />;
+    if(this.state.adminPromote === true){
+      promotePop = (
+        <div className="form-popup" className="myForm">
+        <form className="form-container">
+          <label htmlFor="groupName">
+            <b>
+              <h3 className="warning">Notice!</h3> You are about to promote another user to be the group administrator.
+              After this operation, you can safely leave the group without permanently delete it. Click the promote button below to complete this process.
+            </b>
+          </label>
+          <button
+            type="button"
+            className="btn cancel"
+            onClick={() => this.closePromotion()}
+          >
+            Complete
+          </button>
+        </form>
+      </div>
+      )
+    }
+
+    let removePop = <div />;
+    if(this.state.removeStatus === true){
+      removePop = (
+        <div className="form-popup" className="myForm">
+        <form className="form-container">
+          <label htmlFor="groupName">
+            <b>
+              <h3 className="warning">Notice!</h3> You are about to permanently remove other users from current group. Click the promote button below to complete this process.
+            </b>
+          </label>
+          <button
+            type="button"
+            className="btn cancel"
+            onClick={() => this.closeRemoveForm()}
+          >
+            Complete
+          </button>
+        </form>
+      </div>
+      )
+    }
+
+    let userDivs = this.createGroupMembersComponents(userIds, groupId, adminId, this.state.adminPromote, this.state.removeStatus);
 
     let searchUserBar = <div />;
     if (this.state.searchUserBar === true) {
@@ -113,16 +183,34 @@ class Group extends Component {
                 <span className="tooltiptext">Add User</span>
               </div>
             </div>
-            <div
-              className="option_container"
-              onClick={() => this.openDeleteForm()}
-            >
+            {(Meteor.user().profile.id === adminId) ? (
+              <div className="option_container"
+                onClick={() => this.openRemoveForm()}>
+                <div className="glyphicon glyphicon-remove white">
+                  <span className="tooltiptext">Remove User</span>
+                </div>
+              </div>
+            ) : null}
+            {(Meteor.user().profile.id === adminId) ? (
+              <div className="option_container"
+                onClick={() => this.openPromotion()}>
+                <div className="glyphicon glyphicon-flag white">
+                  <span className="tooltiptext">Promote Admin</span>
+                </div>
+              </div>
+            ) : null}
+            {(Meteor.user().profile.id === adminId) ? (
+            <div className="option_container"
+              onClick={() => this.openDeleteForm()}>
               <div className="glyphicon glyphicon-trash white">
                 <span className="tooltiptext">Delete Group</span>
               </div>
             </div>
+            ) : null}
           </div>
           {deleteGroupPopUp}
+          {promotePop}
+          {removePop}
         </div>
         <div className="search-align">
         {searchUserBar}
@@ -130,7 +218,6 @@ class Group extends Component {
         <div className="groupMembers">
           {userDivs}
         </div>
-        
       </div>);
   }
 }
