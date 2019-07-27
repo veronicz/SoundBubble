@@ -125,8 +125,7 @@ class Group extends Component {
         <form className="form-container">
           <label htmlFor="groupName">
             <b>
-              <h3 className="warning">Notice!</h3> You are about to promote another user to be the group administrator.
-              After this operation, you can safely leave the group without permanently delete it. Click the promote button below to complete this process.
+              <h3 className="warning">Notice!</h3> You are the current administrator of this group. You can reassign this role to another member of the group, but this will revoke your administrator status. After promoting another user, you can still make changes as an administrator prior to hitting the "Done" button below.
             </b>
           </label>
           <button
@@ -134,7 +133,7 @@ class Group extends Component {
             className="btn cancel"
             onClick={() => this.closePromotion()}
           >
-            Complete
+            Done
           </button>
         </form>
       </div>
@@ -148,7 +147,7 @@ class Group extends Component {
         <form className="form-container">
           <label htmlFor="groupName">
             <b>
-              <h3 className="warning">Notice!</h3> You are about to permanently remove other users from current group. Click the promote button below to complete this process.
+              <h3 className="warning">Notice!</h3> Remove users by clicking the "X" beside a user's icon. This removes users from the current group, removing that user's votes and songs from group data. 
             </b>
           </label>
           <button
@@ -156,7 +155,7 @@ class Group extends Component {
             className="btn cancel"
             onClick={() => this.closeRemoveForm()}
           >
-            Complete
+            Done
           </button>
         </form>
       </div>
@@ -195,7 +194,7 @@ class Group extends Component {
               <div className="option_container"
                 onClick={() => this.openPromotion()}>
                 <div className="glyphicon glyphicon-flag white">
-                  <span className="tooltiptext">Promote Admin</span>
+                  <span className="tooltiptext">Change Group Admin</span>
                 </div>
               </div>
             ) : null}
