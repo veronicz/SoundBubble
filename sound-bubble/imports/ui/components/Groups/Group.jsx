@@ -184,17 +184,17 @@ class Group extends Component {
             </div>
             {(Meteor.user().profile.id === adminId) ? (
               <div className="option_container"
-                onClick={() => this.openRemoveForm()}>
-                <div className="glyphicon glyphicon-remove white">
-                  <span className="tooltiptext">Remove User</span>
+                onClick={() => this.openPromotion()}>
+                <div className="glyphicon glyphicon-flag white">
+                  <span className="tooltiptext">Change Group Admin</span>
                 </div>
               </div>
             ) : null}
             {(Meteor.user().profile.id === adminId) ? (
               <div className="option_container"
-                onClick={() => this.openPromotion()}>
-                <div className="glyphicon glyphicon-flag white">
-                  <span className="tooltiptext">Change Group Admin</span>
+                onClick={() => this.openRemoveForm()}>
+                <div className="glyphicon glyphicon-remove white">
+                  <span className="tooltiptext">Remove User</span>
                 </div>
               </div>
             ) : null}
