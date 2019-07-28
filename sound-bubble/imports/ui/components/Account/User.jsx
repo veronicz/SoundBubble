@@ -10,7 +10,9 @@ class User extends Component {
   formatUserInfo(title, detail) {
     return (
       <dl className="user-detail">
-        <dt>{title}:<div className="detail">{detail}</div></dt>
+        <dt>
+          {title}:<div className="detail">{detail}</div>
+        </dt>
       </dl>
     );
   }
@@ -29,13 +31,12 @@ class User extends Component {
 
     return (
       <div className="user-container">
-      
         <div className="user-left">
           <img className="user-image" width="150" src={userImage} />
           <br />
         </div>
         <div className="user-right">
-        <h3 className="display-name">{user.display_name}</h3>
+          <h3 className="display-name">{user.display_name}</h3>
           <div className="user-info">
             {this.formatUserInfo('Groups', myGroupsCount)}
             {this.formatUserInfo('Email', user.email)}
@@ -53,7 +54,7 @@ class User extends Component {
           <div className="logout">
             <button
               type="button"
-              class="btn btn-secondary"
+              className="btn btn-secondary"
               onClick={() => this.logout()}
             >
               Log out
