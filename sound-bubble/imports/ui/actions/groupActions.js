@@ -8,18 +8,6 @@ export const createGroup = (groupName, creatorId) => {
   };
 };
 
-export const deleteGroup = groupId => {
-  return (dispatch, getState) => {
-    Meteor.call('deleteGroup', groupId, (err, result) => {
-      if (err) {
-        console.log('Deleting group failed: ', err);
-      } else if (getState().currentGroupId === groupId) {
-        dispatch(removeCurrentGroup());
-      }
-    });
-  };
-};
-
 export const leaveGroup = groupId => {
   return (dispatch, getState) => {
     Meteor.call('leaveGroup', groupId, (err, result) => {
@@ -51,18 +39,17 @@ export const addGroupMember = (groupId, userId) => {
 export const promoteAdmin = (groupId, userId) => {
   return (dispatch, getState) => {
     Meteor.call('promoteAdmin', groupId, userId, err => {
-      if(err) {
+      if (err) {
         console.log('Promote new admin failed: ', err);
       }
     });
   };
 };
 
-
 export const removeGroupMember = (groupId, userId) => {
   return (dispatch, getState) => {
     Meteor.call('removeGroupMember', groupId, userId, err => {
-      if(err) {
+      if (err) {
         console.log('Remove group member failed: ', err);
       }
     });
