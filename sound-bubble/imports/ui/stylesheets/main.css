@@ -44,7 +44,18 @@ code {
 .option_container{
   position: relative;
 display: inline-block;
+margin:0;
+padding:0;
+height:0px;
 }
+
+.photo_container{
+  position: relative;
+display: inline-block;
+margin:0;
+padding:0;
+}
+
 
 
 .option_container .tooltiptext {
@@ -67,7 +78,7 @@ display: inline-block;
 }
 
 .tooltiptext{
-  font-size:16px;
+  font-size:0.5em;
 }
 
 .option_container .tooltiptext::after{
@@ -172,6 +183,11 @@ border-color: #555 transparent transparent transparent;
   border-radius: 50%;
   border: none;
   margin-bottom:4px !important;
+  position: relative;
+display: inline-block;
+margin:0;
+padding:0;
+height:0px;
 }
 
 .username{
@@ -254,9 +270,12 @@ border-color: #555 transparent transparent transparent;
   align-content:center;
   align-items:center;
   width:10%;
+  height:5px;
   color:grey;
   position:auto;
   font-family:monospace;
+  padding:0;
+  margin:0;
 }
 
 .thumbsUp{
@@ -321,8 +340,6 @@ border-color: #555 transparent transparent transparent;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  width:100%;
-  height:100%;
   color:silver;
   text-align: center;
   font-size:25px;
@@ -364,8 +381,6 @@ border-color: #555 transparent transparent transparent;
   flex-direction:column;
   justify-content:center;
   background-color:black;
-  width:100%;
-  height:100%;
   margin-top:40px;
   padding:0;
   margin:0;
@@ -379,9 +394,217 @@ border-color: #555 transparent transparent transparent;
   background-color:#292828;
   height:65px;
   width:94%;
-  margin:20px;
   border: 1px solid #585858;
   overflow:hidden;
   animation: fadeIn 1s linear;
+  margin-top:20px;
 }
 
+.vote_comments{
+  display:flex;
+  flex-direction:column;
+  align-content:center;
+  justify-content:center;
+  align-items:center;
+}
+
+.glyphicon.glyphicon-comment{
+  font-size:10px;
+}
+
+.glyphicon.glyphicon-pencil{
+  font-size:15px;
+}
+
+.song_and_comments{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  align-content:center;
+}
+
+.comments{
+  background:black;
+  margin-left:80px;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:1;
+  width:350px;
+}
+
+
+.user-comment-image{
+  height:1em;
+  width:1em;
+  border-radius:50%;
+  margin-right:1em;
+  border-color:black;
+  border:1px solid #34363b;
+  margin-top:0px;
+  padding-top:0px;
+}
+
+.add-comment{
+  height:1em;
+  width:1em;
+  border-radius:50%;
+  margin-right:1em;
+  background:white;
+}
+
+.add-comment-text{
+  font-size:12px;
+}
+
+.user-image:hover{
+  height:1.2em;
+  width:1.2em;
+}
+
+.user-comment{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:20px;
+  border:1px;
+}
+
+.user-comment-add{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  width:20px;
+  height:20px;
+  border:1px;
+}
+
+.user-comment:hover{
+  width:40px;
+}
+
+.user-comment:hover .comment-text{
+  display:block;
+}
+
+.user-comment:hover .text-timestamp-container
+{
+  display:block;
+}
+
+.user-comment:hover .comment-timestamp{
+  display:block;
+}
+
+
+.comment-text{
+  float:center;
+  font-family:monospace;
+  font-weight:bold;
+  display:none;
+  width:400px;
+  margin-top:5px;
+  font-size:0.5em;
+  padding:0px;
+  color:white;
+  margin-left:10px;
+  margin-bottom:0px;
+  padding-bottom:0px;
+  text-align:left;
+}
+
+.text-timestamp-container{
+  display:none;
+  background:black;
+  padding:4px;
+  border-radius:8px;
+  width:450px;
+  border:1px solid #34363b;
+  float:right;
+  background:url(https://media1.giphy.com/media/l3q2Xl2Rd8wZfMCaI/200w.webp?cid=790b76115d3e6c3732544e6577a43431&rid=200w.webp) repeat;
+}
+
+.comment-timestamp{
+  display:none;
+  float:right;
+  position:relative;
+  bottom:0;
+  font-size:0.4em;
+  color:white;
+  margin-top:0px;
+  margin-right:10px;
+  padding:0px;
+  font-family:monospace;
+  margin-bottom:0px;
+}
+
+
+.commentBar{
+  border:none;
+  height:95%;
+  width:200px;
+  margin-top:0px;
+  font-size:12px;
+}
+
+.closeCommentForm{
+  margin-left:10px;
+  height:100%;
+  width:15%;
+  border-radius:13px;
+  background-color:rgb(12, 11, 11);
+  color:rgb(238, 236, 236);
+  font-family:monospace;
+  font-size:0.4em;
+  border:none;
+}
+
+.createComment-Container{
+  border-radius:5px;
+  width:30em;
+  padding:4px;
+  padding-top:0px;
+  margin-top:20px;
+  text-align:center;
+  align-items:center;
+  background-color: rgb(241, 240, 240);
+  font-family:monospace;
+}
+
+.add-comment-glyph{
+  position:relative;
+  float:top;
+  margin-bottom:50px;
+  margin-left:10px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltip_comment_text {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-size:10px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip .user-comment-image{
+  visibility:visible;
+}
+
+.tooltip:hover .tooltip_comment_text {
+  visibility: visible;
+}

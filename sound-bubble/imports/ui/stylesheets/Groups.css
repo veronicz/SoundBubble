@@ -267,15 +267,34 @@
   .show {display: block;}
 
 
+  .searchBar{
+    border:none;
+    height:95%;
+    width:80%;
+    font-size:12px;
+  }
+  
+  .closeUserSearch{
+    margin-left:10px;
+    height:100%;
+    width:16%;
+    border-radius:13px;
+    background-color:rgb(12, 11, 11);
+    color:rgb(238, 236, 236);
+    font-family:monospace;
+    font-size:15px;
+    border:none;
+  }
+  
   .searchBar-Container{
     border-radius:5px;
-    width:50%;
+    width:10em;
     padding:4px;
     text-align:center;
     align-items:center;
     background-color: rgb(241, 240, 240);
     font-family:monospace;
-}
+  }
 
 .search-align{
   display:flex;
@@ -297,24 +316,6 @@
   align-items:center;
 }
 
-.searchBar{
-  border:none;
-  height:95%;
-  width:80%;
-}
-
-.closeUserSearch{
-  margin-left:10px;
-  height:100%;
-  width:16%;
-  border-radius:13px;
-  background-color:rgb(12, 11, 11);
-  color:rgb(238, 236, 236);
-  font-family:monospace;
-  font-size:15px;
-  border:none;
-
-}
 
 .foundUser{
   margin-top:10px;

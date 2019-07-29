@@ -4,12 +4,29 @@ import HideSongButton from './Account/HideSongButton';
 import '../stylesheets/main.css';
 import { withTracker } from 'meteor/react-meteor-data';
 import Songs from '../../api/songs';
+import Comments from './Home/Comments.jsx';
 
 // This class has the following inherited props:
 // track (required)
 // home (boolean, whether this component is showing on the home page)
 
 class Song extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      showComments: false
+    };
+  }
+
+  showComments = () => {
+    this.setState({ showComments: true });
+  }
+
+  hideComments = () => {
+    this.setState({ showComments: false });
+  }
+
   userInfo() {
     const { user } = this.props;
     if (user && user.display_name) {
@@ -39,6 +56,8 @@ class Song extends Component {
           </div>
         </div>
       );
+
+      
     } else {
       return null;
     }
@@ -53,6 +72,33 @@ class Song extends Component {
     }
   }
 
+  renderComments() {
+    const { track, song, home } = this.props;
+    if (home) {
+      if (!this.state.showComments) {
+        return (<div onClick={() => this.showComments()} className="option_container">
+          <div
+            className="comments_button glyphicon glyphicon-comment "
+            style={{ color: 'white' }}
+          >
+            <span className="tooltiptext">Open Comments</span>
+          </div>
+        </div>);
+      } else {
+        return (<div onClick={() => this.hideComments()} className="option_container">
+          <div
+            className="comments_button glyphicon glyphicon-comment"
+            style={{ color: 'black' }}
+          >
+            <span className="tooltiptext">Close</span>
+          </div>
+        </div>);
+      }
+    } else {
+      return (<div />);
+    }
+  }
+
   render() {
     const { track, song, home } = this.props;
     if (song) {
@@ -62,7 +108,13 @@ class Song extends Component {
 
       let songArtists = song.artists.join(' & ');
 
+    let comments = <div/>;
+    if (home && this.state.showComments){
+      comments = (<Comments songId="" groupId=""/>);
+    } 
+
       return (
+        <div className="song_and_comments">
         <li className="song_card_container">
           <span className="song_card">
             {home ? this.userInfo() : null}
@@ -99,19 +151,23 @@ class Song extends Component {
               </marquee>
             </div>
 
+            <div className="vote_comments">
             {this.renderVoteOrHide()}
-
-
+            {this.renderComments()}
+            </div>
             <div className="time_stamp">
               <h3 className="time_stamp_stamp">
-                {track.timestamps.toString().substring(16,21)}
+                {track.timestamps.toString().substring(16, 21)}
               </h3>
               <h3 className="time_stamp_played_at">
-              {track.timestamps.toString().substring(4,15)}
+                {track.timestamps.toString().substring(4, 15)}
               </h3>
             </div>
           </span>
         </li>
+
+        {comments}
+        </div>
       );
     }
     return null;
