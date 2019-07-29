@@ -88,7 +88,7 @@ class Song extends Component {
         return (<div onClick={() => this.hideComments()} className="option_container">
           <div
             className="comments_button glyphicon glyphicon-comment"
-            style={{ color: 'black' }}
+            style={{ color: '#1db954' }}
           >
             <span className="tooltiptext">Close</span>
           </div>
@@ -110,7 +110,7 @@ class Song extends Component {
 
     let comments = <div/>;
     if (home && this.state.showComments){
-      comments = (<Comments songId="" groupId=""/>);
+      comments = (<Comments songId="" groupId=""/>); // INSERT GROUP & SONG PROPS HERE
     } 
 
       return (

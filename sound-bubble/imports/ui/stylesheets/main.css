@@ -97,7 +97,6 @@ border-color: #555 transparent transparent transparent;
   opacity: 1;
 }
 
-
 .voteButton{
   position: relative;
 display: inline-block;
@@ -459,7 +458,7 @@ height:0px;
   font-size:12px;
 }
 
-.user-image:hover{
+.user-comment-image:hover{
   height:1.2em;
   width:1.2em;
 }
@@ -473,12 +472,16 @@ height:0px;
 }
 
 .user-comment-add{
+  position:relative;
+  float:top;
   display:flex;
   flex-direction:column;
   align-items:flex-start;
   width:20px;
-  height:20px;
   border:1px;
+  margin-left:20px;
+  vertical-align:top;
+  padding-bottom:5px;
 }
 
 .user-comment:hover{
@@ -495,6 +498,10 @@ height:0px;
 }
 
 .user-comment:hover .comment-timestamp{
+  display:block;
+}
+
+.user-comment:hover .comment-username{
   display:block;
 }
 
@@ -529,6 +536,21 @@ height:0px;
 .comment-timestamp{
   display:none;
   float:right;
+  position:relative;
+  bottom:0;
+  font-size:0.4em;
+  color:white;
+  margin-top:0px;
+  margin-right:10px;
+  padding:0px;
+  font-family:monospace;
+  margin-bottom:0px;
+}
+
+.comment-username{
+  margin-left:5px;
+  display:none;
+  float:left;
   position:relative;
   bottom:0;
   font-size:0.4em;
@@ -576,35 +598,11 @@ height:0px;
 .add-comment-glyph{
   position:relative;
   float:top;
-  margin-bottom:50px;
+  padding-bottom:10px;
   margin-left:10px;
 }
 
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
+.add-comment-glyph:hover{
+  color:#1db954;
 }
 
-.tooltip .tooltip_comment_text {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  font-size:10px;
-
-  /* Position the tooltip */
-  position: absolute;
-  z-index: 1;
-}
-
-.tooltip .user-comment-image{
-  visibility:visible;
-}
-
-.tooltip:hover .tooltip_comment_text {
-  visibility: visible;
-}
