@@ -14,6 +14,9 @@ Meteor.methods({
   },
   voteUserSong(songId, option) {
     updateUserVote(songId, option);
+  },
+  commentSong: function(songId, groupId, comment) {
+    postCommentToGroupSong(songId, groupId, comment);
   }
 });
 
@@ -83,6 +86,23 @@ function incGroupVote(songId, groupId, field, value) {
     },
     {
       $inc: fieldValue
+    }
+  );
+}
+
+function postCommentToGroupSong(songId, groupId, comment) {
+  GroupSongs.upsert(
+    {
+      songId: songId,
+      groupId: groupId
+    },
+    {
+      $push: {
+        comments: {
+          userId: Meteor.user().profile.id,
+          message: comment
+        }
+      }
     }
   );
 }

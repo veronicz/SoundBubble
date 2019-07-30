@@ -50,3 +50,13 @@ export const vote = (songId, option) => {
     }
   };
 };
+
+export const commentSong = (songId, groupId, comment) => {
+  return (dispatch, getState) => {
+    Meteor.call('commentSong', songId, groupId, comment, err => {
+      if (err) {
+        console.log('comment song failed', err);
+      }
+    });
+  };
+};
