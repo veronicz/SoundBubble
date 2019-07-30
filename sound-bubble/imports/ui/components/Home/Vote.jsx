@@ -5,7 +5,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { vote } from '../../actions/homeActions';
 import UserSongs from '../../../api/userSongs';
 import GroupSongs from '../../../api/groupSongs';
-import '../../stylesheets/main.css';
 import { Meteor } from 'meteor/meteor';
 
 class Vote extends React.Component {
