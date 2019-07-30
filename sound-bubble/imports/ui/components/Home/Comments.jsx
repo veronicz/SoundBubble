@@ -35,7 +35,10 @@ class Comments extends React.Component {
 
   onSubmit = () => {
     const { commentSong, songId, currentGroupId } = this.props;
-    commentSong(songId, currentGroupId, this.state.inputValue);
+    let commentText = this.state.inputValue;
+    if (commentText !== '') {
+      commentSong(songId, currentGroupId, commentText);
+    }
     this.closeCommentForm();
   };
 
