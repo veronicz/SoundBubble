@@ -1,8 +1,13 @@
 import React from 'react';
 import '../../stylesheets/main.css';
 
+
+// Inherited props:
+// userImage
+// userName
+// comment
+// timeStamp
 export default class UserComment extends React.Component {
-    // Comments inherit songId and groupId from Song
 
     render() {
         return (
