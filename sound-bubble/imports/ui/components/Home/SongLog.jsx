@@ -61,8 +61,8 @@ class SongLog extends Component {
 
         <GroupButton />
 
-        <div className="songs" id="song_logs">
-          <ul>{this.getSongDetails()}</ul>
+        <div className="songs">
+          <ul  id="song_logs">{this.getSongDetails()}</ul>
         </div>
       </div>
     );
