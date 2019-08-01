@@ -5,81 +5,66 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { vote } from '../../actions/homeActions';
 import UserSongs from '../../../api/userSongs';
 import GroupSongs from '../../../api/groupSongs';
-import '../../stylesheets/main.css';
 import { Meteor } from 'meteor/meteor';
 
 class Vote extends React.Component {
-  render() {
-    const { song, voteState, groupUpvote, groupDownvote, vote } = this.props;
+  handleVote(voteAction) {
+    const { song, voteState, vote } = this.props;
     let songId = song._id;
+    if (voteAction === 'upvote') {
+      if (voteState === 1) {
+        vote(songId, 'undoUpvote');
+        return;
+      }
+      if (voteState === -1) vote(songId, 'undoDownvote');
+      vote(songId, 'upvote');
+    } else {
+      if (voteState === -1) {
+        vote(songId, 'undoDownvote');
+        return;
+      }
+      if (voteState === 1) vote(songId, 'undoUpvote');
+      vote(songId, 'downvote');
+    }
+  }
+
+  render() {
+    const { voteState, groupUpvote, groupDownvote } = this.props;
     let upvoteCount = groupUpvote || (voteState === 1 ? 1 : 0); //use user's own vote if groupVote does not exist
     let downvoteCount = groupDownvote || (voteState === -1 ? 1 : 0);
+    let upvoteTooltip = 'Upvote';
+    let downvoteTooltip = 'Downvote';
+    let upvoteClass = 'thumbsUp glyphicon glyphicon-thumbs-up white';
+    let upvoteStyle = null;
+    let downvoteClass = 'thumbsDown glyphicon glyphicon-thumbs-down white';
+    let downvoteStyle = null;
 
     if (voteState === 1) {
-      return (
-        <div className="votes">
-          <div onClick={() => vote(songId, 2)} className="voteButton">
-            <div
-              className="thumbsUp glyphicon glyphicon-thumbs-up green"
-              style={{ color: '#1db954' }}
-            >
-              <span className="tooltiptext">Undo Upvote</span>
-            </div>
-          </div>
-          <span className="voteCount" style={{ color: 'green' }}>
-            {upvoteCount}
-          </span>
-          <div onClick={() => vote(songId, 3)} className="voteButton">
-            <div className="thumbsDown glyphicon glyphicon-thumbs-down white">
-              <span className="tooltiptext">Downvote</span>
-            </div>
-          </div>
-          <span className="voteCount">{downvoteCount}</span>
-        </div>
-      );
+      upvoteTooltip = 'Undo Upvote';
+      upvoteClass = 'thumbsUp glyphicon glyphicon-thumbs-up green';
+      upvoteStyle = { color: '#1db954' };
+    } else if (voteState === -1) {
+      downvoteTooltip = 'Undo Downvote';
+      downvoteClass = 'thumbsDown glyphicon glyphicon-thumbs-down red';
+      downvoteStyle = { color: 'red' };
     }
-    if (voteState === -1) {
-      return (
-        <div className="votes">
-          <div onClick={() => vote(songId, 1)} className="voteButton">
-            <div className="thumbsUp glyphicon glyphicon-thumbs-up white">
-              <span className="tooltiptext">Upvote</span>
-            </div>
-          </div>
 
-          <span className="voteCount">{upvoteCount}</span>
-
-          <div onClick={() => vote(songId, 4)} className="voteButton">
-            <div
-              className="thumbsDown glyphicon glyphicon-thumbs-down red"
-              style={{ color: 'red' }}
-            >
-              <span className="tooltiptext">Undo Downvote</span>
-            </div>
+    return (
+      <div className="votes">
+        <div onClick={() => this.handleVote('upvote')} className="voteButton">
+          <div className={upvoteClass} style={upvoteStyle}>
+            <span className="tooltiptext">{upvoteTooltip}</span>
           </div>
-          <span className="voteCount" style={{ color: 'red' }}>
-            {downvoteCount}
-          </span>
         </div>
-      );
-    } else {
-      return (
-        <div className="votes">
-          <div onClick={() => vote(songId, 1)} className="voteButton">
-            <div className="thumbsUp glyphicon glyphicon-thumbs-up white">
-              <span className="tooltiptext">Upvote</span>
-            </div>
+        <span className="voteCount">{upvoteCount}</span>
+        <div onClick={() => this.handleVote('downvote')} className="voteButton">
+          <div className={downvoteClass} style={downvoteStyle}>
+            <span className="tooltiptext">{downvoteTooltip}</span>
           </div>
-          <span className="voteCount">{upvoteCount}</span>
-          <div onClick={() => vote(songId, 3)} className="voteButton">
-            <div className="thumbsDown glyphicon glyphicon-thumbs-down white">
-              <span className="tooltiptext">Downvote</span>
-            </div>
-          </div>
-          <span className="voteCount">{downvoteCount}</span>
         </div>
-      );
-    }
+        <span className="voteCount">{downvoteCount}</span>
+      </div>
+    );
   }
 }
 

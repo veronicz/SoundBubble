@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../stylesheets/Groups.css';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withTracker } from 'meteor/react-meteor-data';

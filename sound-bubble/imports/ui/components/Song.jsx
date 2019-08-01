@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Vote from './Home/Vote.jsx';
 import HideSongButton from './Account/HideSongButton';
-import '../stylesheets/main.css';
 import { withTracker } from 'meteor/react-meteor-data';
 import Songs from '../../api/songs';
 import Comments from './Home/Comments.jsx';
@@ -118,7 +117,6 @@ class Song extends Component {
         <li className="song_card_container">
           <span className="song_card">
             {home ? this.userInfo() : null}
-
 
             <div className="album_cover">
               <img
