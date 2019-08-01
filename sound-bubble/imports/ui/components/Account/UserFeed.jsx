@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Song from '../Song';
-import '../../stylesheets/Account.css';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -53,8 +52,8 @@ class UserFeed extends Component {
             onClick={() => this.props.fetchMySongLogs()}
           />
         </div>
-        <div className="songs" id="song_logs">
-          <ul>{this.getSongDetails()}</ul>
+        <div className="songs">
+          <ul  id="song_logs">{this.getSongDetails()}</ul>
         </div>
       </div>
     );

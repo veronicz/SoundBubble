@@ -27,19 +27,18 @@ function updateGroupRecentlyPlayed(groupId) {
   userIds.forEach(userId => getAllRecentlyPlayed(userId));
 }
 
-//TODO: what are these option numbers?
 function updateGroupVote(songId, groupId, option) {
   switch (option) {
-    case 1:
+    case 'upvote':
       incGroupVote(songId, groupId, 'upvote', 1);
       break;
-    case 2:
+    case 'undoUpvote':
       incGroupVote(songId, groupId, 'upvote', -1);
       break;
-    case 3:
+    case 'downvote':
       incGroupVote(songId, groupId, 'downvote', 1);
       break;
-    case 4:
+    case 'undoDownvote':
       incGroupVote(songId, groupId, 'downvote', -1);
       break;
   }
@@ -47,16 +46,16 @@ function updateGroupVote(songId, groupId, option) {
 
 function updateUserVote(songId, option) {
   switch (option) {
-    case 1:
+    case 'upvote':
       updateUserSongs(songId, 1);
       break;
-    case 2:
+    case 'undoUpvote':
       updateUserSongs(songId, 0);
       break;
-    case 3:
+    case 'downvote':
       updateUserSongs(songId, -1);
       break;
-    case 4:
+    case 'undoDownvote':
       updateUserSongs(songId, 0);
       break;
   }
