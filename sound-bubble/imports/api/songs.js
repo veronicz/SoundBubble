@@ -2,11 +2,11 @@ import SimpleSchema from 'simpl-schema';
 
 Songs = new Mongo.Collection('songs');
 SongSchema = new SimpleSchema({
-  _id: { type: String },
-  name: { type: String },
-  artists: { type: Array },
-  'artists.$': { type: String },
-  spotifyUrl: { type: String },
+  _id: String,
+  name: String,
+  artists: Array,
+  'artists.$': String,
+  spotifyUrl: String,
   albumCover: { type: String, optional: true }
 });
 
