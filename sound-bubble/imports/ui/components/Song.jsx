@@ -40,15 +40,7 @@ class Song extends Component {
           <div className="profile_photo">
             <img
               className="user_photo"
-              src={userImage}
-              onClick={() => {
-                window.open(
-                  userImage.toString(),
-                  'popup',
-                  'width=650,height=450'
-                );
-                return false;
-              }}
+              src={userImage} title={user.display_name}
             />
           </div>
 
