@@ -63,7 +63,7 @@ This project is intended for users who are subscribed to the music platform Spot
 
 ## Prototypes
 
-![Home](/readme_images/home_ui.png)
+![Home](/readme_images/home_ui.png)  
 This sketch offers an early view of our music dashboard and the features it is intended to have. They include:
 
 - Song logs from various users assembled into a “Feed” with most recently played songs appearing at the top
