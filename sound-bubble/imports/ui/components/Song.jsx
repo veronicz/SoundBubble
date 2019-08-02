@@ -72,30 +72,30 @@ class Song extends Component {
   }
 
   renderCommentsButton() {
-    const { home, currentGroupId } = this.props;
+    const { home, currentGroupId, groupSong } = this.props;
+    let count  = groupSong ? (groupSong.comments ? groupSong.comments.length: 0): 0;
+
     if (home && currentGroupId) {
       if (!this.state.showComments) {
-        return (
-          <div onClick={() => this.showComments()} className="option_container">
-            <div
-              className="comments_button glyphicon glyphicon-comment "
-              style={{ color: 'white' }}
-            >
-              <span className="tooltiptext">Open Comments</span>
-            </div>
-          </div>
-        );
+        return (<div className="comments_and_count"><div onClick={() => this.showComments()} className="voteButton">
+        <div
+          className="comments_button glyphicon glyphicon-comment"
+          style={{ color: 'white' }}
+        >
+          <span className="tooltiptext">Open Comments</span>
+        </div>
+      </div>
+        <div className="comments_count">{count}</div></div>);
       } else {
-        return (
-          <div onClick={() => this.hideComments()} className="option_container">
-            <div
-              className="comments_button glyphicon glyphicon-comment"
-              style={{ color: '#1db954' }}
-            >
-              <span className="tooltiptext">Close</span>
-            </div>
+        return (<div className="comments_and_count"><div onClick={() => this.hideComments()} className="voteButton">
+          <div
+            className="comments_button glyphicon glyphicon-comment"
+            style={{ color: '#1db954' }}
+          >
+            <span className="tooltiptext">Close</span>
           </div>
-        );
+        </div>
+          <div className="comments_count">{count}</div></div>);
       }
     } else {
       return <div />;
@@ -155,10 +155,8 @@ class Song extends Component {
                 </marquee>
               </div>
 
-              <div className="vote_comments">
-                {this.renderVoteOrHide()}
-                {this.renderCommentsButton()}
-              </div>
+              {this.renderVoteOrHide()}
+              {this.renderCommentsButton()}
               <div className="time_stamp">
                 <h3 className="time_stamp_stamp">
                   {track.timestamps.toString().substring(16, 21)}
