@@ -356,4 +356,7 @@
   width:800px;
 }
 
+.group_container{
+  animation:fadeIn 1s linear;
+}
 
