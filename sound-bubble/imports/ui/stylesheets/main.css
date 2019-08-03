@@ -93,6 +93,7 @@ padding:0;
   opacity: 1;
 }
 
+
 .voteButton{
   position: relative;
   display: inline-block;
@@ -186,8 +187,8 @@ padding:0;
 }
 
 .user_photo {
-  height: inherit;
-  width: inherit;
+  height: 35px;
+  width: 35px;
   background-color: white;
   border-radius: 50%;
   border: none;
@@ -206,7 +207,6 @@ padding:0;
 
 .username:hover {
   color: silver;
-  text-decoration: underline;
 }
 
 .headerContainer {
@@ -384,19 +384,6 @@ padding:0;
   margin:0;
 }
 
-.song_card_container{
-  border-radius:20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background-color:#292828;
-  height:65px;
-  width:94%;
-  border: 1px solid #585858;
-  overflow:hidden;
-  animation: fadeIn 1s linear;
-  margin-top:20px;
-}
 
 .glyphicon.glyphicon-comment{
   font-size:19px;
@@ -591,6 +578,7 @@ padding:0;
 
 .comments_button{
   margin-left:5px;
+  margin-right:0px;
 }
 
 .song_logs{
@@ -613,7 +601,14 @@ padding:0;
   font-size:12px;
   font-family:monospace;
   color:rgb(145, 145, 145);
-  margin-left:3px;
+  margin-left:4px;
   padding:0;
   margin-right:3px;
+  width:2em;
+  text-align:left;
+}
+
+.username_name:hover{
+  color:white;
+  text-decoration:bold;
 }

@@ -31,7 +31,7 @@ class Groups extends Component {
 
   render() {
     const { myGroups } = this.props;
-    let groupDivs = myGroups.map(g => (
+    let groupDivs = myGroups.slice(0).reverse().map(g => (
       <Group
         key={g._id}
         groupId={g._id}
