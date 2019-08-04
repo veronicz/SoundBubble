@@ -634,4 +634,5 @@ padding:0;
   top: -300%;
   left: 0%;
   float:bottom;
+  overflow-wrap:break-word;
 }
