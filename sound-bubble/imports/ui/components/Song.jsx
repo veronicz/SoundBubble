@@ -103,8 +103,12 @@ class Song extends Component {
   }
 
   render() {
-    const { track, song, groupSong, home } = this.props;
+    const { track, song, groupSong, home, filterKey, user } = this.props;
     if (song) {
+      if(home && !(song.name.toLowerCase().includes(filterKey.toLowerCase())) && !(user.display_name.toLowerCase().includes(filterKey.toLowerCase()))){
+        return null;
+      }
+
       let albumImage =
         song.albumCover ||
         'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';

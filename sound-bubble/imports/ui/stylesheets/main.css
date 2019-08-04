@@ -617,3 +617,14 @@ padding:0;
   padding:0;
   margin-right:3px;
 }
+
+.filter_bar {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+}
+
+*:focus {
+  outline: none;
+}

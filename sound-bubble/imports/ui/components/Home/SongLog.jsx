@@ -3,7 +3,7 @@ import Song from '../Song';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import { fetchGroupSongLogs } from '../../actions/homeActions';
+import { fetchGroupSongLogs, changeFilter, removeFilter } from '../../actions/homeActions';
 import GroupButton from './GroupButton';
 import UserSongs from '../../../api/userSongs';
 import Groups from '../../../api/groups';
@@ -19,7 +19,7 @@ class SongLog extends Component {
 
   getSongDetails() {
     return this.props.recentTracks.map(t => {
-      return <Song key={t._id + t.userId} track={t} home={true} />;
+      return <Song key={t._id + t.userId} track={t} home={true} filterKey={this.props.filterKey}/>;
     });
   }
 
@@ -59,7 +59,12 @@ class SongLog extends Component {
           </div>
         </div>
 
-        <GroupButton />
+        <GroupButton />    
+
+        <div>
+        <span className='glyphicon glyphicon-search white'></span>
+        <input className='filter_bar' type="text" value={this.props.filterKey} onChange={event => this.props.changeFilter(event.target.value)} placeholder="Search..."/>
+        </div>
 
         <div className="songs">
           <ul  id="song_logs">{this.getSongDetails()}</ul>
@@ -70,13 +75,14 @@ class SongLog extends Component {
 }
 
 const mapStateToProps = state => {
-  return { currentGroupId: state.currentGroupId };
+  return { currentGroupId: state.currentGroupId,
+           filterKey: state.filterKey };
 };
 
 export default compose(
   connect(
     mapStateToProps,
-    { fetchGroupSongLogs }
+    { fetchGroupSongLogs, changeFilter, removeFilter }
   ),
   withTracker(props => {
     const currentGroupId = props.currentGroupId;
