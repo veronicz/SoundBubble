@@ -2,7 +2,7 @@
 
 ###### Group Members: [Martin Palanca](https://github.com/martipal), [Sherry Zhang](https://github.com/veronicz), [Yancey Yang](https://github.com/Talos6)
 
-SoundBubble is a platform that leverages Spotify's public API to build logs of a user's recently played tracks and makes this data visible to other users. Users can create and join groups to refine which users' song logs appear on their feed, as well as rate songs using an 'thumbs up' and 'thumbs down' scale.
+SoundBubble is a platform that leverages Spotify's public API to build logs of a user's recently played tracks and makes this data visible to other users. Users can create and join groups to refine which users' song logs appear on their feed, as well as rate songs using a 'thumbs up' and 'thumbs down' scale, and post comments to a particular song that are then visible to all group members.
 
 ## Table of Contents
 
@@ -33,7 +33,7 @@ This project is intended for users who are subscribed to the music platform Spot
 
 ### Standard Requirements
 
-1. Be able to clear a user’s posted song logs
+1. Be able to hide or show the current user’s song logs
 2. Album cover appears as an icon for the song log
 3. If song logs are large, paginate the song log
 4. Create a clickable link on a song log to redirect the user to the spotify song page
@@ -63,7 +63,7 @@ This project is intended for users who are subscribed to the music platform Spot
 
 ## Prototypes
 
-![Home](/readme_images/home_ui.png)  
+![Home](/readme_images/home_ui.png)
 This sketch offers an early view of our music dashboard and the features it is intended to have. They include:
 
 - Song logs from various users assembled into a “Feed” with most recently played songs appearing at the top
