@@ -54,7 +54,7 @@ class Song extends Component {
           </div>
 
           
-        <div className="username_name" style={{'fontSize':'10px', 'fontWeight':'bold'}} title={user.display_name}>{nameToDisplay}
+        <div className="username_name" style={{'fontSize':'10px', 'fontWeight':'bold'}} title=" " alt={user.display_name}>{nameToDisplay}
         </div>
           
         </div>

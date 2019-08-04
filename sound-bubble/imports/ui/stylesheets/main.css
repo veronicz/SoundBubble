@@ -612,3 +612,24 @@ padding:0;
   color:white;
   text-decoration:bold;
 }
+
+.username_name{
+  position: relative;
+  display: inline-block;
+}
+
+.username_name[title]:hover:after {
+  color:white;
+  text-decoration:bold;
+  font-size:12px;
+  width:auto;
+  height:auto;
+  padding-top:3px;
+  background:rgb(26, 26, 26);
+  font-family:monospace;
+  content: attr(alt);
+  position: absolute;
+  top: -300%;
+  left: 0%;
+  float:bottom;
+}
