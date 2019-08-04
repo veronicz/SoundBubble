@@ -506,7 +506,9 @@ padding:0;
   border:1px solid #34363b;
   float:right;
   background:url(https://media1.giphy.com/media/l3q2Xl2Rd8wZfMCaI/200w.webp?cid=790b76115d3e6c3732544e6577a43431&rid=200w.webp) repeat;
+  overflow-wrap:break-word;
 }
+
 
 .comment-timestamp{
   display:none;
