@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../../stylesheets/Groups.css';
 import GroupMember from './GroupMember.jsx';
 import Search from './Search.jsx';
 

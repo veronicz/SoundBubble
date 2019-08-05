@@ -41,7 +41,7 @@ class GroupMember extends React.Component {
     if (user) {
       let userImage =
         (user.images[0] && user.images[0].url) ||
-        'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
+        'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
 
       return (
         <li className="groupMember_container">
@@ -63,7 +63,9 @@ class GroupMember extends React.Component {
 
             <div className="username">
               <p className="group_member_username">
-                {user.display_name}{isAdmin ? (<span> &#9819; </span>) : null}{this.isCurrentUser() ? '(Me)' : null}{' '}
+                {user.display_name}
+                {isAdmin ? <span> &#9819; </span> : null}
+                {this.isCurrentUser() ? '(Me)' : null}{' '}
               </p>
             </div>
             {this.isCurrentUser() && (!isAdmin || this.onlyUserInGroup()) ? (
