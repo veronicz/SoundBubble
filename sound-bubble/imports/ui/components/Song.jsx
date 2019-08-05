@@ -119,8 +119,11 @@ class Song extends Component {
       />
     ) : null;
 
-
-      if(home && !(song.name.toLowerCase().includes(filterKey.toLowerCase())) && user && !(user.display_name.toLowerCase().includes(filterKey.toLowerCase())) && !(songArtists.toLowerCase().includes(filterKey.toLowerCase()))){
+    let compareVal = filterKey.toLowerCase();
+      if(home && 
+        !(song.name.toLowerCase().includes(compareVal)) && user && 
+        !(user.display_name.toLowerCase().includes(compareVal)) && 
+        !(songArtists.toLowerCase().includes(compareVal))){
         return null;
       }
 
@@ -199,7 +202,6 @@ export default compose(
       ? Meteor.subscribe('groupSong', currentGroupId, songId).ready()
       : false;
     const userReady = Meteor.subscribe('usersBySpotifyId', userId).ready();
-    console.log(userReady);
     return {
       song: songReady ? Songs.findOne({ _id: songId }) : null,
       groupSong: groupReady
