@@ -1,33 +1,27 @@
 import React, { Component } from 'react';
+import compose from 'recompose/compose';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/styles';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import ContentEditable from 'react-contenteditable';
 import { editComment, deleteComment } from '../../actions/homeActions';
 
 class CommentDetail extends Component {
   state = { comment: this.props.comment.message };
 
   handleChange = e => {
-    let newComment = e.target.value;
-    if (newComment.length <= 200) {
-      this.setState({
-        comment: newComment
-      });
-    } else {
-      this.setState({
-        comment: this.state.comment
-      });
-    }
+    this.setState({
+      comment: e.target.value
+    });
   };
 
   handleEdit = action => {
     const { comment, songId, editComment, deleteComment, close } = this.props;
-    if (action === 'save') {
+    if (this.state.comment !== '' && action === 'save') {
       editComment(songId, comment._id, this.state.comment);
     } else if (action === 'delete') {
       deleteComment(songId, comment._id);
@@ -40,21 +34,28 @@ class CommentDetail extends Component {
       <Dialog
         open={true}
         onClose={this.props.close}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle id="form-dialog-title">
           Edit or delete your comment
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <ContentEditable
-              html={this.state.comment}
-              onChange={this.handleChange}
-              tagName="span"
-              className="editable-comment"
-            />
-          </DialogContentText>
+          <TextField
+            InputProps={{
+              classes: {
+                input: this.props.classes.inputSize
+              }
+            }}
+            inputProps={{
+              maxLength: 200
+            }}
+            className={this.props.classes.textField}
+            value={this.state.comment}
+            onChange={this.handleChange}
+            autoFocus
+            multiline
+            fullWidth
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.handleEdit('save')} color="primary">
@@ -69,7 +70,17 @@ class CommentDetail extends Component {
   }
 }
 
-export default connect(
-  null,
-  { editComment, deleteComment }
+export default compose(
+  connect(
+    null,
+    { editComment, deleteComment }
+  ),
+  withStyles({
+    textField: {
+      width: 500
+    },
+    inputSize: {
+      fontSize: 15
+    }
+  })
 )(CommentDetail);

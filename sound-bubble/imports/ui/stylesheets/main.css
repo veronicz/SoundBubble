@@ -613,9 +613,3 @@ code {
   padding: 0;
   margin-right: 3px;
 }
-
-.editable-comment {
-  font-size: 15px;
-  display: inline-block;
-  text-align: start;
-}
