@@ -19,7 +19,7 @@ class SongLog extends Component {
 
   getSongDetails() {
     return this.props.recentTracks.map(t => {
-      return <Song key={t._id + t.userId} track={t} home={true} filterKey={this.props.filterKey}/>;
+      return <Song key={t._id + t.userId} track={t} home={true} filterKey={this.props.filterKey} />;
     });
   }
 
@@ -59,15 +59,18 @@ class SongLog extends Component {
           </div>
         </div>
 
-        <GroupButton />    
+        <GroupButton />
 
         <div>
-        <span className='glyphicon glyphicon-search white'></span>
-        <input className='filter_bar' type="text" value={this.props.filterKey} onChange={event => this.props.changeFilter(event.target.value)} placeholder="Search..."/>
+          <div className="option_container">
+            <span className='glyphicon glyphicon-search white'></span>
+            <span className="tooltiptext">Search Played Songs</span> 
+          </div>
+          <input className='filter_bar' type="text" value={this.props.filterKey} onChange={event => this.props.changeFilter(event.target.value)} placeholder="  Search songs..." />
         </div>
 
         <div className="songs">
-          <ul  id="song_logs">{this.getSongDetails()}</ul>
+          <ul id="song_logs">{this.getSongDetails()}</ul>
         </div>
       </div>
     );
@@ -75,8 +78,10 @@ class SongLog extends Component {
 }
 
 const mapStateToProps = state => {
-  return { currentGroupId: state.currentGroupId,
-           filterKey: state.filterKey };
+  return {
+    currentGroupId: state.currentGroupId,
+    filterKey: state.filterKey
+  };
 };
 
 export default compose(
@@ -110,13 +115,13 @@ export default compose(
         recentTracksReady: groupRecentTracksReady,
         recentTracks: groupRecentTracksReady
           ? UserSongs.find(
-              {
-                userId: { $in: currentGroup.userIds },
-                show: true,
-                timestamps: { $exists: true }
-              },
-              { sort: { timestamps: -1 } }
-            ).fetch()
+            {
+              userId: { $in: currentGroup.userIds },
+              show: true,
+              timestamps: { $exists: true }
+            },
+            { sort: { timestamps: -1 } }
+          ).fetch()
           : []
       };
     } else {
@@ -133,12 +138,12 @@ export default compose(
         recentTracksReady: myRecentTracksReady,
         recentTracks: myRecentTracksReady
           ? UserSongs.find(
-              {
-                userId: Meteor.user().profile.id,
-                timestamps: { $exists: true }
-              },
-              { sort: { timestamps: -1 } }
-            ).fetch()
+            {
+              userId: Meteor.user().profile.id,
+              timestamps: { $exists: true }
+            },
+            { sort: { timestamps: -1 } }
+          ).fetch()
           : []
       };
     }
