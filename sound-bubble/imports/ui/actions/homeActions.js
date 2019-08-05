@@ -29,11 +29,6 @@ export const changeFilter = (filterKey) => {
   }
 }
 
-export const removeFilter = () => {
-  return {
-    type: 'REMOVE_FILTER'
-  }
-}
 
 export const vote = (songId, option) => {
   return (dispatch, getState) => {

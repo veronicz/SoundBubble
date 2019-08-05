@@ -14,7 +14,9 @@ const filterKeyReducer = (filterKey = '', action) => {
   switch (action.type) {
     case 'CHANGE_FILTER':
       return action.value;
-    case 'REMOVE_FILTER':
+    case 'CHANGE_GROUP':
+      return '';
+    case 'REMOVE_GROUP':
       return '';
   }
   return filterKey;

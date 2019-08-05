@@ -3,7 +3,7 @@ import Song from '../Song';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import { fetchGroupSongLogs, changeFilter, removeFilter } from '../../actions/homeActions';
+import { fetchGroupSongLogs, changeFilter } from '../../actions/homeActions';
 import GroupButton from './GroupButton';
 import UserSongs from '../../../api/userSongs';
 import Groups from '../../../api/groups';
@@ -82,7 +82,7 @@ const mapStateToProps = state => {
 export default compose(
   connect(
     mapStateToProps,
-    { fetchGroupSongLogs, changeFilter, removeFilter }
+    { fetchGroupSongLogs, changeFilter }
   ),
   withTracker(props => {
     const currentGroupId = props.currentGroupId;

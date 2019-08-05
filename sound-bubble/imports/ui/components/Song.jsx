@@ -105,22 +105,24 @@ class Song extends Component {
   render() {
     const { track, song, groupSong, home, filterKey, user } = this.props;
     if (song) {
-      if(home && !(song.name.toLowerCase().includes(filterKey.toLowerCase())) && !(user.display_name.toLowerCase().includes(filterKey.toLowerCase()))){
+
+    let albumImage =
+    song.albumCover ||
+    'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';
+
+    let songArtists = song.artists.join(' & ');
+
+    let comments = this.state.showComments ? (
+      <Comments
+        songId={song._id}
+        comments={groupSong ? groupSong.comments || [] : []}
+      />
+    ) : null;
+
+
+      if(home && !(song.name.toLowerCase().includes(filterKey.toLowerCase())) && user && !(user.display_name.toLowerCase().includes(filterKey.toLowerCase())) && !(songArtists.toLowerCase().includes(filterKey.toLowerCase()))){
         return null;
       }
-
-      let albumImage =
-        song.albumCover ||
-        'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';
-
-      let songArtists = song.artists.join(' & ');
-
-      let comments = this.state.showComments ? (
-        <Comments
-          songId={song._id}
-          comments={groupSong ? groupSong.comments || [] : []}
-        />
-      ) : null;
 
       return (
         <div className="song_and_comments">
@@ -197,6 +199,7 @@ export default compose(
       ? Meteor.subscribe('groupSong', currentGroupId, songId).ready()
       : false;
     const userReady = Meteor.subscribe('usersBySpotifyId', userId).ready();
+    console.log(userReady);
     return {
       song: songReady ? Songs.findOne({ _id: songId }) : null,
       groupSong: groupReady
