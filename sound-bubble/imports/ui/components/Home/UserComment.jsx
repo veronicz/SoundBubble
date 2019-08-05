@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../stylesheets/main.css';
 import { withTracker } from 'meteor/react-meteor-data';
+import CommentDetail from './CommentDetail';
 
 // Inherited props:
 // userId
@@ -8,16 +8,38 @@ import { withTracker } from 'meteor/react-meteor-data';
 // timeStamp
 
 class UserComment extends React.Component {
+  state = { showDetail: false };
+
+  handleUserImageClick = () => {
+    if (Meteor.user().profile.id === this.props.comment.userId) {
+      this.setState({ showDetail: true });
+    }
+  };
+
+  handleCloseDetail = () => {
+    this.setState({ showDetail: false });
+  };
+
   render() {
-    const { user } = this.props;
+    const { user, comment, songId } = this.props;
     if (user) {
       let userImage =
         (user.images[0] && user.images[0].url) ||
-        'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
-
+        'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
       return (
         <div className="user-comment">
-          <img className="user-comment-image" src={userImage} />
+          {this.state.showDetail ? (
+            <CommentDetail
+              comment={comment}
+              close={this.handleCloseDetail}
+              songId={songId}
+            />
+          ) : null}
+          <img
+            className="user-comment-image"
+            src={userImage}
+            onClick={this.handleUserImageClick}
+          />
           <div className="text-timestamp-container">
             <p className="comment-username">
               <strong>{user.display_name}</strong> commented:
@@ -25,11 +47,11 @@ class UserComment extends React.Component {
             </p>
 
             <p className="comment-text">
-              <br /> {this.props.comment}
+              <br /> {comment.message}
             </p>
             <div className="comment-timestamp-container">
               <p className="comment-timestamp">
-                {this.props.timeStamp.toString().substring(4, 21)}
+                {comment.date.toString().substring(4, 21)}
               </p>
             </div>
           </div>
@@ -42,7 +64,7 @@ class UserComment extends React.Component {
 }
 
 export default withTracker(props => {
-  const userId = props.userId;
+  const userId = props.comment.userId;
   const userReady = Meteor.subscribe('usersBySpotifyId', userId).ready();
   return {
     user: userReady
