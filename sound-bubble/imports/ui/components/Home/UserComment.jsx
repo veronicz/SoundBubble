@@ -26,6 +26,7 @@ class UserComment extends React.Component {
       let userImage =
         (user.images[0] && user.images[0].url) ||
         'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
+
       return (
         <div className="user-comment">
           {this.state.showDetail ? (

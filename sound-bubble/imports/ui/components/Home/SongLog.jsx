@@ -70,7 +70,7 @@ class SongLog extends Component {
         </div>
 
         <div className="songs">
-          <ul id="song_logs">{this.getSongDetails()}</ul>
+          <ul className="song_logs" id="song_logs">{this.getSongDetails()}</ul>
         </div>
       </div>
     );
