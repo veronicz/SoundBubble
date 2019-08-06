@@ -30,7 +30,16 @@ class Song extends Component {
 
   userInfo() {
     const { user } = this.props;
+
     if (user && user.display_name) {
+      let name = user.display_name;
+      let nameToDisplay;
+      if (name.length > 14){
+        nameToDisplay = name.substring(0,12) + ".. ";
+      } else {
+        nameToDisplay = name;
+      }
+
       let userImage =
         (user.images[0] && user.images[0].url) ||
         'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
@@ -41,20 +50,13 @@ class Song extends Component {
             <img
               className="user_photo"
               src={userImage}
-              onClick={() => {
-                window.open(
-                  userImage.toString(),
-                  'popup',
-                  'width=650,height=450'
-                );
-                return false;
-              }}
             />
           </div>
 
-          <div className="username">
-            <p className="username_name">{user.display_name}</p>
-          </div>
+          
+        <div className="username_name" style={{'fontSize':'10px', 'fontWeight':'bold'}} title=" " alt={user.display_name}>{nameToDisplay}
+        </div>
+          
         </div>
       );
     } else {
@@ -74,6 +76,9 @@ class Song extends Component {
   renderCommentsButton() {
     const { home, currentGroupId, groupSong } = this.props;
     let count  = groupSong ? (groupSong.comments ? groupSong.comments.length: 0): 0;
+    if (count > 100){
+      count = "100+";
+    }
 
     if (home && currentGroupId) {
       if (!this.state.showComments) {

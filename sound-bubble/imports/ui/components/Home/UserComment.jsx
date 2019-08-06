@@ -13,7 +13,7 @@ class UserComment extends React.Component {
     if (user) {
       let userImage =
         (user.images[0] && user.images[0].url) ||
-        'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
+        'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
 
       return (
         <div className="user-comment">

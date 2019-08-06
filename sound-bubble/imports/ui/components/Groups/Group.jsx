@@ -129,7 +129,7 @@ export default class Group extends Component {
     }
 
     return (
-      <div>
+      <div className="group_container">
         <div className="group_header">
           <h1 className="groupName"> {groupName} </h1>
           <div className="group_options">
