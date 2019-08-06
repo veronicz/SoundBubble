@@ -22,6 +22,14 @@ export const changeCurrentGroup = groupId => {
   };
 };
 
+export const changeFilter = (filterKey) => {
+  return {
+    type: 'CHANGE_FILTER',
+    value: filterKey
+  }
+}
+
+
 export const vote = (songId, option) => {
   return (dispatch, getState) => {
     if (getState().currentGroupId) {

@@ -103,20 +103,28 @@ class Song extends Component {
   }
 
   render() {
-    const { track, song, groupSong, home } = this.props;
+    const { track, song, groupSong, home, filterKey, user } = this.props;
     if (song) {
-      let albumImage =
-        song.albumCover ||
-        'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';
 
-      let songArtists = song.artists.join(' & ');
+    let albumImage =
+    song.albumCover ||
+    'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1150x647.png';
 
-      let comments = this.state.showComments ? (
-        <Comments
-          songId={song._id}
-          comments={groupSong ? groupSong.comments || [] : []}
-        />
-      ) : null;
+    let songArtists = song.artists.join(' & ');
+
+    let comments = this.state.showComments ? (
+      <Comments
+        songId={song._id}
+        comments={groupSong ? groupSong.comments || [] : []}
+      />
+    ) : null;
+
+      if(home && 
+        !(song.name.toLowerCase().includes(filterKey.toLowerCase())) && user && 
+        !(user.display_name.toLowerCase().includes(filterKey.toLowerCase())) && 
+        !(songArtists.toLowerCase().includes(filterKey.toLowerCase()))){
+        return null;
+      }
 
       return (
         <div className="song_and_comments">
