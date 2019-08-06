@@ -119,11 +119,10 @@ class Song extends Component {
       />
     ) : null;
 
-    let compareVal = filterKey.toLowerCase();
       if(home && 
-        !(song.name.toLowerCase().includes(compareVal)) && user && 
-        !(user.display_name.toLowerCase().includes(compareVal)) && 
-        !(songArtists.toLowerCase().includes(compareVal))){
+        !(song.name.toLowerCase().includes(filterKey.toLowerCase())) && user && 
+        !(user.display_name.toLowerCase().includes(filterKey.toLowerCase())) && 
+        !(songArtists.toLowerCase().includes(filterKey.toLowerCase()))){
         return null;
       }
 
