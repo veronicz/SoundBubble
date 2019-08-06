@@ -406,6 +406,12 @@ padding:0;
   font-size:15px;
 }
 
+.glyphicon.glyphicon-search{
+  font-size:25px;
+  padding:0px;
+  margin:0px;
+}
+
 .song_and_comments{
   display:flex;
   flex-direction:column;
@@ -616,4 +622,19 @@ padding:0;
   margin-left:3px;
   padding:0;
   margin-right:3px;
+}
+
+.filter_bar {
+  font-family:monospace;
+  margin-left:0.5em;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  font-size:0.8em;
+  margin-bottom:10px;
+}
+
+*:focus {
+  outline: none;
 }

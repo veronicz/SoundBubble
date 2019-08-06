@@ -10,6 +10,18 @@ const currentGroupReducer = (currentGroupId = null, action) => {
   return currentGroupId;
 };
 
+const filterKeyReducer = (filterKey = '', action) => {
+  switch (action.type) {
+    case 'CHANGE_FILTER':
+      return action.value;
+    case 'CHANGE_GROUP':
+      return '';
+    case 'REMOVE_GROUP':
+      return '';
+  }
+  return filterKey;
+}
 export default combineReducers({
-  currentGroupId: currentGroupReducer
+  currentGroupId: currentGroupReducer,
+  filterKey: filterKeyReducer
 });
