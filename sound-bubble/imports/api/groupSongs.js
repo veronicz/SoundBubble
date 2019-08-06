@@ -12,10 +12,9 @@ GroupSongSchema = new SimpleSchema({
   'comments.$._id': { type: String, regEx: SimpleSchema.RegEx.Id },
   'comments.$.userId': String,
   'comments.$.message': { type: String, max: 200 },
-  'comments.$.date': {
+  'comments.$.createdAt': {
     type: Date,
     autoValue: function() {
-      console.log('hi');
       if (this.operator !== '$pull') {
         return new Date();
       }

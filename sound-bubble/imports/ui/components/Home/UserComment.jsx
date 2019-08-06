@@ -51,7 +51,7 @@ class UserComment extends React.Component {
             </p>
             <div className="comment-timestamp-container">
               <p className="comment-timestamp">
-                {comment.date.toString().substring(4, 21)}
+                {comment.createdAt.toString().substring(4, 21)}
               </p>
             </div>
           </div>
