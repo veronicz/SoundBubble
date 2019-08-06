@@ -44,14 +44,14 @@ code {
 
 .option_container {
   position: relative;
-display: inline-block;
+  display: inline-block;
 }
 
-.photo_container{
+.photo_container {
   position: relative;
-display: inline-block;
-margin:0;
-padding:0;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 }
 
 .option_container .tooltiptext {
@@ -73,8 +73,8 @@ padding:0;
   transition: opacity 1s;
 }
 
-.tooltiptext{
-  font-size:0.5em;
+.tooltiptext {
+  font-size: 0.5em;
 }
 
 .option_container .tooltiptext::after {
@@ -92,7 +92,6 @@ padding:0;
   visibility: visible;
   opacity: 1;
 }
-
 
 .voteButton{
   position: relative;
@@ -143,7 +142,7 @@ padding:0;
   height: 65px;
   width: 94%;
   margin: 20px;
-  margin-bottom:0px;
+  margin-bottom: 0px;
   border: 1px solid #585858;
   overflow: hidden;
   animation: fadeIn 1s linear;
@@ -268,18 +267,18 @@ padding:0;
   color: #1db954;
 }
 
-.votes{
-  display:flex;
-  justify-content:center;
-  align-content:center;
-  align-items:center;
-  width:10%;
-  height:5px;
-  color:grey;
-  position:auto;
-  font-family:monospace;
-  padding:0;
-  margin:0;
+.votes {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  width: 10%;
+  height: 5px;
+  color: grey;
+  position: auto;
+  font-family: monospace;
+  padding: 0;
+  margin: 0;
 }
 
 .thumbsUp {
@@ -339,11 +338,11 @@ padding:0;
   position: relative;
 }
 
-.feed_container{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  color:silver;
+.feed_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: silver;
   text-align: center;
   font-size: 25px;
   font-family: lucida console;
@@ -374,23 +373,22 @@ padding:0;
   position: auto;
 }
 
-.songs{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  background-color:black;
-  margin-top:40px;
-  padding:0;
-  margin:0;
+.songs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: black;
+  margin-top: 40px;
+  padding: 0;
+  margin: 0;
 }
 
-
-.glyphicon.glyphicon-comment{
-  font-size:19px;
+.glyphicon.glyphicon-comment {
+  font-size: 19px;
 }
 
-.glyphicon.glyphicon-pencil{
-  font-size:15px;
+.glyphicon.glyphicon-pencil {
+  font-size: 15px;
 }
 
 .glyphicon.glyphicon-search{
@@ -418,7 +416,6 @@ padding:0;
   width:520px;
 }
 
-
 .user-comment-image{
   height:1em;
   width:1em;
@@ -429,21 +426,21 @@ padding:0;
   padding:0;
 }
 
-.add-comment{
-  height:1em;
-  width:1em;
-  border-radius:50%;
-  margin-right:1em;
-  background:white;
+.add-comment {
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  margin-right: 1em;
+  background: white;
 }
 
-.add-comment-text{
-  font-size:12px;
+.add-comment-text {
+  font-size: 12px;
 }
 
-.user-comment-image:hover{
-  height:1.4em;
-  width:1.4em;
+.user-comment-image:hover {
+  height: 1.4em;
+  width: 1.4em;
 }
 
 .user-comment{
@@ -458,36 +455,50 @@ padding:0;
   animation: fadeIn 1s linear;
 }
 
-.user-comment-add{
-  position:relative;
-  float:top;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  width:20px;
-  border:1px;
-  margin-left:20px;
-  vertical-align:top;
-  padding-bottom:5px;
+.user-comment-add {
+  position: relative;
+  float: top;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 20px;
+  border: 1px;
+  margin-left: 20px;
+  vertical-align: top;
+  padding-bottom: 5px;
 }
 
-.user-comment:hover .comment-text{
-  display:block;
+.user-comment:hover .comment-text {
+  display: block;
 }
 
-.user-comment:hover .text-timestamp-container
-{
-  display:block;
+.user-comment:hover .text-timestamp-container {
+  display: block;
 }
 
-.user-comment:hover .comment-timestamp{
-  display:block;
+.user-comment:hover .comment-timestamp {
+  display: block;
 }
 
-.user-comment:hover .comment-username{
-  display:block;
+.user-comment:hover .comment-username {
+  display: block;
 }
 
+.comment-text {
+  float: center;
+  font-family: monospace;
+  font-weight: bold;
+  display: none;
+  width: 250px;
+  margin-top: 5px;
+  font-size: 0.5em;
+  padding: 0px;
+  color: white;
+  margin-left: 10px;
+  margin-bottom: 6px;
+  padding-bottom: 0px;
+  text-align: left;
+}
 
 .comment-text{
   float:center;
@@ -547,43 +558,70 @@ padding:0;
   margin-bottom:0px;
 }
 
-
-.commentBar{
-  border:none;
-  height:115%;
-  width:300px;
-  margin-top:0px;
-  font-size:12px;
+.comment-timestamp {
+  display: none;
+  float: right;
+  position: relative;
+  bottom: 0;
+  font-size: 0.4em;
+  color: white;
+  margin-top: 0px;
+  margin-right: 10px;
+  padding: 0px;
+  font-family: monospace;
+  margin-bottom: 0px;
 }
 
-.closeCommentForm{
-  margin-left:10px;
-  height:100%;
-  width:15%;
-  border-radius:13px;
-  background-color:rgb(12, 11, 11);
-  color:rgb(238, 236, 236);
-  font-family:monospace;
-  font-size:0.4em;
-  border:none;
+.comment-username {
+  margin-left: 5px;
+  display: none;
+  float: left;
+  position: relative;
+  bottom: 0;
+  font-size: 0.4em;
+  color: white;
+  margin-top: 0px;
+  margin-right: 10px;
+  padding: 0px;
+  font-family: monospace;
+  margin-bottom: 0px;
 }
 
-.createComment-Container{
-  border-radius:5px;
-  width:20em;
-  padding:4px;
-  padding-top:0px;
-  margin-top:20px;
-  text-align:center;
-  align-items:center;
+.commentBar {
+  border: none;
+  height: 115%;
+  width: 300px;
+  margin-top: 0px;
+  font-size: 12px;
+}
+
+.closeCommentForm {
+  margin-left: 10px;
+  height: 100%;
+  width: 15%;
+  border-radius: 13px;
+  background-color: rgb(12, 11, 11);
+  color: rgb(238, 236, 236);
+  font-family: monospace;
+  font-size: 0.4em;
+  border: none;
+}
+
+.createComment-Container {
+  border-radius: 5px;
+  width: 20em;
+  padding: 4px;
+  padding-top: 0px;
+  margin-top: 20px;
+  text-align: center;
+  align-items: center;
   background-color: rgb(241, 240, 240);
-  font-family:monospace;
+  font-family: monospace;
 }
 
-.add-comment-glyph:hover{
-  color:#1db954;
-  animation:fadeIn 1s linear;
-
+.add-comment-glyph:hover {
+  color: #1db954;
+  animation: fadeIn 1s linear;
 }
 
 .comments_button{
@@ -591,20 +629,20 @@ padding:0;
   margin-right:0px;
 }
 
-.song_logs{
-  margin:0;
-  padding:0;
-  margin-bottom:70px;
+.song_logs {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 70px;
 }
 
-.comments_and_count{
-  display:flex;
-  flex-direction:row;
-  justify-content:center;
-  align-items:center;
-  align-content:center;
-  margin-right:5px;
-  margin-left:5px;
+.comments_and_count {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .comments_count{

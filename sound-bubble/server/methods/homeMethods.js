@@ -17,6 +17,12 @@ Meteor.methods({
   },
   commentSong: function(songId, groupId, comment) {
     postCommentToGroupSong(songId, groupId, comment);
+  },
+  editComment(songId, groupId, commentId, newComment) {
+    updateComment(songId, groupId, commentId, newComment);
+  },
+  deleteComment(songId, groupId, commentId) {
+    removeComment(songId, groupId, commentId);
   }
 });
 
@@ -98,9 +104,39 @@ function postCommentToGroupSong(songId, groupId, comment) {
     {
       $push: {
         comments: {
+          _id: Random.id(),
           userId: Meteor.user().profile.id,
           message: comment
         }
+      }
+    }
+  );
+}
+
+function updateComment(songId, groupId, commentId, newComment) {
+  GroupSongs.update(
+    {
+      songId: songId,
+      groupId: groupId,
+      'comments._id': commentId
+    },
+    {
+      $set: {
+        'comments.$.message': newComment
+      }
+    }
+  );
+}
+
+function removeComment(songId, groupId, commentId) {
+  GroupSongs.update(
+    {
+      songId: songId,
+      groupId: groupId
+    },
+    {
+      $pull: {
+        comments: { _id: commentId }
       }
     }
   );

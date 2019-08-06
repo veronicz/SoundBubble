@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../stylesheets/main.css';
 import { connect } from 'react-redux';
 import UserComment from './UserComment.jsx';
 import { commentSong } from '../../actions/homeActions';
@@ -34,10 +33,11 @@ class Comments extends React.Component {
   }
 
   onSubmit = () => {
-    const { commentSong, songId, currentGroupId } = this.props;
+    event.preventDefault();
+    const { commentSong, songId } = this.props;
     let commentText = this.state.inputValue;
     if (commentText !== '') {
-      commentSong(songId, currentGroupId, commentText);
+      commentSong(songId, commentText);
     }
     this.closeCommentForm();
   };
@@ -60,6 +60,7 @@ class Comments extends React.Component {
               Submit
             </button>
             <button
+              type="button"
               className="closeCommentForm"
               onClick={() => this.closeCommentForm()}
             >
@@ -75,10 +76,9 @@ class Comments extends React.Component {
         {this.props.comments.map(comment => {
           return (
             <UserComment
-              key={comment.userId + comment.createdAt}
-              userId={comment.userId}
-              comment={comment.message}
-              timeStamp={comment.createdAt}
+              key={comment._id}
+              comment={comment}
+              songId={this.props.songId}
             />
           );
         })}
@@ -99,13 +99,7 @@ class Comments extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    currentGroupId: state.currentGroupId
-  };
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   { commentSong }
 )(Comments);

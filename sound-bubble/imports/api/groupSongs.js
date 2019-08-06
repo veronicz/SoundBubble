@@ -9,12 +9,15 @@ GroupSongSchema = new SimpleSchema({
   downvote: { type: SimpleSchema.Integer, defaultValue: 0, min: 0 },
   comments: { type: Array, optional: true },
   'comments.$': Object,
+  'comments.$._id': { type: String, regEx: SimpleSchema.RegEx.Id },
   'comments.$.userId': String,
   'comments.$.message': { type: String, max: 200 },
   'comments.$.createdAt': {
     type: Date,
     autoValue: function() {
-      return new Date();
+      if (this.operator !== '$pull') {
+        return new Date();
+      }
     }
   }
 });
