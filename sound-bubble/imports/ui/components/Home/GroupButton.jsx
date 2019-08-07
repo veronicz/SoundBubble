@@ -62,8 +62,6 @@ class GroupButton extends Component {
     }
   };
 
-  navigateToGroups() {}
-
   render() {
     this.setDefaultGroup();
     if (!this.props.currentGroupId) {
