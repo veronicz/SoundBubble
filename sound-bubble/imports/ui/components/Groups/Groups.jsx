@@ -31,15 +31,18 @@ class Groups extends Component {
 
   render() {
     const { myGroups } = this.props;
-    let groupDivs = myGroups.slice(0).reverse().map(g => (
-      <Group
-        key={g._id}
-        groupId={g._id}
-        groupName={g.name}
-        adminId={g.adminId}
-        userIds={g.userIds}
-      />
-    ));
+    let groupDivs = myGroups
+      .slice(0)
+      .reverse()
+      .map(g => (
+        <Group
+          key={g._id}
+          groupId={g._id}
+          groupName={g.name}
+          adminId={g.adminId}
+          userIds={g.userIds}
+        />
+      ));
 
     let popup = <div />;
     if (this.state.createGroupPopup === true) {
@@ -53,6 +56,7 @@ class Groups extends Component {
               type="text"
               placeholder="Enter group name..."
               name="groupName"
+              maxLength={30}
               required
             />
 
