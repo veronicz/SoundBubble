@@ -27,7 +27,7 @@ export default class AppRouter extends Component {
                 <h1 className="navLink_title">Home</h1>
               </NavLink>
               <NavLink
-                to={'/Account'}
+                to={'/account'}
                 className="navLink"
                 activeClassName="activeLink"
               >
@@ -38,7 +38,7 @@ export default class AppRouter extends Component {
                 <h1 className="navLink_title">My Profile</h1>
               </NavLink>
               <NavLink
-                to={'/Groups'}
+                to={'/groups'}
                 className="navLink"
                 activeClassName="activeLink"
               >
@@ -49,7 +49,7 @@ export default class AppRouter extends Component {
                 <h1 className="navLink_title">My Groups</h1>
               </NavLink>
               <NavLink
-                to={'/About'}
+                to={'/about'}
                 id="rest"
                 className="navLink"
                 activeClassName="activeLink"

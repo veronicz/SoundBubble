@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
+import { NavLink } from 'react-router-dom';
 
 const BootstrapInput = withStyles(theme => ({
   root: {
@@ -16,6 +17,7 @@ const BootstrapInput = withStyles(theme => ({
     }
   },
   input: {
+    'line-height': '1.2em',
     borderRadius: 4,
     position: 'relative',
     backgroundColor: 'grey',
@@ -52,15 +54,6 @@ class GroupButton extends Component {
     }
   }
 
-  renderCurrentGroupName() {
-    const { currentGroupId, myGroups } = this.props;
-    if (currentGroupId && myGroups.length !== 0) {
-      return myGroups.find(g => g._id === currentGroupId).name;
-    } else {
-      return 'Join a group';
-    }
-  }
-
   handleChangeGroup = e => {
     const { currentGroupId, changeCurrentGroup, myGroups } = this.props;
     let newGroupId = e.target.value;
@@ -69,8 +62,22 @@ class GroupButton extends Component {
     }
   };
 
+  navigateToGroups() {}
+
   render() {
     this.setDefaultGroup();
+    if (!this.props.currentGroupId) {
+      return (
+        <div>
+          <NavLink
+            className="feed_button btn btn-secondary btn-lg"
+            to="/groups"
+          >
+            Join a group
+          </NavLink>
+        </div>
+      );
+    }
     return (
       <form autoComplete="off">
         <FormControl>
