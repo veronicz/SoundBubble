@@ -8,28 +8,8 @@ import GroupSongs from '../../../api/groupSongs';
 import { Meteor } from 'meteor/meteor';
 
 class Vote extends React.Component {
-  handleVote(voteAction) {
-    const { song, voteState, vote } = this.props;
-    let songId = song._id;
-    if (voteAction === 'upvote') {
-      if (voteState === 1) {
-        vote(songId, 'undoUpvote');
-        return;
-      }
-      if (voteState === -1) vote(songId, 'undoDownvote');
-      vote(songId, 'upvote');
-    } else {
-      if (voteState === -1) {
-        vote(songId, 'undoDownvote');
-        return;
-      }
-      if (voteState === 1) vote(songId, 'undoUpvote');
-      vote(songId, 'downvote');
-    }
-  }
-
   render() {
-    const { voteState, groupUpvote, groupDownvote } = this.props;
+    const { voteState, groupUpvote, groupDownvote, vote, song } = this.props;
     let upvoteCount = groupUpvote || (voteState === 1 ? 1 : 0); //use user's own vote if groupVote does not exist
     let downvoteCount = groupDownvote || (voteState === -1 ? 1 : 0);
     let upvoteTooltip = 'Upvote';
@@ -51,13 +31,13 @@ class Vote extends React.Component {
 
     return (
       <div className="votes">
-        <div onClick={() => this.handleVote('upvote')} className="voteButton">
+        <div onClick={() => vote(song._id, true)} className="voteButton">
           <div className={upvoteClass} style={upvoteStyle}>
             <span className="tooltiptext">{upvoteTooltip}</span>
           </div>
         </div>
         <span className="voteCount">{upvoteCount}</span>
-        <div onClick={() => this.handleVote('downvote')} className="voteButton">
+        <div onClick={() => vote(song._id, false)} className="voteButton">
           <div className={downvoteClass} style={downvoteStyle}>
             <span className="tooltiptext">{downvoteTooltip}</span>
           </div>
