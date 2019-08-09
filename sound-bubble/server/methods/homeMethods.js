@@ -8,12 +8,14 @@ Meteor.methods({
   getGroupRecentlyPlayed: function(groupId = null) {
     updateGroupRecentlyPlayed(groupId);
   },
-  voteGroupSong: function(songId, groupId, option) {
-    updateGroupVote(songId, groupId, option);
-    updateUserVote(songId, option);
+  voteGroupSong: function(songId, groupId, isUpvote) {
+    let voteOption = getVoteOption(songId, isUpvote);
+    updateUserVote(songId, voteOption);
+    updateGroupVote(songId, groupId, voteOption);
   },
-  voteUserSong(songId, option) {
-    updateUserVote(songId, option);
+  voteUserSong(songId, isUpvote) {
+    let voteOption = getVoteOption(songId, isUpvote);
+    updateUserVote(songId, voteOption);
   },
   commentSong: function(songId, groupId, comment) {
     postCommentToGroupSong(songId, groupId, comment);
@@ -33,41 +35,71 @@ function updateGroupRecentlyPlayed(groupId) {
   userIds.forEach(userId => getAllRecentlyPlayed(userId));
 }
 
-function updateGroupVote(songId, groupId, option) {
-  switch (option) {
-    case 'upvote':
-      incGroupVote(songId, groupId, 'upvote', 1);
-      break;
-    case 'undoUpvote':
-      incGroupVote(songId, groupId, 'upvote', -1);
-      break;
-    case 'downvote':
-      incGroupVote(songId, groupId, 'downvote', 1);
-      break;
-    case 'undoDownvote':
-      incGroupVote(songId, groupId, 'downvote', -1);
-      break;
+function getVoteOption(songId, isUpvote) {
+  let userSong = UserSongs.findOne({
+    songId: songId,
+    userId: Meteor.user().profile.id
+  });
+
+  let oldUserVote = userSong ? userSong.vote : 0;
+  if (isUpvote) {
+    if (oldUserVote === 1) {
+      return 'undoUpvote';
+    } else {
+      if (oldUserVote === -1) return 'undoDownvoteThenUpvote';
+      return 'upvote';
+    }
+  } else {
+    if (oldUserVote === -1) {
+      return 'undoDownvote';
+    } else {
+      if (oldUserVote === 1) return 'undoUpvoteThenDownvote';
+      return 'downvote';
+    }
   }
 }
 
 function updateUserVote(songId, option) {
   switch (option) {
     case 'upvote':
-      updateUserSongs(songId, 1);
+    case 'undoDownvoteThenUpvote':
+      setUserVote(songId, 1);
       break;
     case 'undoUpvote':
-      updateUserSongs(songId, 0);
+    case 'undoDownvote':
+      setUserVote(songId, 0);
       break;
     case 'downvote':
-      updateUserSongs(songId, -1);
-      break;
-    case 'undoDownvote':
-      updateUserSongs(songId, 0);
+    case 'undoUpvoteThenDownvote':
+      setUserVote(songId, -1);
       break;
   }
 }
 
-function updateUserSongs(songId, vote) {
+function updateGroupVote(songId, groupId, option) {
+  switch (option) {
+    case 'upvote':
+      incGroupVote(songId, groupId, { upvote: 1 });
+      break;
+    case 'undoUpvote':
+      incGroupVote(songId, groupId, { upvote: -1 });
+      break;
+    case 'downvote':
+      incGroupVote(songId, groupId, { downvote: 1 });
+      break;
+    case 'undoDownvote':
+      incGroupVote(songId, groupId, { downvote: -1 });
+      break;
+    case 'undoDownvoteThenUpvote':
+      incGroupVote(songId, groupId, { downvote: -1, upvote: 1 });
+      break;
+    case 'undoUpvoteThenDownvote':
+      incGroupVote(songId, groupId, { upvote: -1, downvote: 1 });
+      break;
+  }
+}
+
+function setUserVote(songId, vote) {
   UserSongs.upsert(
     {
       songId: songId,
@@ -81,9 +113,7 @@ function updateUserSongs(songId, vote) {
   );
 }
 
-function incGroupVote(songId, groupId, field, value) {
-  let fieldValue = {};
-  fieldValue[field] = value;
+function incGroupVote(songId, groupId, fieldValue) {
   GroupSongs.upsert(
     {
       songId: songId,

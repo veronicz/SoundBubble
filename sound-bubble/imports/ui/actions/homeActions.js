@@ -22,22 +22,21 @@ export const changeCurrentGroup = groupId => {
   };
 };
 
-export const changeFilter = (filterKey) => {
+export const changeFilter = filterKey => {
   return {
     type: 'CHANGE_FILTER',
     value: filterKey
-  }
-}
+  };
+};
 
-
-export const vote = (songId, option) => {
+export const vote = (songId, isUpvote) => {
   return (dispatch, getState) => {
     if (getState().currentGroupId) {
       Meteor.call(
         'voteGroupSong',
         songId,
         getState().currentGroupId,
-        option,
+        isUpvote,
         err => {
           if (err) {
             console.log(
@@ -50,7 +49,7 @@ export const vote = (songId, option) => {
         }
       );
     } else {
-      Meteor.call('voteUserSong', songId, option, err => {
+      Meteor.call('voteUserSong', songId, isUpvote, err => {
         if (err) {
           console.log(`vote song with ${songId} failed`, err);
         }
