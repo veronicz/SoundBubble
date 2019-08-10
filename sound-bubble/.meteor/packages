@@ -23,7 +23,7 @@ accounts-base
 underscore
 aldeed:collection2
 ultimatejs:tracker-react
-sakulstra:aggregate
 tunguska:reactive-aggregate
 littledata:synced-cron
 ros:publish-counts
+random

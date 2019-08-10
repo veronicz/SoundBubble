@@ -1,9 +1,12 @@
 import React from 'react';
-import '../../stylesheets/Groups.css';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withTracker } from 'meteor/react-meteor-data';
-import { leaveGroup } from '../../actions/groupActions';
+import {
+  leaveGroup,
+  promoteAdmin,
+  removeGroupMember
+} from '../../actions/groupActions';
 import { Meteor } from 'meteor/meteor';
 
 class GroupMember extends React.Component {
@@ -21,12 +24,24 @@ class GroupMember extends React.Component {
     return Meteor.user().profile.id === this.props.userId;
   }
 
+  onlyUserInGroup() {
+    return this.props.userCount === 1;
+  }
+
   render() {
-    const { user } = this.props;
+    const {
+      user,
+      isAdmin,
+      promotion,
+      promoteAdmin,
+      groupId,
+      remove,
+      removeGroupMember
+    } = this.props;
     if (user) {
       let userImage =
         (user.images[0] && user.images[0].url) ||
-        'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
+        'https://www.loginradius.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png';
 
       return (
         <li className="groupMember_container">
@@ -48,13 +63,35 @@ class GroupMember extends React.Component {
 
             <div className="username">
               <p className="group_member_username">
-                {user.display_name} {this.isCurrentUser() ? '(Me)' : null}
+                {user.display_name}
+                {isAdmin ? <span> &#9819; </span> : null}
+                {this.isCurrentUser() ? '(Me)' : null}{' '}
               </p>
             </div>
-            {this.isCurrentUser() ? (
+            {this.isCurrentUser() && (!isAdmin || this.onlyUserInGroup()) ? (
               <div className="option_container" onClick={this.leaveGroup}>
                 <div className="leaveGroup glyphicon glyphicon-log-out white">
                   <span className="tooltiptext">Leave Group</span>
+                </div>
+              </div>
+            ) : null}
+            {promotion && !isAdmin ? (
+              <div
+                className="option_container"
+                onClick={() => promoteAdmin(groupId, user.id)}
+              >
+                <div className="leaveGroup glyphicon glyphicon-ok white">
+                  <span className="tooltiptext">Promote</span>
+                </div>
+              </div>
+            ) : null}
+            {remove && !isAdmin ? (
+              <div
+                className="option_container"
+                onClick={() => removeGroupMember(groupId, user.id)}
+              >
+                <div className="leaveGroup glyphicon glyphicon-remove white">
+                  <span className="tooltiptext">Remove</span>
                 </div>
               </div>
             ) : null}
@@ -81,6 +118,6 @@ export default compose(
   }),
   connect(
     null,
-    { leaveGroup }
+    { leaveGroup, promoteAdmin, removeGroupMember }
   )
 )(GroupMember);

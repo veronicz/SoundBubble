@@ -18,18 +18,21 @@ SpotifyWebApi = function(config) {
       // Update the current API instance
       api.setAccessToken(response.data.body.access_token);
 
-      // Update the current user (if available)
-      if (Meteor.userId()) {
-        Meteor.users.update(
-          { _id: Meteor.userId() },
-          {
-            $set: {
-              'services.spotify.accessToken': response.data.body.access_token,
-              'services.spotify.expiresAt':
-                +new Date() + 1000 * response.data.body.expires_in
-            }
+      // Update the user's access token (if available)
+      let userQuery = null;
+      if (config.userId) {
+        userQuery = { 'profile.id': config.userId };
+      } else if (Meteor.userId()) {
+        userQuery = { _id: Meteor.userId() };
+      }
+      if (userQuery) {
+        Meteor.users.update(userQuery, {
+          $set: {
+            'services.spotify.accessToken': response.data.body.access_token,
+            'services.spotify.expiresAt':
+              +new Date() + 1000 * response.data.body.expires_in
           }
-        );
+        });
       }
 
       callback(null, response);
@@ -39,63 +42,8 @@ SpotifyWebApi = function(config) {
   // Whitelist functions to be wrapped. This is ugly -- any alternatives?
   SpotifyWebApi.whitelistedFunctionNames = [
     'refreshAndUpdateAccessToken',
-    'getTrack',
-    'getTracks',
-    'getAlbum',
-    'getAlbums',
-    'getArtist',
-    'getArtists',
-    'searchAlbums',
-    'searchArtists',
-    'searchTracks',
-    'searchPlaylists',
-    'getArtistAlbums',
-    'getAlbumTracks',
-    'getArtistTopTracks',
-    'getArtistRelatedArtists',
-    'getUser',
-    'getMe',
-    'getUserPlaylists',
-    'getPlaylist',
-    'getPlaylistTracks',
-    'createPlaylist',
-    'followPlaylist',
-    'unfollowPlaylist',
-    'changePlaylistDetails',
-    'addTracksToPlaylist',
-    'removeTracksFromPlaylist',
-    'removeTracksFromPlaylistByPosition',
-    'replaceTracksInPlaylist',
-    'reorderTracksInPlaylist',
-    'clientCredentialsGrant',
-    'authorizationCodeGrant',
     'refreshAccessToken',
-    'getMySavedTracks',
-    'getMyRecentlyPlayedTracks',
-    'containsMySavedTracks',
-    'removeFromMySavedTracks',
-    'addToMySavedTracks',
-    'followUsers',
-    'followArtists',
-    'unfollowUsers',
-    'unfollowArtists',
-    'isFollowingUsers',
-    'areFollowingPlaylist',
-    'isFollowingArtists',
-    'getFollowedArtists',
-    'getNewReleases',
-    'getFeaturedPlaylists',
-    'getCategories',
-    'getCategory',
-    'getPlaylistsForCategory',
-    'removeFromMySavedAlbums',
-    'addToMySavedAlbums',
-    'getMySavedAlbums',
-    'containsMySavedAlbums',
-    'getAudioFeaturesForTrack',
-    'getAudioFeaturesForTracks',
-    'getRecommendations',
-    'getAvailableGenreSeeds'
+    'getMyRecentlyPlayedTracks'
   ];
 
   // Wrap all the functions to be able to be called synchronously on the server.

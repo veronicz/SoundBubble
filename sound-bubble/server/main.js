@@ -16,6 +16,11 @@ SyncedCron.add({
 });
 
 Meteor.startup(() => {
+  Meteor.users.deny({
+    update() {
+      return true;
+    }
+  });
   SpotifyOAuthInit();
   SyncedCron.start();
 });

@@ -6,14 +6,17 @@ Meteor.methods({
   createGroup: function(groupName) {
     return createGroup(groupName);
   },
-  deleteGroup: function(groupId) {
-    return deleteGroup(groupId);
-  },
   leaveGroup: function(groupId) {
-    return leaveGroup(groupId);
+    return removeGroupMember(groupId, Meteor.user().profile.id);
   },
   addGroupMember: function(groupId, userId) {
-    addGroupMember(groupId,userId)
+    addGroupMember(groupId, userId);
+  },
+  promoteAdmin: function(groupId, userId) {
+    promoteAdmin(groupId, userId);
+  },
+  removeGroupMember: function(groupId, userId) {
+    removeGroupMember(groupId, userId);
   }
 });
 
@@ -21,12 +24,18 @@ function createGroup(groupName) {
   // creates a group and adds the creator to the group
   let groupId = Groups.insert({
     name: groupName,
+    adminId: Meteor.user().profile.id,
     userIds: [Meteor.user().profile.id]
   });
   Meteor.users.update(
     { _id: Meteor.userId() },
     { $push: { groupIds: groupId } }
   );
+  addUserVoteToGroup(groupId, Meteor.user().profile.id);
+}
+
+function promoteAdmin(groupId, userId) {
+  Groups.update({ _id: groupId }, { $set: { adminId: userId } });
 }
 
 function deleteGroup(groupId) {
@@ -41,11 +50,33 @@ function deleteGroup(groupId) {
   GroupSongs.remove({ groupId: groupId });
 }
 
-function leaveGroup(groupId) {
-  let currentUserId = Meteor.user().profile.id;
-  Groups.update({ _id: groupId }, { $pull: { userIds: currentUserId } });
+function addGroupMember(groupId, userId) {
+  Groups.update({ _id: groupId }, { $push: { userIds: userId } });
   Meteor.users.update(
-    { 'profile.id': currentUserId },
+    { 'profile.id': userId },
+    { $push: { groupIds: groupId } }
+  );
+  addUserVoteToGroup(groupId, userId);
+}
+
+function addUserVoteToGroup(groupId, userId) {
+  let userVotedSongs = UserSongs.find({ userId: userId, vote: { $ne: 0 } });
+  userVotedSongs.forEach(song => {
+    let fieldToIncrement = song.vote === 1 ? { upvote: 1 } : { downvote: 1 };
+    GroupSongs.upsert(
+      {
+        songId: song.songId,
+        groupId: groupId
+      },
+      { $inc: fieldToIncrement }
+    );
+  });
+}
+
+function removeGroupMember(groupId, userId) {
+  Groups.update({ _id: groupId }, { $pull: { userIds: userId } });
+  Meteor.users.update(
+    { 'profile.id': userId },
     { $pull: { groupIds: groupId } }
   );
 
@@ -55,12 +86,13 @@ function leaveGroup(groupId) {
     deleteGroup(groupId);
   } else {
     let userVotedSongs = UserSongs.find({
-      userId: currentUserId,
+      userId: userId,
       vote: { $ne: 0 }
     });
     // remove user vote from group vote
     userVotedSongs.forEach(song => {
-      let fieldToDecrement = song.vote === 1 ? { upvote: -1 } : { downvote: -1 };
+      let fieldToDecrement =
+        song.vote === 1 ? { upvote: -1 } : { downvote: -1 };
       GroupSongs.update(
         { songId: song.songId, groupId: groupId },
         {
@@ -69,28 +101,4 @@ function leaveGroup(groupId) {
       );
     });
   }
-}
-
-function addGroupMember(groupId, userId) {
-  Groups.update(
-    {_id: groupId},
-    {$push: { userIds: userId}}
-  );
-  Meteor.users.update(
-    {'profile.id': userId},
-    {$push: {groupIds: groupId}}
-  );
-  //add the user vote to the group vote count
-  let userVotedSongs = UserSongs.find(
-    {userId: userId,
-    vote: {$ne: 0}}
-  );
-  userVotedSongs.forEach(song => {
-    let fieldToIncrement = song.vote === 1 ? {upvote: 1} : {downvote: 1};
-    GroupSongs.upsert({
-      songId: song.songId,
-      groupId: groupId
-    },
-    {$inc: fieldToIncrement})
-  });
 }

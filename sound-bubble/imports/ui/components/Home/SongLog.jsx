@@ -3,7 +3,7 @@ import Song from '../Song';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
-import { fetchGroupSongLogs } from '../../actions/homeActions';
+import { fetchGroupSongLogs, changeFilter } from '../../actions/homeActions';
 import GroupButton from './GroupButton';
 import UserSongs from '../../../api/userSongs';
 import Groups from '../../../api/groups';
@@ -18,9 +18,8 @@ class SongLog extends Component {
   }
 
   getSongDetails() {
-    console.log('groupRecent', this.props.recentTracks);
     return this.props.recentTracks.map(t => {
-      return <Song key={t._id + t.userId} track={t} home={true} />;
+      return <Song key={t._id + t.userId} track={t} home={true} filterKey={this.props.filterKey} />;
     });
   }
 
@@ -62,8 +61,16 @@ class SongLog extends Component {
 
         <GroupButton />
 
-        <div className="songs" id="song_logs">
-          <ul>{this.getSongDetails()}</ul>
+        <div>
+          <div className="option_container">
+            <span className='glyphicon glyphicon-search white'></span>
+            <span className="tooltiptext">Search Played Songs</span> 
+          </div>
+          <input className='filter_bar' type="text" value={this.props.filterKey} onChange={event => this.props.changeFilter(event.target.value)} placeholder="  Search songs..." />
+        </div>
+
+        <div className="songs">
+          <ul className="song_logs" id="song_logs">{this.getSongDetails()}</ul>
         </div>
       </div>
     );
@@ -71,13 +78,16 @@ class SongLog extends Component {
 }
 
 const mapStateToProps = state => {
-  return { currentGroupId: state.currentGroupId };
+  return {
+    currentGroupId: state.currentGroupId,
+    filterKey: state.filterKey
+  };
 };
 
 export default compose(
   connect(
     mapStateToProps,
-    { fetchGroupSongLogs }
+    { fetchGroupSongLogs, changeFilter }
   ),
   withTracker(props => {
     const currentGroupId = props.currentGroupId;
@@ -105,13 +115,13 @@ export default compose(
         recentTracksReady: groupRecentTracksReady,
         recentTracks: groupRecentTracksReady
           ? UserSongs.find(
-              {
-                userId: { $in: currentGroup.userIds },
-                show: true,
-                timestamps: { $exists: true }
-              },
-              { sort: { timestamps: -1 } }
-            ).fetch()
+            {
+              userId: { $in: currentGroup.userIds },
+              show: true,
+              timestamps: { $exists: true }
+            },
+            { sort: { timestamps: -1 } }
+          ).fetch()
           : []
       };
     } else {
@@ -128,12 +138,12 @@ export default compose(
         recentTracksReady: myRecentTracksReady,
         recentTracks: myRecentTracksReady
           ? UserSongs.find(
-              {
-                userId: Meteor.user().profile.id,
-                timestamps: { $exists: true }
-              },
-              { sort: { timestamps: -1 } }
-            ).fetch()
+            {
+              userId: Meteor.user().profile.id,
+              timestamps: { $exists: true }
+            },
+            { sort: { timestamps: -1 } }
+          ).fetch()
           : []
       };
     }

@@ -31,14 +31,18 @@ class Groups extends Component {
 
   render() {
     const { myGroups } = this.props;
-    let groupDivs = myGroups.map(g => (
-      <Group
-        key={g._id}
-        groupId={g._id}
-        groupName={g.name}
-        userIds={g.userIds}
-      />
-    ));
+    let groupDivs = myGroups
+      .slice(0)
+      .reverse()
+      .map(g => (
+        <Group
+          key={g._id}
+          groupId={g._id}
+          groupName={g.name}
+          adminId={g.adminId}
+          userIds={g.userIds}
+        />
+      ));
 
     let popup = <div />;
     if (this.state.createGroupPopup === true) {
@@ -50,8 +54,9 @@ class Groups extends Component {
             </label>
             <input
               type="text"
-              placeholder="Enter Group Name"
+              placeholder="Enter group name..."
               name="groupName"
+              maxLength={30}
               required
             />
 
@@ -63,7 +68,7 @@ class Groups extends Component {
               className="btn cancel"
               onClick={() => this.closeForm()}
             >
-              Cancel
+              Close
             </button>
           </form>
         </div>

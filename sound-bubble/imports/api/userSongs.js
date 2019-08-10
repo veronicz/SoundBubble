@@ -3,17 +3,17 @@ import { Meteor } from 'meteor/meteor';
 
 UserSongs = new Mongo.Collection('user_songs');
 UserSongSchema = new SimpleSchema({
-  songId: { type: String },
-  userId: { type: String },
+  songId: String,
+  userId: String,
   timestamps: { type: Array, optional: true },
-  'timestamps.$': { type: Date },
+  'timestamps.$': Date,
   vote: {
     type: SimpleSchema.Integer,
     allowedValues: [-1, 0, 1],
     optional: true,
-    defaultValue:0
+    defaultValue: 0
   },
-  show: { type: Boolean, optional: true, defaultValue:true }
+  show: { type: Boolean, optional: true, defaultValue: true }
 });
 
 UserSongs.attachSchema(UserSongSchema);

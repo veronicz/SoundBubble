@@ -5,16 +5,30 @@ import { hideMySong } from '../../actions/accountActions';
 class HideSongButton extends Component {
   render() {
     const { hideMySong, song, show } = this.props;
-    return (
-      <div className="hide_song">
+
+    let button;
+    if (show) {
+      button = (
         <button
           className="hide_button"
           onClick={() => hideMySong(song._id, show ? 'hide' : 'show')}
         >
-          {show ? 'Hide' : 'Show'}
+          Hide
         </button>
-      </div>
-    );
+      );
+    } else {
+      button = (
+        <button
+          className="hide_button"
+          style={{ backgroundColor: 'black', color: 'white' }}
+          onClick={() => hideMySong(song._id, show ? 'hide' : 'show')}
+        >
+          Show
+        </button>
+      );
+    }
+
+    return <div className="hide_song">{button}</div>;
   }
 }
 

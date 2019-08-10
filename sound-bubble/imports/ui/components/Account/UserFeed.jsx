@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Song from '../Song';
-import '../../stylesheets/Account.css';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -37,7 +36,6 @@ class UserFeed extends Component {
 
   getSongDetails() {
     const { myRecentTracks } = this.props;
-    console.log('myrecent', myRecentTracks);
     return myRecentTracks.map(t => {
       return <Song key={t._id} track={t} />;
     });
@@ -48,42 +46,47 @@ class UserFeed extends Component {
       <div className="feed_container">
         <div className="song_feed_header">
           <h1 className="song_feed_title">My Played Tracks</h1>
-          <img
+          <div
             className="refresh_button"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB5rIE754i5dhUenkMUyG-JulFFkR78v3yt0TS-tbqiKCsr4Uj"
             onClick={() => this.props.fetchMySongLogs()}
-          />
+          >
+            <div className="option_container">
+              <div className="glyphicon glyphicon-refresh white">
+                <span className="tooltiptext">Refresh</span>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div className="songs">
+            <ul className="song_logs" id="song_logs">{this.getSongDetails()}</ul>
+          </div>
         </div>
-        <div className="songs" id="song_logs">
-          <ul>{this.getSongDetails()}</ul>
-        </div>
-      </div>
-    );
-  }
-}
-
-export default compose(
+        );
+      }
+    }
+    
+    export default compose(
   withTracker(props => {
     const myTracksCountReady = Meteor.subscribe('mySongLogsCount').ready();
-    const myRecentTracksReady = Meteor.subscribe(
-      'myRecentTracks',
-      limit.get()
-    ).ready();
+        const myRecentTracksReady = Meteor.subscribe(
+          'myRecentTracks',
+          limit.get()
+        ).ready();
     return {
-      myTracksCount: myTracksCountReady
-        ? Counts.get('mySongLogsCount')
-        : Number.POSITIVE_INFINITY,
-      myRecentTracksReady: myRecentTracksReady,
-      myRecentTracks: myRecentTracksReady
-        ? UserSongs.find(
-            { userId: Meteor.user().profile.id, timestamps: { $exists: true } },
-            { sort: { timestamps: -1 } }
-          ).fetch()
-        : []
-    };
-  }),
-  connect(
-    null,
-    { fetchMySongLogs }
-  )
-)(UserFeed);
+          myTracksCount: myTracksCountReady
+          ? Counts.get('mySongLogsCount')
+          : Number.POSITIVE_INFINITY,
+        myRecentTracksReady: myRecentTracksReady,
+        myRecentTracks: myRecentTracksReady
+          ? UserSongs.find(
+            {userId: Meteor.user().profile.id, timestamps: {$exists: true } },
+            {sort: {timestamps: -1 } }
+      ).fetch()
+    : []
+};
+}),
+connect(
+null,
+    {fetchMySongLogs}
+        )
+      )(UserFeed);
