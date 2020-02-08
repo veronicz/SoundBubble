@@ -1,21 +1,24 @@
-import React, { Component } from 'react';
-import '../stylesheets/LogIn.css';
+import React, { Component } from "react";
+import "../stylesheets/LogIn.css";
+import { updateUserProfilePic } from "../actions/loginActions";
 
 export default class LogInPage extends Component {
   logIn() {
     var options = {
       showDialog: true, // Whether or not to force the user to approve the app again if they’ve already done so.
       requestPermissions: [
-        'user-library-read',
-        'user-follow-read',
-        'playlist-read-private',
-        'user-read-recently-played'
+        "user-library-read",
+        "user-follow-read",
+        "playlist-read-private",
+        "user-read-recently-played"
       ] // Spotify access scopes.
     };
 
     Meteor.loginWithSpotify(options, err => {
       if (err) {
-        console.log('login failed', err);
+        console.log("login failed", err);
+      } else {
+        updateUserProfilePic();
       }
     });
   }
